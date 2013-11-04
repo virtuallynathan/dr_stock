@@ -22,7 +22,7 @@ class Index(object):
         self._companies.remove(company)
 
     def __iter__(self):
-        return self._companies.__iter()__
+        return self._companies.__iter__()
 
     def __contains__(self, company):
         return company in _companies
