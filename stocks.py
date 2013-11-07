@@ -1,82 +1,82 @@
-class Index(object):
+from sqlalchemy import Column, Integer, String, Date, Float, ForeignKey
+from sqlalchemy.ext.declarative import declarative_base, declared_attr
+from sqlalchemy.orm import relationship, backref
+
+
+Base = declarative_base()
+
+
+index_stocks = Table('index_stocks',
+                     Base.metadata,
+                     Column('index_id', Integer, ForeignKey('index.id')),
+                     Column('company_id', Integer, ForeignKey('company.id'))
+
+
+class Mixin(object):
     '''
-    An index is a list of companies in a certain a stock exchange.
-    For example, the FTSE 100 in the London Stock Exchange.
+    Defines common class attributes.
     '''
-    def __init__(self, name, companies=[]):
-        self._companies = set()
-        self._companies.extend(companies)
+    @declared_attr
+    def __tablename__(cls):
+        return cls.__name__.lower()
 
-    @property
-    def companies(self):
-        return frozenset(self._companies)
-
-    @companies.setter
-    def companies(self, companies):
-        self._companies = frozenset(companies)
-
-    def add_company(self, company):
-        self._companies.add(company)
-
-    def remove_company(self, company):
-        self._companies.remove(company)
-
-    def __iter__(self):
-        return self._companies.__iter__()
-
-    def __contains__(self, company):
-        return company in _companies
+    id = Column(Integer, primary_key=True)
 
 
-class Company(object):
+class Exchange(Mixin, Base):
     '''
-    A company represents a unique company within a stock exchange.
-    For example, NYSE/MSFT represents Microsoft in the New York Stock Exchange.
+    Represents a stock exchange (e.g. NASDAQ).
     '''
-    def __init__(self, exchange, symbol):
-        self._exchange = exchange
-        self._symbol = symbol
+    name = Column(String)
+    abbreviation = Column(String) # TODO - normalise?
+    reuters_code = Column(String) # ^
 
-    @property
-    def exchange(self):
-        return self._exchange
-
-    @property
-    def symbol(self):
-        return self._symbol
-
-    def __hash__(self):
-        return hash(self._exchange + self._symbol)
-
-    def __eq__(self, other):
-        return hash(self) == hash(other)
-
-    def __ne__(self, other):
-        return not (self == other)
+    stocks = relationship('Stock', backref='exchange')
+    indexes = relationship('Index', backref='exchange')
 
 
-class Stock(object):
+class Index(Mixin, Base):
     '''
-    A stock represents a set of information about a company's share prices
-    on a given trading day.
+    Represents an index, a collection of stocks, in an exchange (e.g. FTSE 100).
     '''
+    name = Column(String)
+    stocks = relationship('Stock', secondary=index_stocks, backref='indexes')
 
-    _valid_attributes = ['high', 'low', 'opening', 'closing']
+    # TODO - market cap, etc
 
-    def __init__(self, company, date, **kwargs):
-        self._company = company
-        self._date = date
 
-        for attribute, value in kwargs.iteritems():
-            if attribute not in _valid_attributes:
-                raise ValueError('{} is not a valid attribute for a stock'.format(attribute))
-            self.__dict__[attribute] = value
+class Stock(Mixin, Base):
+    '''
+    Represents a stock on a certain stock exchange.
+    '''
+    name = Column(String)  # Inherit from company if no special name?
+    ticker = Column(String)
+    company_id = Column(Integer, ForeignKey('company.id'))
+    exchange = Column(Integer, ForeignKey('exchange.id'))
 
-    @property
-    def company(self):
-        return self._company
+    # Already have a backref to any indexes
 
-    @property
-    def date(self):
-        return self._date
+    stock_prices = relationship('StockPrice', backref='stock')
+
+
+class Company(Mixin, Base):
+    '''
+    Represents a company. A company may have multiple stocks in multiple exchanges.
+    '''
+    name = Column(String)
+    stocks = relationship('Stock', backref='company')
+
+
+class StockPrice(Mixin, Base):
+    '''
+    Represents a stock price (volume, close, etc) on a given trading day.
+    '''
+    stock_id = Column(Integer, ForeignKey('stock.id'))
+
+    date = Column(Date)
+    volume = Column(Integer)
+    open = Column(Float)
+    close = Column(Float)
+    high = Column(Float)
+    low = Column(Float)
 
