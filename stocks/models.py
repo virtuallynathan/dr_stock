@@ -1,25 +1,11 @@
 from django.db import models
 
 
-class Exchange(models.Model):
+class Company(models.Model):
     '''
-    Represents a stock exchange (e.g. NASDAQ).
-    '''
-    name = models.CharField()
-    abbreviation = models.CharField()
-    reuters_code = models.CharField()
-
-    stocks = models.ManyToManyField(Stock)
-    indexes = models.ManyToManyField(Index)
-
-
-class Index(models.Model):
-    '''
-    Represents an index, a collection of stocks, in an exchange (e.g. FTSE 100).
+    Represents a company. A company may have multiple stocks in multiple exchanges.
     '''
     name = models.CharField()
-    reuters_code = models.CharField()
-    stocks = models.ManyToManyField(Stock)
 
 
 class Stock(models.Model):
@@ -32,11 +18,23 @@ class Stock(models.Model):
     exchange = models.ForeignKey(Exchange, related_name='stocks')
 
 
-class Company(models.Model):
+class Exchange(models.Model):
     '''
-    Represents a company. A company may have multiple stocks in multiple exchanges.
+    Represents a stock exchange (e.g. NASDAQ).
     '''
     name = models.CharField()
+    abbreviation = models.CharField()
+    reuters_code = models.CharField()
+
+
+class Index(models.Model):
+    '''
+    Represents an index, a collection of stocks, in an exchange (e.g. FTSE 100).
+    '''
+    name = models.CharField()
+    reuters_code = models.CharField()
+    stocks = models.ManyToManyField(Stock)
+
 
 
 class StockPrice(models.Model):
