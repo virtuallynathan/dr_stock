@@ -8,6 +8,15 @@ class Company(models.Model):
     name = models.CharField()
 
 
+class Exchange(models.Model):
+    '''
+    Represents a stock exchange (e.g. NASDAQ).
+    '''
+    name = models.CharField()
+    abbreviation = models.CharField()
+    reuters_code = models.CharField()
+
+
 class Stock(models.Model):
     '''
     Represents a stock on a certain stock exchange.
@@ -17,14 +26,6 @@ class Stock(models.Model):
     company = models.ForeignKey(Company, related_name='stocks')
     exchange = models.ForeignKey(Exchange, related_name='stocks')
 
-
-class Exchange(models.Model):
-    '''
-    Represents a stock exchange (e.g. NASDAQ).
-    '''
-    name = models.CharField()
-    abbreviation = models.CharField()
-    reuters_code = models.CharField()
 
 
 class Index(models.Model):
