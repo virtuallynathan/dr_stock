@@ -33,6 +33,8 @@ class Index(models.Model):
     Represents an index, a collection of stocks, in an exchange (e.g. FTSE 100).
     '''
     name = models.CharField(max_length=50)
+    exchange = models.ForeignKey(Exchange, related_name='indexes')
+
     reuters_code = models.CharField(max_length=50)
     stocks = models.ManyToManyField(Stock)
 
