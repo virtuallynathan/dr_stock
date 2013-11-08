@@ -88,7 +88,7 @@ SECRET_KEY = 'ym2+sf0d46)5ri8bqpjq!lt(!veqdd+ip+0s-y23q)))%=5=!4'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    #'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -98,7 +98,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 ROOT_URLCONF = 'finance.urls'
@@ -107,6 +107,7 @@ ROOT_URLCONF = 'finance.urls'
 WSGI_APPLICATION = 'finance.wsgi.application'
 
 TEMPLATE_DIRS = (
+    '/home/js233/softwareeng/finance/templates',
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -122,8 +123,10 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
-    'stocks'
+    #'django.contrib.admindocs',
+    'stocks',
+    'users',
+    'south'
 )
 
 # A sample logging configuration. The only tangible logging
@@ -154,3 +157,7 @@ LOGGING = {
         },
     }
 }
+
+PASWORD_HASHERS = (
+    'django.contrib.auth.hashers,PBKDF2PasswordHasher',
+)
