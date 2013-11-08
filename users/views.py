@@ -26,13 +26,14 @@ def login_view(request):
 # Log a user out
 def logout_view(request):
     logout(request)
-    # Redirect to a success page.
     return HttpResponseRedirect("/account/logout")
 
 # Confirm a user has logged out
 def logout_confirm(request):
 	return render(request, 'logout.html')
 
+# Allow an investor to register an account
+# Do not add to database
 def register(request):
     if request.method == 'POST':
         form = UserCreatForm(request.POST)
