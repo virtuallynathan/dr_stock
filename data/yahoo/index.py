@@ -40,5 +40,5 @@ def fetch_stocks(index, html):
         html = etree.HTML(response.text)
 
         return fetch_stocks(index, html)
-    else
+    else:
         return index
