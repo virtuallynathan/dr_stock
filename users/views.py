@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, logout
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
+# Login in a user and check if they have registered
 def login_view(request):
     username = request.POST['username']
     password = request.POST['password']
@@ -22,13 +23,13 @@ def login_view(request):
     	return HttpResponseRedirect("account/invalid")
     return render(request, 'login.html', locals(), context_instance = RequestContext(request))
   
-
+# Log a user out
 def logout_view(request):
     logout(request)
     # Redirect to a success page.
     return HttpResponseRedirect("/account/logout")
 
-
+# Confirm a user has logged out
 def logout_confirm(request):
 	return render(request, 'logout.html')
 
@@ -47,5 +48,7 @@ def register(request):
     return render(request, "registration.html", {
     	'form': form,
     })
+
+# Link to profile page
 def profile_page(request):
 	return render(Request, "profile.html")
