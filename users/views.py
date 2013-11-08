@@ -33,7 +33,7 @@ def logout_confirm(request):
 	return render(request, 'logout.html')
 
 # Allow an investor to register an account
-# Do not add to database
+# Does not add to database
 def register(request):
     if request.method == 'POST':
         form = UserCreatForm(request.POST)
