@@ -51,3 +51,10 @@ class StockPrice(models.Model):
     high = models.DecimalField(max_digits=20, decimal_places=4)
     low = models.DecimalField(max_digits=20, decimal_places=4)
 
+
+def get_company(name):
+    return Company.objects.get(name=name)
+
+
+def get_stock(exchange, ticker):
+    return Stock.objects.get(exchange=exchange, ticker=ticker)
