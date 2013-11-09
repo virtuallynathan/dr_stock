@@ -23,8 +23,8 @@ class Stock(models.Model):
     '''
     name = models.CharField(max_length=50)
     ticker = models.CharField(max_length=50)
-    company = models.ForeignKey(Company, related_name='stocks')
     exchange = models.ForeignKey(Exchange, related_name='stocks')
+    company = models.ForeignKey(Company, related_name='stocks')
 
 
 
@@ -33,18 +33,18 @@ class Index(models.Model):
     Represents an index, a collection of stocks, in an exchange (e.g. FTSE 100).
     '''
     name = models.CharField(max_length=50)
+    ticker = models.CharField(max_length=50)
     exchange = models.ForeignKey(Exchange, related_name='indexes')
 
-    reuters_code = models.CharField(max_length=50)
     stocks = models.ManyToManyField(Stock)
 
 
 
-class StockPrice(models.Model):
+class Quote(models.Model):
     '''
     Represents a stock price (volume, close, etc) on a given trading day.
     '''
-    stock = models.ForeignKey(Stock, related_name='stock_prices')
+    stock = models.ForeignKey(Stock, related_name='quotes')
 
     date = models.DateField()
     volume = models.IntegerField()
