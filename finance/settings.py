@@ -71,7 +71,7 @@ DATABASES = {
         'NAME': 'finance',
         'USER': 'postgres',
         'PASSWORD': '',
-        'HOST': 'jhproj05.cs.st-andrews.ac.uk',
+        'HOST': '',
         'PORT': '',
     }
 }

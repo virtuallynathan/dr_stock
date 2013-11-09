@@ -5,7 +5,7 @@ admin.autodiscover()
 
 from django.contrib.auth.views import login, logout
 
-from users.views import profile
+from users.views import profile, register
 
 urlpatterns = patterns('',
     # Examples:
@@ -17,4 +17,5 @@ urlpatterns = patterns('',
     url(r'^accounts/login/$',  login, {'template_name': 'login.html'}),
     url(r'^accounts/logout/$', logout, {'template_name': 'logout.html'}),
     url(r'^accounts/profile/$', profile, {'template_name': 'profile.html'}),
+    url(r'^accounts/register/$', register, {'template_name': 'register.html'}),
 )
