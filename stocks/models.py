@@ -7,6 +7,9 @@ class Company(models.Model):
     '''
     name = models.CharField(max_length=50)
 
+    def __unicode__(self):
+        return self.name
+
 
 class Exchange(models.Model):
     '''
@@ -15,6 +18,9 @@ class Exchange(models.Model):
     name = models.CharField(max_length=50)
     abbreviation = models.CharField(max_length=50)
     reuters_code = models.CharField(max_length=50)
+
+    def __unicode__(self):
+        return '{} - {}'.format(self.abbreviation, self.name)
 
 
 class Stock(models.Model):
@@ -26,6 +32,9 @@ class Stock(models.Model):
     exchange = models.ForeignKey(Exchange, related_name='stocks')
     company = models.ForeignKey(Company, related_name='stocks')
 
+    def __unicode__(self):
+        return '{}.{} - {}'.format(self.ticker,
+            self.exchange.reuters_code, self.name)
 
 
 class Index(models.Model):
@@ -38,6 +47,8 @@ class Index(models.Model):
 
     stocks = models.ManyToManyField(Stock)
 
+    def __unicode__(self):
+        return '.{} - {}'.format(self.ticker, self.name)
 
 
 class Quote(models.Model):
@@ -52,6 +63,10 @@ class Quote(models.Model):
     close = models.DecimalField(max_digits=20, decimal_places=4)
     high = models.DecimalField(max_digits=20, decimal_places=4)
     low = models.DecimalField(max_digits=20, decimal_places=4)
+
+    def __unicode__(self):
+        return '{}.{} - {%Y-%m-%d} {}'.format(self.stock.ticker,
+            self.stock.exchange.reuters_code, self.date, self.close)
 
 
 def get_company(name):
