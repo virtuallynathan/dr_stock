@@ -4,7 +4,7 @@ Index scraper for Yahoo Finance
 from lxml import etree
 from requests import get
 
-from stocks.models import Exchange, Stock, Company, get_stock
+from stocks.models import Exchange, Symbol, Company, get_symbol
 
 
 BASE_URL = 'http://finance.yahoo.com'
@@ -26,11 +26,15 @@ def fetch_stocks(index, html):
         stock_symbol = stock_symbol[:stock_symbol.rfind('.')]
 
         try:
-            stock = get_stock(exchange, stock_symbol)
+            stock = get_symbol(exchange, stock_symbol)
         except Stock.DoesNotExist:
             stock_name = row[1].text
             company, created = Company.objects.get_or_create(name=stock_name)
-            stock = Stock(name=stock_name, ticker=stock_symbol, company=company, exchange=exchange)
+            stock = Symbol(name=stock_name,
+                           ticker=stock_symbol,
+                           company=company,
+                           exchange=exchange,
+                           type=Symbol.STOCK)
 
         stock.save()
         index.stocks.add(stock)

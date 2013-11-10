@@ -23,39 +23,39 @@ class Exchange(models.Model):
         return '{} - {}'.format(self.abbreviation, self.name)
 
 
-class Stock(models.Model):
+class Symbol(models.Model):
     '''
     Represents a stock on a certain stock exchange.
     '''
     name = models.CharField(max_length=50)
     ticker = models.CharField(max_length=50)
-    exchange = models.ForeignKey(Exchange, related_name='stocks')
-    company = models.ForeignKey(Company, related_name='stocks')
+    exchange = models.ForeignKey(Exchange, related_name='symbol')
+    company = models.ForeignKey(Company, related_name='symbol')
+
+    COMPANY = 'C'
+    INDEX = 'I'
+    TYPES = ((COMPANY, 'Company'), (INDEX, 'Index'))
+    type = models.CharField(max_length=1, choices=TYPES, default=COMPANY)
+
+    components = models.ManyToManyField('self',
+                                        db_table='symbol_components',
+                                        symmetrical=False)
+
+    def code(self):
+        if self.type == INDEX:
+            return '.{}'.format(self.ticker)
+        else:
+            return '{}.{}'.format(self.ticker, self.exchange.reuters_code)
 
     def __unicode__(self):
-        return '{}.{} - {}'.format(self.ticker,
-            self.exchange.reuters_code, self.name)
-
-
-class Index(models.Model):
-    '''
-    Represents an index, a collection of stocks, in an exchange (e.g. FTSE 100).
-    '''
-    name = models.CharField(max_length=50)
-    ticker = models.CharField(max_length=50)
-    exchange = models.ForeignKey(Exchange, related_name='indexes')
-
-    stocks = models.ManyToManyField(Stock)
-
-    def __unicode__(self):
-        return '.{} - {}'.format(self.ticker, self.name)
+        return '{} - {}'.format(self.code())
 
 
 class Quote(models.Model):
     '''
     Represents a stock price (volume, close, etc) on a given trading day.
     '''
-    stock = models.ForeignKey(Stock, related_name='quotes')
+    symbol = models.ForeignKey(Symbol, related_name='quotes')
 
     date = models.DateField()
     volume = models.IntegerField()
@@ -65,13 +65,14 @@ class Quote(models.Model):
     low = models.DecimalField(max_digits=20, decimal_places=4)
 
     def __unicode__(self):
-        return '{}.{} - {%Y-%m-%d} {}'.format(self.stock.ticker,
-            self.stock.exchange.reuters_code, self.date, self.close)
+        return '{} - {%Y-%m-%d} {}'.format(self.symbol.code(),
+                                           self.date,
+                                           self.close)
 
 
 def get_company(name):
     return Company.objects.get(name=name)
 
 
-def get_stock(exchange, ticker):
-    return Stock.objects.get(exchange=exchange, ticker=ticker)
+def get_symbol(exchange, ticker):
+    return Symbol.objects.get(exchange=exchange, ticker=ticker)

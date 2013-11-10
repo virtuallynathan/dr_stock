@@ -30,7 +30,6 @@ def _scrape_quotes(symbol, start_date, end_date):
     lines.next()  # Skip the first line
 
     for quote in (q.split(',') for q in lines):
-        print quote
         date, open, high, low, close, volume, adj = quote
         date = datetime.datetime.strptime(date, '%Y-%m-%d')
 
