@@ -20,7 +20,7 @@ class Exchange(models.Model):
     reuters_code = models.CharField(max_length=50)
 
     def __unicode__(self):
-        return '{} - {}'.format(self.abbreviation, self.name)
+        return '{0} - {1}'.format(self.abbreviation, self.name)
 
 
 class Symbol(models.Model):
@@ -42,13 +42,13 @@ class Symbol(models.Model):
                                         symmetrical=False)
 
     def code(self):
-        if self.type == INDEX:
-            return '.{}'.format(self.ticker)
+        if self.type == Symbol.INDEX:
+            return '.{0}'.format(self.ticker)
         else:
-            return '{}.{}'.format(self.ticker, self.exchange.reuters_code)
+            return '{0}.{1}'.format(self.ticker, self.exchange.reuters_code)
 
     def __unicode__(self):
-        return '{} - {}'.format(self.code())
+        return '{0}'.format(self.code())
 
 
 class Quote(models.Model):
@@ -65,9 +65,9 @@ class Quote(models.Model):
     low = models.DecimalField(max_digits=20, decimal_places=4)
 
     def __unicode__(self):
-        return '{} - {%Y-%m-%d} {}'.format(self.symbol.code(),
-                                           self.date,
-                                           self.close)
+        return '{0} - {1:%Y-%m-%d} {2}'.format(self.symbol.code(),
+                                               self.date,
+                                               self.close)
 
 
 def get_company(name):
