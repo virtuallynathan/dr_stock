@@ -30,7 +30,7 @@ class Symbol(models.Model):
     name = models.CharField(max_length=50)
     ticker = models.CharField(max_length=50)
     exchange = models.ForeignKey(Exchange, related_name='symbol')
-    company = models.ForeignKey(Company, related_name='symbol')
+    company = models.ForeignKey(Company, related_name='symbol', null=True)
 
     COMPANY = 'C'
     INDEX = 'I'
