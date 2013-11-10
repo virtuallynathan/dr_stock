@@ -1,15 +1,68 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <link rel="stylesheet" href="style.css" />
-    <title>{% block title %}Finance Viewer{% endblock %}</title>
-</head>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static "images/favicon.png" %}">
+    <title>Stock Advisor - {% block title %}Finance Viewer{% endblock %}</title>
 
-<body>
-    <h1>{% block header %}Finance Viewer Site{% endblock %}</h1>
-    <h2>{% block pagename %}{% endblock %}</h2>
-    <div id="content">
-        {% block content %}{% endblock %}
-    </div>
-</body>
+    <!-- Bootstrap core CSS -->
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    {% block pageheaders %}{% endblock %}
+
+    <style type="text/css">
+      body {
+        padding: 0px;
+        margin: 0px;
+      }
+
+      .navbar-brand img {
+        margin-right: 8px;
+        vertical-align: middle;
+        max-height: 24px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-default" role="navigation">
+
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">
+          <img src="{% static "images/small_logo.png" %}" />
+          Stock Advisor
+        </a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/">Home</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/accounts/login/">Login</a></li>
+          <li><a href="/accounts/register/">Sign Up</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </nav>
+    <div class="container">
+
+      {% block content %}{% endblock %}
+
+    </div> <!-- /container -->
+  </body>
 </html>

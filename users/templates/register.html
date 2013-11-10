@@ -1,14 +1,22 @@
 {% extends "base.html" %}
 
-{% block pagename %}Create an account{% endblock %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+{% block pageheaders %}
+<link href="{%static "css/register.css" %}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}Create an account{% endblock %}
 
 {% block content %}
+<form class="form-signup" method="post" action="{% url 'users.views.register' %}">
+	{% csrf_token %}
+	{{ form.username|attr:"placeholder:Username"|attr:"required:true"|add_class:"form-control" }}
 
-<form action="{% url 'users.views.register' %}" method="post">
-{% csrf_token %}
-{{ form.as_p }}
-
-<input type="submit" value="Create the account">
+	{{ form.password1|attr:"placeholder:Password"|attr:"required:true"|add_class:"form-control" }}
+	{{ form.password2|attr:"placeholder:Confirm Password"|attr:"required:true"|add_class:"form-control" }}
+	<button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
 </form>
 
 {% endblock %}

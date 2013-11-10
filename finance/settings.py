@@ -44,6 +44,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Thing I found
+    'widget_tweaks',
+
     # Our apps
     'stocks',
     'users',
