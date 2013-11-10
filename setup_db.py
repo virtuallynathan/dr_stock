@@ -4,14 +4,6 @@ from stocks.models import Exchange, Symbol
 from data.yahoo.index import scrape
 
 
-cursor = connection.cursor()
-try:
-    cursor.execute('drop schema public cascade;')
-    cursor.execute('create schema public;')
-finally:
-    cursor.close()
-
-
 lse, created = Exchange.objects.get_or_create(abbreviation='LSE',
     defaults={'name': 'London Stock Exchange',
               'reuters_code': 'L'})
