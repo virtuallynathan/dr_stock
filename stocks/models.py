@@ -58,7 +58,7 @@ class Quote(models.Model):
     symbol = models.ForeignKey(Symbol, related_name='quotes')
 
     date = models.DateField()
-    volume = models.IntegerField()
+    volume = models.BigIntegerField()
     open = models.DecimalField(max_digits=20, decimal_places=4)
     close = models.DecimalField(max_digits=20, decimal_places=4)
     high = models.DecimalField(max_digits=20, decimal_places=4)
