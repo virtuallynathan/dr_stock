@@ -17,7 +17,7 @@ class Exchange(models.Model):
     '''
     name = models.CharField(max_length=50)
     abbreviation = models.CharField(max_length=50)
-    reuters_code = models.CharField(max_length=50)
+    ticker = models.CharField(max_length=50)
 
     def __unicode__(self):
         return '{0} - {1}'.format(self.abbreviation, self.name)
@@ -45,7 +45,7 @@ class Symbol(models.Model):
         if self.type == Symbol.INDEX:
             return '.{0}'.format(self.ticker)
         else:
-            return '{0}.{1}'.format(self.ticker, self.exchange.reuters_code)
+            return '{0}.{1}'.format(self.ticker, self.exchange.ticker)
 
     def __unicode__(self):
         return '{0}'.format(self.code())
@@ -72,6 +72,10 @@ class Quote(models.Model):
 
 def get_company(name):
     return Company.objects.get(name=name)
+
+
+def get_exchange(abbreviation):
+    return Exchange.objects.get(abbreviation=abbreviation)
 
 
 def get_symbol(exchange, ticker):

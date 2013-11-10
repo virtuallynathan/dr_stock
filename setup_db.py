@@ -6,7 +6,7 @@ from data.yahoo.index import scrape
 
 lse, created = Exchange.objects.get_or_create(abbreviation='LSE',
     defaults={'name': 'London Stock Exchange',
-              'reuters_code': 'L'})
+              'ticker': 'L'})
 lse.save()
 
 ftse100, created = Symbol.objects.get_or_create(ticker='FTSE',

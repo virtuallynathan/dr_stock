@@ -5,14 +5,19 @@ import datetime
 from lxml import etree
 from requests import get
 
-from stocks.models import Quote
+from stocks.models import Symbol, Quote
 
 
 BASE_URL = 'http://ichart.yahoo.com/table.csv'
 
 
 def _fetch_quotes(symbol, start_date, end_date):
-    return get(BASE_URL, params={'s': symbol,
+    if symbol.type == Symbol.INDEX:
+        ticker = '^' + symbol.ticker
+    else:
+        ticker = symbol.ticker + '.' + symbol.exchange.ticker
+
+    return get(BASE_URL, params={'s': ticker,
                                  'a': start_date.month,
                                  'b': start_date.day,
                                  'c': start_date.year,
@@ -23,7 +28,7 @@ def _fetch_quotes(symbol, start_date, end_date):
                stream=True)
 
 
-def _scrape_quotes(symbol, start_date, end_date):
+def scrape_quotes(symbol, start_date, end_date):
     response = _fetch_quotes(symbol, start_date, end_date)
 
     lines = response.iter_lines()
@@ -33,15 +38,5 @@ def _scrape_quotes(symbol, start_date, end_date):
         date, open, high, low, close, volume, adj = quote
         date = datetime.datetime.strptime(date, '%Y-%m-%d')
 
-        yield Quote(date=date, volume=volume, open=open,
-                    close=close, high=high, low=low)
-
-
-def scrape_stock_quotes(stock, start_date, end_date):
-    symbol = stock.ticker + stock.exchange.ticker
-    return _scrape_quotes(symbol, start_date, end_date)
-
-
-def scrape_index_quotes(index, start_date, end_date):
-    symbol = '^' + index.ticker
-    return _scrape_quotes(symbol, start_date, end_date)
+        yield Quote(symbol=symbol, date=date, volume=volume,
+                    open=open, close=close, high=high, low=low)
