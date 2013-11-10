@@ -11,7 +11,8 @@ lse.save()
 
 ftse100, created = Symbol.objects.get_or_create(ticker='FTSE',
     defaults={'name': 'FTSE 100',
-              'exchange': lse})
+              'exchange': lse,
+              'type': Symbol.INDEX})
 ftse100.save()
 
 
