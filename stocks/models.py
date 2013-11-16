@@ -23,6 +23,21 @@ class Exchange(models.Model):
         return '{0} - {1}'.format(self.abbreviation, self.name)
 
 
+class Price(models.Model):
+    '''
+    Represents a real-time stock price (last close, current price, volume, market cap).
+    '''
+    updated = models.DateTimeField()
+    price = models.FloatField()
+    last_close = models.FloatField()
+    volume = models.BigIntegerField()
+    market_cap = models.FloatField(null=True)
+
+    def __unicode__(self):
+        return '{0} - {1:%Y-%m-%d} {2}'.format(self.symbol.code(),
+                                               self.updated,
+                                               self.price)
+
 class Symbol(models.Model):
     '''
     Represents a stock on a certain stock exchange.
@@ -31,24 +46,28 @@ class Symbol(models.Model):
     ticker = models.CharField(max_length=50)
     exchange = models.ForeignKey(Exchange, related_name='symbol')
     company = models.ForeignKey(Company, related_name='symbol', null=True)
+    price = models.OneToOneField(Price, null=True)
 
-    COMPANY = 'C'
+    STOCK = 'S'
     INDEX = 'I'
-    TYPES = ((COMPANY, 'Company'), (INDEX, 'Index'))
-    type = models.CharField(max_length=1, choices=TYPES, default=COMPANY)
+    TYPES = [(STOCK, 'Stock'), (INDEX, 'Index')]
+    type = models.CharField(max_length=1, choices=TYPES, default=STOCK)
 
     components = models.ManyToManyField('self',
                                         db_table='symbol_components',
                                         symmetrical=False)
 
+    def index_code(self):
+        return '.{0}'.format(self.ticker)
+
+    def stock_code(self):
+        return '{0}.{1}'.format(self.ticker, self.exchange.ticker)
+
     def code(self):
-        if self.type == Symbol.INDEX:
-            return '.{0}'.format(self.ticker)
-        else:
-            return '{0}.{1}'.format(self.ticker, self.exchange.ticker)
+        return self.index_code() if self.type == Symbol.INDEX else self.stock_code()
 
     def __unicode__(self):
-        return '{0}'.format(self.code())
+        return self.code()
 
 
 class Quote(models.Model):
@@ -59,10 +78,10 @@ class Quote(models.Model):
 
     date = models.DateField()
     volume = models.BigIntegerField()
-    open = models.DecimalField(max_digits=20, decimal_places=4)
-    close = models.DecimalField(max_digits=20, decimal_places=4)
-    high = models.DecimalField(max_digits=20, decimal_places=4)
-    low = models.DecimalField(max_digits=20, decimal_places=4)
+    open = models.FloatField()
+    close = models.FloatField()
+    high = models.FloatField()
+    low = models.FloatField()
 
     def __unicode__(self):
         return '{0} - {1:%Y-%m-%d} {2}'.format(self.symbol.code(),
