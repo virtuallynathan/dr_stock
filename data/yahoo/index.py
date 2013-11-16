@@ -10,11 +10,12 @@ from stocks.models import Exchange, Symbol, Company, get_symbol
 BASE_URL = 'http://finance.yahoo.com'
 
 
-def scrape(index):
+def scrape_index(index):
     symbol = '^' + index.ticker
     response = get(BASE_URL + '/q/cp', params={'s': symbol})
-    html = etree.HTML(response.text)
+    response.raise_for_status()
 
+    html = etree.HTML(response.text)
     return fetch_stocks(index, html)
 
 
@@ -34,7 +35,7 @@ def fetch_stocks(index, html):
                            ticker=stock_symbol,
                            company=company,
                            exchange=exchange,
-                           type=Symbol.COMPANY)
+                           type=Symbol.STOCK)
 
         stock.save()
         index.components.add(stock)

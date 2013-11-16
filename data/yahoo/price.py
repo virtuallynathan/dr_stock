@@ -16,12 +16,15 @@ def _fetch_price(symbol):
     else:
         ticker = symbol.ticker + '.' + symbol.exchange.ticker
 
-    return get(BASE_URL, params={'s': ticker, 'f': 'sl1p0v0j1'})  # Or j3 for realtime market cap?
+    response = get(BASE_URL, params={'s': ticker, 'f': 'sl1p0v0j1'})  # Or j3 for realtime market cap?
+    response.raise_for_status()
+    return response
 
 
 def _parse_market_cap(market_cap):
     if market_cap == 'N/A':
         return None
+
     mult_dict = {'K': 3, 'M': 6, 'B': 9, 'T': 12}
     mult = mult_dict.get(market_cap[-1], 0)
     return float(market_cap[:-1]) * (10 ** mult)

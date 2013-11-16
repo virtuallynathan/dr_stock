@@ -17,15 +17,17 @@ def _fetch_quotes(symbol, start_date, end_date):
     else:
         ticker = symbol.ticker + '.' + symbol.exchange.ticker
 
-    return get(BASE_URL, params={'s': ticker,
-                                 'a': start_date.month,
-                                 'b': start_date.day,
-                                 'c': start_date.year,
-                                 'd': end_date.month,
-                                 'e': end_date.day,
-                                 'f': end_date.year,
-                                 'g': 'd'},
-               stream=True)
+    response = get(BASE_URL, params={'s': ticker,
+                                     'a': start_date.month,
+                                     'b': start_date.day,
+                                     'c': start_date.year,
+                                     'd': end_date.month,
+                                     'e': end_date.day,
+                                     'f': end_date.year,
+                                     'g': 'd'},
+                   stream=True)
+    response.raise_for_status()
+    return response
 
 
 def scrape_quotes(symbol, start_date, end_date):
