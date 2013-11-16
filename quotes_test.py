@@ -28,7 +28,7 @@ for quote in quotes:
 
 for symbol in ftse.components.all():
 	price = scrape_price(symbol)
-	symbol.price = price
+	price.symbol = symbol
 	print price
 	price.save()
 

@@ -23,21 +23,6 @@ class Exchange(models.Model):
         return '{0} - {1}'.format(self.abbreviation, self.name)
 
 
-class Price(models.Model):
-    '''
-    Represents a real-time stock price (last close, current price, volume, market cap).
-    '''
-    updated = models.DateTimeField()
-    price = models.FloatField()
-    last_close = models.FloatField()
-    volume = models.BigIntegerField()
-    market_cap = models.FloatField(null=True)
-
-    def __unicode__(self):
-        return '{0} - {1:%Y-%m-%d} {2}'.format(self.symbol.code(),
-                                               self.updated,
-                                               self.price)
-
 class Symbol(models.Model):
     '''
     Represents a stock on a certain stock exchange.
@@ -46,7 +31,6 @@ class Symbol(models.Model):
     ticker = models.CharField(max_length=50)
     exchange = models.ForeignKey(Exchange, related_name='symbol')
     company = models.ForeignKey(Company, related_name='symbol', null=True)
-    price = models.OneToOneField(Price, null=True)
 
     STOCK = 'S'
     INDEX = 'I'
@@ -68,6 +52,23 @@ class Symbol(models.Model):
 
     def __unicode__(self):
         return self.code()
+
+
+class Price(models.Model):
+    '''
+    Represents a real-time stock price (last close, current price, volume, market cap).
+    '''
+    symbol = models.OneToOneField(Symbol, primary_key=True)
+    updated = models.DateTimeField()
+    price = models.FloatField()
+    last_close = models.FloatField()
+    volume = models.BigIntegerField()
+    market_cap = models.FloatField(null=True)
+
+    def __unicode__(self):
+        return '{0} - {1:%Y-%m-%d} {2}'.format(self.symbol.code(),
+                                               self.updated,
+                                               self.price)
 
 
 class Quote(models.Model):
