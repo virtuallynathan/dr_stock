@@ -55,8 +55,13 @@
           <li class="active"><a href="/">Home</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="/accounts/login/">Login</a></li>
-          <li><a href="/accounts/register/">Sign Up</a></li>
+          {% if user.is_authenticated %}
+            <li><a href="/accounts/profile">{% user.username %}</a></li>
+            <li><a href="/accounts/logout">Logout</a></li>
+          {% else %}
+            <li><a href="/accounts/login/">Login</a></li>
+            <li><a href="/accounts/register/">Sign Up</a></li>
+          {% endif %}
         </ul>
       </div><!-- /.navbar-collapse -->
     </nav>
