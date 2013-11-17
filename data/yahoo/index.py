@@ -1,6 +1,8 @@
 '''
 Index scraper for Yahoo Finance
 '''
+import datetime
+
 from lxml import etree
 from requests import get
 
@@ -48,4 +50,6 @@ def fetch_stocks(index, html):
 
         return fetch_stocks(index, html)
     else:
+        index.updated = datetime.datetime.utcnow()
+        index.save()
         return index
