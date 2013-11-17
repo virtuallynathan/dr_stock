@@ -1,7 +1,6 @@
 '''
 Price scraper for Yahoo Finance
 '''
-import datetime
 from requests import get
 
 from stocks.models import Price, Symbol

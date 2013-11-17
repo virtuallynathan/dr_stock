@@ -1,8 +1,6 @@
 '''
 Component scraper for Yahoo Finance
 '''
-import datetime
-
 from lxml import etree
 from requests import get
 

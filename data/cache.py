@@ -1,4 +1,5 @@
-import datetime
+from datetime import datetime
+from pytz import utc
 
 from data.yahoo.components import scrape_components
 from data.yahoo.price import scrape_price
@@ -32,7 +33,7 @@ def get_components(index):
     are more than a day old, it will scrape them.
     '''
     # Scrape components if more than a day old
-    now = datetime.datetime.utcnow()
+    now = datetime.now(utc)
     if index.updated.date() < now.date():
         components = scrape_components(index)
 
@@ -56,7 +57,7 @@ def get_price(symbol):
     except DoesNotExist:
         price = scrape_price(symbol)
     else:
-        now = datetime.datetime.utcnow()
+        now = datetime.now(utc)
         if (now - price.updated).total_seconds() > 15 * 60:
             price = scrape_price(symbol)
 
