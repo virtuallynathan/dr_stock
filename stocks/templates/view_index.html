@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}Viewing index {{ index.name }}{% endblock %}
+
+{% block content %}
+<ul>
+<li>Price is {{ index.price.price }}</li>
+</ul>
+<p>
+Index components are:
+<ul>
+{% for symbol in index.components.all %}
+<li>{{ symbol.name }}</li>
+{% endfor %}
+</ul>
+</p>
+{% endblock %}
