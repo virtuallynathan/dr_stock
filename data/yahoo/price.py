@@ -36,10 +36,8 @@ def scrape_price(symbol):
 
     line = response.text.strip().split(',')
     assert len(line) == 5
-    assert line[0].strip('"') == symbol.code()
 
-    updated = datetime.datetime.utcnow()
     market_cap = _parse_market_cap(line[4])
 
-    return Price(updated=updated, price=line[1], last_close=line[2],
+    return Price(symbol=symbol, price=line[1], last_close=line[2],
                  volume=line[3], market_cap=market_cap)
