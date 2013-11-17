@@ -1,4 +1,6 @@
-import datetime
+from datetime import datetime
+from functools import partial
+from pytz import utc
 
 from django.db import models
 
@@ -31,7 +33,7 @@ class Symbol(models.Model):
     components = models.ManyToManyField('self',
                                         db_table='symbol_components',
                                         symmetrical=False)
-    updated = models.DateTimeField(default=datetime.datetime.utcnow)
+    updated = models.DateTimeField(default=partial(datetime.now, utc))
 
     class Meta:
         unique_together = (('ticker', 'exchange'),)
@@ -55,7 +57,7 @@ class Price(models.Model):
     Represents a real-time stock price (last close, current price, volume, market cap).
     '''
     symbol = models.OneToOneField(Symbol, primary_key=True)
-    updated = models.DateTimeField(default=datetime.datetime.utcnow)
+    updated = models.DateTimeField(default=partial(datetime.now, utc))
     price = models.FloatField()
     last_close = models.FloatField()
     volume = models.BigIntegerField()
