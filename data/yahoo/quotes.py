@@ -18,10 +18,10 @@ def _fetch_quotes(symbol, start_date, end_date):
         ticker = symbol.ticker + '.' + symbol.exchange.ticker
 
     response = get(BASE_URL, params={'s': ticker,
-                                     'a': start_date.month,
+                                     'a': start_date.month - 1,
                                      'b': start_date.day,
                                      'c': start_date.year,
-                                     'd': end_date.month,
+                                     'd': end_date.month - 1,
                                      'e': end_date.day,
                                      'f': end_date.year,
                                      'g': 'd'},
