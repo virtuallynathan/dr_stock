@@ -48,6 +48,7 @@ INSTALLED_APPS = (
     'widget_tweaks',
 
     # Our apps
+    'data',
     'stocks',
     'users',
 )
