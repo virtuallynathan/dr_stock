@@ -29,7 +29,7 @@ def _parse_components(index, html):
         yield symbol
 
 
-def scrape_components(index, html):
+def scrape_components(index):
     components = []
 
     exchange = index.exchange

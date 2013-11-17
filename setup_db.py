@@ -1,7 +1,7 @@
 from django.db import connection
 
-from stocks.models import Exchange, Symbol
-from data.yahoo.index import scrape_index
+from data.models import Exchange, Symbol
+from data.cache import get_components
 
 
 lse, created = Exchange.objects.get_or_create(abbreviation='LSE',
@@ -17,6 +17,4 @@ ftse100, created = Symbol.objects.get_or_create(ticker='FTSE',
 ftse100.save()
 
 
-stocks = scrape_index(ftse100)
-stocks.save()
-
+components = get_components(ftse100)

@@ -1,9 +1,8 @@
 import datetime
 import sys
 
-from data.yahoo.quotes import scrape_quotes
-from data.yahoo.price import scrape_price
-from stocks.models import Exchange, Symbol, get_symbol, get_exchange
+from data.cache import get_price, get_quotes
+from data.models import Exchange, Symbol, get_symbol, get_exchange
 
 
 try:
@@ -17,18 +16,13 @@ except:
 start_date = datetime.date(year=2012, month=2, day=2)
 end_date = datetime.date(year=2012, month=8, day=2)
 
-result = scrape_quotes(ftse, start_date, end_date)
-quotes = list(result)
-
+quotes = get_quotes(ftse, start_date, end_date)
 
 for quote in quotes:
     print quote
-    quote.save()
 
 
 for symbol in ftse.components.all():
-	price = scrape_price(symbol)
-	price.symbol = symbol
+	price = get_price(symbol)
 	print price
-	price.save()
 

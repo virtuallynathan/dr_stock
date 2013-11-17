@@ -4,7 +4,7 @@ from pytz import utc
 from data.yahoo.components import scrape_components
 from data.yahoo.price import scrape_price
 from data.yahoo.quotes import scrape_quotes
-from data.models import Symbol, Quote
+from data.models import Symbol, Quote, Price
 
 
 def get_quotes(symbol, start_date, end_date):
@@ -34,15 +34,16 @@ def get_components(index):
     '''
     # Scrape components if more than a day old
     now = datetime.now(utc)
-    if index.updated.date() < now.date():
+    if index.updated.date() < now.date() or not index.components.count():
         components = scrape_components(index)
+        for component in components:
+            component.save()
 
-    for component in components:
-        component.save()
-
-    index.components.add(*components)
-    index.updated = now
-    index.save()
+        index.components.add(*components)
+        index.updated = now
+        index.save()
+    else:
+        components = index.components.all()
 
     return components
 
@@ -54,12 +55,14 @@ def get_price(symbol):
     '''
     try:
         price = symbol.price
-    except DoesNotExist:
+    except Price.DoesNotExist:
         price = scrape_price(symbol)
     else:
         now = datetime.now(utc)
         if (now - price.updated).total_seconds() > 15 * 60:
             price = scrape_price(symbol)
+        else:
+            return price
 
     price.symbol = symbol
     price.save()
