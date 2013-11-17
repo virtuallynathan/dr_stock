@@ -3,16 +3,6 @@ import datetime
 from django.db import models
 
 
-class Company(models.Model):
-    '''
-    Represents a company. A company may have multiple stocks in multiple exchanges.
-    '''
-    name = models.CharField(max_length=50)
-
-    def __unicode__(self):
-        return self.name
-
-
 class Exchange(models.Model):
     '''
     Represents a stock exchange (e.g. NASDAQ).
@@ -32,7 +22,6 @@ class Symbol(models.Model):
     name = models.CharField(max_length=50)
     ticker = models.CharField(max_length=50)
     exchange = models.ForeignKey(Exchange, related_name='symbol')
-    company = models.ForeignKey(Company, related_name='symbol', null=True)
 
     STOCK = 'S'
     INDEX = 'I'
@@ -98,10 +87,6 @@ class Quote(models.Model):
         return '{0} - {1:%Y-%m-%d} {2}'.format(self.symbol.code(),
                                                self.date,
                                                self.close)
-
-
-def get_company(name):
-    return Company.objects.get(name=name)
 
 
 def get_exchange(abbreviation):

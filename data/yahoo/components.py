@@ -6,7 +6,7 @@ import datetime
 from lxml import etree
 from requests import get
 
-from stocks.models import Exchange, Symbol, Company, get_symbol
+from stocks.models import Exchange, Symbol, get_symbol
 
 
 BASE_URL = 'http://finance.yahoo.com'
@@ -23,10 +23,8 @@ def _parse_components(index, html):
             symbol = get_symbol(exchange, ticker)
         except Symbol.DoesNotExist:
             stock_name = row[1].text
-            company, created = Company.objects.get_or_create(name=stock_name)
             symbol = Symbol(name=stock_name,
                             ticker=ticker,
-                            company=company,
                             exchange=exchange,
                             type=Symbol.STOCK)
 
