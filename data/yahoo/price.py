@@ -3,7 +3,7 @@ Price scraper for Yahoo Finance
 '''
 from requests import get
 
-from stocks.models import Price, Symbol
+from data.models import Price, Symbol
 
 
 BASE_URL = 'http://download.finance.yahoo.com/d/quotes.csv'

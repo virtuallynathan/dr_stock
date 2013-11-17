@@ -4,7 +4,7 @@ Component scraper for Yahoo Finance
 from lxml import etree
 from requests import get
 
-from stocks.models import Exchange, Symbol, get_symbol
+from data.models import Exchange, Symbol, get_symbol
 
 
 BASE_URL = 'http://finance.yahoo.com'

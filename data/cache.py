@@ -4,7 +4,7 @@ from pytz import utc
 from data.yahoo.components import scrape_components
 from data.yahoo.price import scrape_price
 from data.yahoo.quotes import scrape_quotes
-from stocks.models import Symbol, Quote
+from data.models import Symbol, Quote
 
 
 def get_quotes(symbol, start_date, end_date):

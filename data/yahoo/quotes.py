@@ -5,7 +5,7 @@ import datetime
 from lxml import etree
 from requests import get
 
-from stocks.models import Symbol, Quote
+from data.models import Symbol, Quote
 
 
 BASE_URL = 'http://ichart.yahoo.com/table.csv'
