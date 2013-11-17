@@ -1,18 +1,65 @@
+import datetime
+
+from data.yahoo.components import scrape_components
+from data.yahoo.price import scrape_price
 from data.yahoo.quotes import scrape_quotes
 from stocks.models import Symbol, Quote
 
 
 def get_quotes(symbol, start_date, end_date):
-	'''
-	Retrieves historical quotes for the symbol for the given date range.
-	If they're not in the database, it will scrape them.
-	'''
-	days = (end_date - start_date).days + 1
-	expected = days / 7 * 5 + min(days % 7, 5)  # It made sense when I wrote it
+    '''
+    Retrieves historical quotes for the symbol for the given date range.
+    If they're not in the database, it will scrape them.
+    '''
+    days = (end_date - start_date).days + 1
+    expected = days / 7 * 5 + min(days % 7, 5)  # It made sense when I wrote it
 
-	quotes = Quote.objects.filter(symbol=symbol, date__gte=start_date, date__lte=end_date)
-	if quotes.count() < expected:
-		quotes = scrape_quotes(symbol, start_date, end_date)
-		Quote.objects.bulk_create(quotes)
+    quotes = Quote.objects.filter(symbol=symbol,
+                                  date__gte=start_date,
+                                  date__lte=end_date)
 
-	return quotes
+    if quotes.count() < expected:
+        quotes.delete()
+        quotes = scrape_quotes(symbol, start_date, end_date)
+        Quote.objects.bulk_create(quotes)
+
+    return quotes
+
+
+def get_components(index):
+    '''
+    Retrieves the components of an index. If the components in the database
+    are more than a day old, it will scrape them.
+    '''
+    # Scrape components if more than a day old
+    now = datetime.datetime.utcnow()
+    if index.updated.date() < now.date():
+        components = scrape_components(index)
+
+    for component in components:
+        component.save()
+
+    index.components.add(*components)
+    index.updated = now
+    index.save()
+
+    return components
+
+
+def get_price(symbol):
+    '''
+    Retrieves the price for a symbol. If the price in the database is more
+    than 15 minutes old, it is scraped.
+    '''
+    try:
+        price = symbol.price
+    except DoesNotExist:
+        price = scrape_price(symbol)
+    else:
+        now = datetime.datetime.utcnow()
+        if (now - price.updated).total_seconds() > 15 * 60:
+            price = scrape_price(symbol)
+
+    price.symbol = symbol
+    price.save()
+    return price
