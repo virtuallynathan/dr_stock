@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 
 
@@ -40,6 +42,7 @@ class Symbol(models.Model):
     components = models.ManyToManyField('self',
                                         db_table='symbol_components',
                                         symmetrical=False)
+    updated = models.DateTimeField(default=datetime.datetime.utcnow)
 
     def index_code(self):
         return '.{0}'.format(self.ticker)
@@ -59,7 +62,7 @@ class Price(models.Model):
     Represents a real-time stock price (last close, current price, volume, market cap).
     '''
     symbol = models.OneToOneField(Symbol, primary_key=True)
-    updated = models.DateTimeField()
+    updated = models.DateTimeField(default=datetime.datetime.utcnow)
     price = models.FloatField()
     last_close = models.FloatField()
     volume = models.BigIntegerField()
