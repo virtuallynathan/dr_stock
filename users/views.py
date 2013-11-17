@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.core.mail import EmailMessage
 
 def register(request, template_name='register.html'):
     if request.method == 'POST':
@@ -20,4 +21,27 @@ def register(request, template_name='register.html'):
 
 @login_required
 def profile(request, template_name='profile.html'):
+    return render(request, template_name)
+
+# Send an email from form
+def send_email(request):
+    errors = []
+    if request.method == 'POST':
+        if not request.POST.get('subject', ''):
+            errors.append('Enter a subject.')
+        if not request.POST.get('message', ''):
+            errors.append('Enter a message.')
+        if request.POST.get('email') and '@' not in request.POST['email']:
+            errors.append('Enter a valid e-mail address.')
+        if not errors:
+            send_mail(
+                request.POST['subject'],
+                request.POST['message'],
+                request.POST.get('email', 'jamesspyt@gmail.com'),
+                ['jamesspyt@gmail.com'],
+            )
+            return HttpResponseRedirect(request, '/accounts/sent')
+    return render(request, 'email.html', {'errors': errors})
+
+def sent(request, template_name='sent.html'):
     return render(request, template_name)

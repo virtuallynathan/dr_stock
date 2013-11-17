@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.auth.views import login, logout
 
 from stocks.views import view_index
-from users.views import profile, register
+from users.views import profile, register, send_email, sent
 
 
 admin.autodiscover()
@@ -19,6 +19,10 @@ urlpatterns = patterns('',
     url(r'^accounts/logout/$', logout, {'template_name': 'logout.html'}),
     url(r'^accounts/profile/$', profile, {'template_name': 'profile.html'}),
     url(r'^accounts/register/$', register, {'template_name': 'register.html'}),
+
+    # Messing around with sending email
+    url(r'^accounts/email/$',  send_email),
+    url(r'^accounts/sent$',  sent, {'template_name': 'sent.html'}),
 
     url(r'^index/(?P<ticker>\w+)/$', view_index, {'template_name': 'view_index.html'})
 )
