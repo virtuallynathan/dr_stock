@@ -1,5 +1,5 @@
 '''
-Symbol price scraper for Yahoo Finance
+Price scraper for Yahoo Finance
 '''
 import datetime
 from requests import get
