@@ -44,8 +44,12 @@ class Symbol(models.Model):
                                         symmetrical=False)
     updated = models.DateTimeField(default=datetime.datetime.utcnow)
 
+    class Meta:
+        unique_together = (('ticker', 'exchange'),)
+        index_together = (('ticker', 'exchange'),)
+
     def index_code(self):
-        return '.{0}'.format(self.ticker)
+        return '.{0} - {1}'.format(self.ticker, self.name)
 
     def stock_code(self):
         return '{0}.{1}'.format(self.ticker, self.exchange.ticker)
@@ -79,13 +83,16 @@ class Quote(models.Model):
     Represents a stock price (volume, close, etc) on a given trading day.
     '''
     symbol = models.ForeignKey(Symbol, related_name='quotes')
-
     date = models.DateField()
     volume = models.BigIntegerField()
     open = models.FloatField()
     close = models.FloatField()
     high = models.FloatField()
     low = models.FloatField()
+
+    class Meta:
+        unique_together = (('symbol', 'date'),)
+        index_together = (('symbol', 'date'),)
 
     def __unicode__(self):
         return '{0} - {1:%Y-%m-%d} {2}'.format(self.symbol.code(),
