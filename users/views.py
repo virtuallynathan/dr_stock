@@ -14,7 +14,7 @@ def register(request, template_name='register.html'):
             new_user = authenticate(username=request.POST['username'],
                                     password=request.POST['password1'])
             login(request, new_user)
-            return HttpResponseRedirect('/accounts/profile')
+            return HttpResponseRedirect('/accounts/profile/')
     else:
         form = UserCreationForm()
     return render(request, template_name, {'form': form})
