@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 from data.cache import get_price, get_components, get_quotes
-from data.cache import get_risers, get_fallers
+from data.cache import get_risers, get_fallers, get_biggest
 from data.models import Symbol, Exchange, get_exchange, get_symbol
 
 
@@ -102,5 +102,11 @@ def view_risers(request, number):
 
 def view_fallers(request, number):
     prices = get_fallers(number)
+    result = [serialize_symbol(p.symbol, p) for p in prices]
+    return json_response(result)
+
+
+def view_biggest(request, number):
+    prices = get_biggest(number)
     result = [serialize_symbol(p.symbol, p) for p in prices]
     return json_response(result)

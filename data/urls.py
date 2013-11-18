@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
 
 from data.views import view_index, view_stock, view_historical
-from data.views import view_risers, view_fallers
+from data.views import view_risers, view_fallers, view_biggest
 
 
 urlpatterns = patterns('',
@@ -13,5 +13,6 @@ urlpatterns = patterns('',
         view_historical),
 
     url(r'^risers/(?P<number>\d+)/$', view_risers),
-    url(r'^fallers/(?P<number>\d+)/$', view_fallers)
+    url(r'^fallers/(?P<number>\d+)/$', view_fallers),
+    url(r'^biggest/(?P<number>\d+)/$', view_biggest)
 )

@@ -87,3 +87,11 @@ def get_fallers(number):
     '''
     prices = Price.objects.extra(select={'rise': 'price / last_close'}).order_by('rise').all()[:number]
     return prices
+
+
+def get_biggest(number):
+    '''
+    Retrieves the top 'number' stocks by market capitalization. Doesn't scrape.
+    '''
+    prices = Price.objects.order_by('-market_cap').all()[:number]
+    return prices
