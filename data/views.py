@@ -4,7 +4,9 @@ import ujson
 
 from django.http import HttpResponse
 from django.shortcuts import render
+
 from data.cache import get_price, get_components, get_quotes
+from data.cache import get_risers, get_fallers
 from data.models import Symbol, Exchange, get_exchange, get_symbol
 
 
@@ -20,9 +22,7 @@ def serialize_price(price):
             'market_cap': price.market_cap}
 
 
-def serialize_symbol(symbol):
-    price = get_price(symbol)
-
+def serialize_symbol(symbol, price):
     return {'ticker': symbol.ticker,
             'name': symbol.name,
             'exchange': symbol.exchange.abbreviation,
@@ -56,11 +56,12 @@ def view_index(request, ticker):
     price = get_price(index)
     components = get_components(index)
 
-    result = serialize_symbol(index)
+    result = serialize_symbol(index, price)
     result['components'] = []
 
     for component in components:
-        symbol = serialize_symbol(component)
+        price = get_price(component)
+        symbol = serialize_symbol(component, price)
         result['components'].append(symbol)
 
     return json_response(result)
@@ -73,7 +74,8 @@ def view_stock(request, exchange, ticker):
     except Symbol.DoesNotExist:
         return json_response({'error': 'Symbol not found'})
 
-    result = serialize_symbol(symbol)
+    price = get_price(symbol)
+    result = serialize_symbol(symbol, price)
     return json_response(result)
 
 
@@ -89,4 +91,16 @@ def view_historical(request, exchange, ticker, start_date, end_date):
     quotes = get_quotes(symbol, start_date, end_date)
 
     result = serialize_historical(symbol, quotes)
+    return json_response(result)
+
+
+def view_risers(request, number):
+    prices = get_risers(number)
+    result = [serialize_symbol(p.symbol, p) for p in prices]
+    return json_response(result)
+
+
+def view_fallers(request, number):
+    prices = get_fallers(number)
+    result = [serialize_symbol(p.symbol, p) for p in prices]
     return json_response(result)

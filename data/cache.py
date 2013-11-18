@@ -4,7 +4,7 @@ from pytz import utc
 from data.yahoo.components import scrape_components
 from data.yahoo.price import scrape_price
 from data.yahoo.quotes import scrape_quotes
-from data.models import Symbol, Quote, Price
+from data.models import Quote, Price
 
 
 def get_quotes(symbol, start_date, end_date):
@@ -71,3 +71,19 @@ def get_price(symbol):
     price.symbol = symbol
     price.save()
     return price
+
+
+def get_risers(number):
+    '''
+    Retrieves the top 'numer' risers from the database. Doesn't scrape.
+    '''
+    prices = Price.objects.extra(select={'rise': 'price / last_close'}).order_by('-rise').all()[:number]
+    return prices
+
+
+def get_fallers(number):
+    '''
+    Retrieves the top 'number' fallers from the database. Doesn't scrape.
+    '''
+    prices = Price.objects.extra(select={'rise': 'price / last_close'}).order_by('rise').all()[:number]
+    return prices
