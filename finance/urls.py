@@ -24,5 +24,5 @@ urlpatterns = patterns('',
 
     # Messing around with sending email
     url(r'^accounts/email/$',  send_email),
-    url(r'^accounts/sent$',  sent, {'template_name': 'sent.html'}),
+    url(r'^accounts/sent/$',  sent, {'template_name': 'sent.html'}),
 )
