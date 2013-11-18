@@ -48,6 +48,10 @@ def get_components(index):
     return components
 
 
+def total_seconds(delta):
+    return delta.seconds + delta.days * 24 * 3600
+
+
 def get_price(symbol):
     '''
     Retrieves the price for a symbol. If the price in the database is more
@@ -59,7 +63,7 @@ def get_price(symbol):
         price = scrape_price(symbol)
     else:
         now = datetime.now(utc)
-        if (now - price.updated).total_seconds() > 15 * 60:
+        if total_seconds(now - price.updated) > 15 * 60:
             price = scrape_price(symbol)
         else:
             return price
