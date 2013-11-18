@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.contrib.auth.views import login, logout
 
-#import data.url
+import data.urls
 from users.views import profile, register, send_email, sent
 
 
@@ -15,7 +15,7 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    #url(r'^data/', include(data.urls)),
+    url(r'^data/', include(data.urls)),
 
     url(r'^accounts/login/$',  login, {'template_name': 'login.html'}),
     url(r'^accounts/logout/$', logout, {'template_name': 'logout.html'}),

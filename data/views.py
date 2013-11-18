@@ -24,7 +24,7 @@ def serialize_symbol(symbol):
     return {'ticker': symbol.ticker,
             'name': symbol.name,
             'exchange': symbol.exchange.abbreviation,
-            'price': serialize_price(symbol)}
+            'price': serialize_price(price)}
 
 
 def view_index(request, ticker):
