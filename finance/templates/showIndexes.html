@@ -18,9 +18,11 @@
 <div ng-app="stockApp">
 <div ng-controller="StockListCtrl">
 
-<div>
-Search: <input ng-model="query">
-</div>
+<div class="bs-example">
+      <form role="form">
+        <input type="text" class="form-control" placeholder="Search" ng-model="query">
+      </form>
+</div><!-- /.bs-example -->
 
   <table class="table table-striped table-hover">
 	  <thead>
