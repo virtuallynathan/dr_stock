@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -10,6 +11,10 @@
 
     <!-- Bootstrap core CSS -->
     <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/theme.css" %}" rel="stylesheet">
+    <link href="{% static "css/retina.css" %}" rel="stylesheet">
+
+    <script src="{% static "js/jquery-2.0.3.min.js" %}"></script>
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -30,45 +35,139 @@
         vertical-align: middle;
         max-height: 24px;
       }
+
+      .navbar .btn {
+        height: 44px;
+      }
+
+      .navbar .btn i {
+        margin-top: 6px;
+        
+      }
+
+      .drop-login {
+        padding: 0px;
+        margin: 0 auto;
+      }
+
+      .drop-login .form-control {
+        position: relative;
+        font-size: 16px;
+        height: auto;
+        padding: 10px;
+        -webkit-box-sizing: border-box;
+           -moz-box-sizing: border-box;
+                box-sizing: border-box;
+      }
+      .drop-login .form-control:focus {
+        z-index: 2;
+      }
+      .drop-login input[type="text"] {
+        margin-bottom: -1px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      .drop-login input[type="password"] {
+        margin-top: -1px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+      .drop-login .btn {
+        color:#fff;
+        background-color:#36a9e1;
+        border-color: #357ebd;
+      }
+      .drop-login .btn:hover {
+        background-color:#1e8fc6 
+      }
     </style>
-  </head>
 
   <body>
-    <nav class="navbar navbar-default" role="navigation">
 
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="/">
-          <img src="{% static "images/small_logo.png" %}" />
-          Stock Advisor
-        </a>
-      </div>
-
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="/">Home</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
+    <header class="navbar">
+      <div class="container">
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".sidebar-nav.nav-collapse">
+        <span class="fa fa-bar"></span>
+        <span class="fa fa-bar"></span>
+        <span class="fa fa-bar"></span>
+      </button>
+      <a class="navbar-brand col-lg-2 col-sm-1 col-xs-12" href="/">
+        <img src="{% static "images/small_logo.png" %}"/><span>Stock Advisor</span>
+      </a>
+      <!-- start: Header Menu -->
+      <div class="nav-no-collapse header-nav">
+        <ul class="nav navbar-nav pull-right">
           {% if user.is_authenticated %}
-            <li><a href="/accounts/profile/">{{ user.username }}</a></li>
-            <li><a href="/accounts/logout/">Logout</a></li>
+          <li>
+            <a class="btn" href="/accounts/logout/">
+              <i class="fa fa-user">&nbsp;Log Out</i>
+
+            </a>
+          </li>
           {% else %}
-            <li><a href="/accounts/login/">Login</a></li>
-            <li><a href="/accounts/register/">Sign Up</a></li>
+          <li class="dropdown hidden-xs">
+            <a class="btn" class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-user">&nbsp;Login</i>
+            </a>
+            <ul class="dropdown-menu login">
+              <li class="dropdown-menu-title">
+                <span>Login</span>
+              </li> 
+              <li style="width: 256px;">
+                  <div style="width: 100%; padding: 8px;">
+                    <form class="drop-login" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+                      {% csrf_token %}
+                      <input class="form-control" id="id_username" maxlength="254" name="username" placeholder="Username" required="true" type="text" />
+                      <input class="form-control" id="id_password" name="password" placeholder="Password" required="true" type="password" />
+                      <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+                      <input type="hidden" name="next" value="{{ next }}" />
+                    </form>
+                  </div>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a class="btn" href="/accounts/register/">
+              <i class="fa fa-book">&nbsp;Sign Up</i>
+            </a>
+          </li>
           {% endif %}
         </ul>
-      </div><!-- /.navbar-collapse -->
-    </nav>
+      </div>
+      <!-- end: Header Menu -->
+      
+    </div>  
+  </header>
+  <!-- end: Header -->
+
+
     <div class="container">
+      <div style="padding: 16px;">
 
       {% block content %}{% endblock %}
 
+      </div>
+
     </div> <!-- /container -->
   </body>
+
+
+
+  <script src="{% static "js/index.js" %}"></script>
+  <script src="{% static "js/jquery-migrate-1.2.1.min.js" %}"></script>
+  <script src="{% static "js/bootstrap.min.js" %}"></script>
+  
+  <!-- page scripts -->
+  <script src="{% static "js/jquery-ui-1.10.3.custom.min.js" %}"></script>
+  <script src="{% static "js/jquery.ui.touch-punch.min.js" %}"></script>
+  <script src="{% static "js/jquery.sparkline.min.js" %}"></script>
+  <script src="{% static "js/fullcalendar.min.js" %}"></script>
+
+  <script src="{% static "js/jquery.flot.min.js" %}"></script>
+  <script src="{% static "js/jquery.flot.pie.min.js" %}"></script>
+  <script src="{% static "js/jquery.flot.stack.min.js" %}"></script>
+  <script src="{% static "js/jquery.flot.resize.min.js" %}"></script>
+  <script src="{% static "js/jquery.flot.time.min.js" %}"></script>
+  <script src="{% static "js/jquery.autosize.min.js" %}"></script>
+  <script src="{% static "js/jquery.placeholder.min.js" %}"></script>
 </html>

@@ -15,7 +15,7 @@
 </div>
 <form class="form-signin" method="post" action="{% url 'django.contrib.auth.views.login' %}">
 	{% csrf_token %}
-	<h2 class="form-signin-heading">Log In</h2>
+	<h1 style="text-align:center;">Log In</h1>
 	{{ form.username|attr:"placeholder:Username"|attr:"required:true"|add_class:"form-control" }}
 	{{ form.password|attr:"placeholder:Password"|attr:"required:true"|add_class:"form-control" }}
 	{% if form.errors %}
