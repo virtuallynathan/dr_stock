@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block pageheaders %}
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.min.js"></script>
 <script src="/static/js/controllers.js"></script>
 {% endblock %}
 
@@ -18,9 +18,8 @@
 <div ng-controller="StockListCtrl">
 
   <ul>
-    <li ng-repeat="stock in stocks.components">
-      {{stock.name}}
-      <p>{{stock.price.price}}</p>
+    <li ng-repeat="stock in stocks">
+      {{ stock.name }}
     </li>
   </ul>
 
