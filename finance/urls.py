@@ -4,6 +4,7 @@ from django.contrib.auth.views import login, logout
 
 import data.urls
 from users.views import profile, register, send_email, sent
+from finance.views import view_index
 
 
 admin.autodiscover()
@@ -16,6 +17,8 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^data/', include(data.urls)),
+
+    url(r'^view_index/', view_index),
 
     url(r'^accounts/login/$',  login, {'template_name': 'login.html'}),
     url(r'^accounts/logout/$', logout, {'template_name': 'logout.html'}),
