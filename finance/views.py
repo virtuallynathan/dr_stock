@@ -5,6 +5,6 @@ from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
-def view_index():
+def view_index(request):
 	return render(request, 'showIndexes.html')
 	
