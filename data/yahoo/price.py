@@ -38,5 +38,9 @@ def scrape_price(symbol):
 
     market_cap = _parse_market_cap(line[4])
 
-    return Price(symbol=symbol, price=line[1], last_close=line[2],
-                 volume=line[3], market_cap=market_cap)
+    price = float(line[1])
+    last_close = float(line[2])
+    volume = float(line[3])
+
+    return Price(symbol=symbol, price=price, last_close=last_close,
+                 volume=volume, market_cap=market_cap)
