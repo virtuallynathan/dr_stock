@@ -18,6 +18,10 @@
 <div ng-app="stockApp">
 <div ng-controller="StockListCtrl">
 
+<div>
+Search: <input ng-model="query">
+</div>
+
   <table class="table table-striped table-hover">
 	  <thead>
 	    <tr>
@@ -27,7 +31,7 @@
 		    <th>Volume</th>
 	    </tr>
 	  </thead>
-	    <tr ng-repeat="stock in stocks.components">
+	    <tr ng-repeat="stock in stocks.components | filter:query">
 	      <td>{{stock.ticker}}</td>
 	      <td>{{stock.name}}</td>
 	      <td>{{stock.price.price}}</td>
