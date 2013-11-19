@@ -14,16 +14,22 @@
 
 {% block content %}
 
+    {% verbatim %}
 <div ng-app="stockApp">
 <div ng-controller="StockListCtrl">
 
-  <ul>
-    <li ng-repeat="stock in stocks">
-      {{ stock.name }}
-    </li>
-  </ul>
+  <table>
+    <tr><td>Ticker</td><td>Name</td><td>Price</td><td>Volume</td></tr>
+    <tr ng-repeat="stock in stocks.components">
+      <td>{{stock.ticker}}</td>
+      <td>{{stock.name}}</td>
+      <td>{{stock.price.price}}</td>
+      <td>{{stock.price.volume}}</td>
+    </tr>
+  </table>
 
 </div>
 </div>
 
+    {% endverbatim %}
 {% endblock %}
