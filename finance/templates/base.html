@@ -9,7 +9,7 @@
     <link rel="shortcut icon" href="{% static "images/favicon.png" %}">
     <title>Stock Advisor - {% block title %}Finance Viewer{% endblock %}</title>
 
-    
+
     <!-- Bootstrap core CSS -->
     <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
     <link href="{% static "css/theme.css" %}" rel="stylesheet">
@@ -101,14 +101,15 @@
           {% if user.is_authenticated %}
           <li>
             <a class="btn" href="/accounts/logout/">
-              <i class="fa fa-user">&nbsp;Log Out</i>
-
+              <i class="fa fa-user"></i>
+              <span>Log Out</span>
             </a>
           </li>
           {% else %}
           <li class="dropdown hidden-xs">
             <a class="btn" class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-              <i class="fa fa-user">&nbsp;Login</i>
+              <i class="fa fa-user"></i>
+              <span>Login</span>
             </a>
             <ul class="dropdown-menu login">
               <li class="dropdown-menu-title">
