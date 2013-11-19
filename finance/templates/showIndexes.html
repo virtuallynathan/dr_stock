@@ -1,14 +1,30 @@
 {% extends "base.html" %}
 
+{% block pageheaders %}
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+<script src="js/controllers.js"></script>
+{% endblock %}
+
 {% block pagename %}
 
-	Index Listing
+    Index Listing
 
 {% endblock %}
 
 
 {% block content %}
 
-	<p> This is where you would go to see the list of indexes if there were one. Goodbye.</p>
+<div ng-app>
+<div ng-controller="StockListCtrl">
+
+  <ul>
+    <li ng-repeat="stock in stocks.components">
+      {{stock.name}}
+      <p>{{stock.price.price}}</p>
+    </li>
+  </ul>
+
+</div>
+</div>
 
 {% endblock %}
