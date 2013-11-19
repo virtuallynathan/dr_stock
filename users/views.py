@@ -14,13 +14,13 @@ def register(request, template_name='register.html'):
             new_user = authenticate(username=request.POST['username'],
                                     password=request.POST['password1'])
             login(request, new_user)
-            return HttpResponseRedirect('/accounts/profile/')
+            return HttpResponseRedirect('/home/')
     else:
         form = UserCreationForm()
     return render(request, template_name, {'form': form})
 
 @login_required
-def profile(request, template_name='profile.html'):
+def profile(request, template_name='home.html'):
     return render(request, template_name)
 
 # Send an email from form
