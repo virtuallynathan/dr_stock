@@ -2,7 +2,7 @@ var homeApp = angular.module('homeApp', []);
 
 homeApp.controller('homeCtrl', function($scope, $http, $timeout) {
   (function refresh() {
-    $http.get('/data/biggest/10/').success(
+    $http.get('/data/biggest/1/').success(
       function(data) {
         $scope.stocks = data;
         $timeout(refresh, 1000 * 60 * 5);
