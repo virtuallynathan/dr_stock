@@ -1,6 +1,6 @@
-var IndexApp = angular.module('HomeApp', []);
+var homeApp = angular.module('homeApp', []);
 
-HomeApp.controller('homeCtrl', function($scope, $http, $timeout) {
+homeApp.controller('homeCtrl', function($scope, $http, $timeout) {
   (function refresh() {
     $http.get('/data/biggest/10/').success(
       function(data) {
