@@ -11,6 +11,11 @@
 
 	<p> Welcome to your profile page </p>
 
+	{% user.email %}
+	{% user.username %}
+	{% user.first_name %}
+	{% user.last_name %}
+
 <form role="form" action="{% url 'users.views.profile' %}" method="post">
  {% csrf_token %}
   <div class="form-group">
