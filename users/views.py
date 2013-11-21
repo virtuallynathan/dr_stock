@@ -38,7 +38,7 @@ def register(request, template_name='register.html'):
 
 
 @login_required
-def profile(request, template_name='home.html'):
+def profile(request, template_name='profile.html'):
     return render(request, template_name)
 
 
