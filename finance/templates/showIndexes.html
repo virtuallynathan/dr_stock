@@ -30,28 +30,28 @@
 <div class="tempStats row">
         <div class="col-md-3 col-sm-4">
           <div class="tempStatBox">
-            <div class="tempStat" style="border-color: rgb(103, 194, 239);">{{stocks.price.price.toFixed(2)}}</div>
+            <div class="tempStat" style="border-color: #36a9e1;">{{stocks.price.price.toFixed(2)}}</div>
             <span>Price</span>
           </div>
         </div><!--/col-->
 
         <div class="col-md-3 col-sm-4">
           <div class="tempStatBox">
-            <div class="tempStat" style="border-color: rgb(250, 96, 61);">{{stocks.price.last_close.toFixed(2)}}</div>
+            <div class="tempStat" style="border-color: #36a9e1;">{{stocks.price.last_close.toFixed(2)}}</div>
             <span>Last Close</span>
           </div>
         </div><!--/col-->
 
         <div class="col-md-3 col-sm-4">
           <div class="tempStatBox">
-            <div class="tempStat" style="border-color: rgb(103, 194, 239);">{{stocks.components.length}}</div>
+            <div class="tempStat" style="border-color: #36a9e1;">{{stocks.components.length}}</div>
             <span>Components</span>
           </div>
         </div><!--/col-->
 
         <div class="col-md-3 col-sm-4">
           <div class="tempStatBox">
-            <div class="tempStat" style="border-color: rgb(234, 232, 116);">{{((stocks.price.price / stocks.price.last_close - 1) * 100).toFixed(3)}}%</div>
+            <div class="tempStat" id="circle-id" style="border-color: #36a9e1;">{{getExchangeChanges(stocks, 'circle-id')}}</div>
             <span>Change</span>
           </div>
         </div><!--/col-->

@@ -1,6 +1,20 @@
 var IndexApp = angular.module('IndexApp', []);
 
 IndexApp.controller('IndexListCtrl', function($scope, $http, $timeout) {
+
+  $scope.getBarHeight = function(stock, circ_id) {
+    var val = ((stocks.price.price / stocks.price.last_close - 1) * 100).toFixed(3);
+
+    if (val > 0 {
+      $("#"+circ_id).css('border-color', '#bdea74');
+    } else if (val < 0) {
+      $("#"+circ_id).css('border-color', '#ff5454');
+    } else {
+      $("#"+circ_id).css('border-color', '#36a9e1');
+    }
+    return val + "%";
+  }
+
   (function refresh() {
     $http.get('/data/index/FTSE/').success(
       function(data) {
