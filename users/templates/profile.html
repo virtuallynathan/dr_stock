@@ -8,10 +8,11 @@
 
 
 {% block content %}
- {% csrf_token %}
+
 	<p> Welcome to your profile page </p>
 
 <form role="form" action="{% url 'users.views.profile' %}" method="post">
+ {% csrf_token %}
   <div class="form-group">
     <label for="inputEmail">Email address</label>
     <input type="email" class="form-control" id="inputEmail1" placeholder="{{form.email}}">
