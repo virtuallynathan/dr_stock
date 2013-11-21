@@ -36,8 +36,9 @@ StockApp.controller('HistoricalCtrl', function($scope, $http, $timeout) {
 StockApp.directive('stockChart', function ($parse) {
     var directiveDefinitionObject = {
         restrict: 'E',
-        replace: false,
+        replace: true,
         scope: {},
+        template: '<div class="chart"></div>',
         /*controller: function (scope) {
           function processData(data) {
             for (index in data) {
@@ -56,25 +57,29 @@ StockApp.directive('stockChart', function ($parse) {
         link: function (scope, element, attrs) {
           scope.historical = [{date: '2012-01-01', close: 100}, {date: '2012-02-01', close:200}]
           scope.parseDate = d3.time.format("%Y-%m-%d").parse;
-
+          for (index in scope.historical) { datum = scope.historical[index]; datum.date = scope.parseDate(datum.date); }
+          
+var margin = {top: 20, right: 20, bottom: 30, left: 50},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
           scope.x = d3.time.scale().range([0, width]);
           scope.y = d3.scale.linear().range([height, 0]);
 
-          var xAxis = d3.svg.axis().scale(x).orient("bottom");
-          var yAxis = d3.svg.axis().scale(y).orient("left");
+          var xAxis = d3.svg.axis().scale(scope.x).orient("bottom");
+          var yAxis = d3.svg.axis().scale(scope.y).orient("left");
 
           var line = d3.svg.line()
               .x(function(d) { return x(d.date); })
               .y(function(d) { return y(d.close); });
 
-          var svg = d3.select("#chart").append("svg")
+          var svg = d3.select(element[0]).append("svg")
               .attr("width", width + margin.left + margin.right)
               .attr("height", height + margin.top + margin.bottom)
             .append("g")
               .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-          x.domain(d3.extent(data, function(d) { return d.date; }));
-          y.domain(d3.extent(data, function(d) { return d.close; }));
+          scope.x.domain(d3.extent(scope.historical, function(d) { return d.date; }));
+          scope.y.domain(d3.extent(scope.historical, function(d) { return d.close; }));
 
           svg.append("g")
               .attr("class", "x axis")
@@ -92,7 +97,7 @@ StockApp.directive('stockChart', function ($parse) {
               .text("Price");
 
           svg.append("path")
-              .data(data)
+              .data(scope.historical)
               .attr("class", "line")
               .attr("d", line);
         }
