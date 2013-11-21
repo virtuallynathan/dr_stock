@@ -75,7 +75,7 @@
         <th><a href="" ng-click="reverse = predicate == 'price.market_cap' && !reverse; predicate = 'price.market_cap'">Market Cap</a></th>
       </tr>
     </thead>
-      <a ng-repeat="stock in stocks.components | filter:query | orderBy:predicate:reverse" href="/stock/{{stocks.exchange}}/{{stock.ticker}}/$">
+      <a ng-repeat="stock in stocks.components | filter:query | orderBy:predicate:reverse" href="/stock/{{stocks.exchange}}/{{stock.ticker}}/">
         <tr>
           <td>{{stock.ticker}}</td>
           <td>{{stock.name}}</td>
