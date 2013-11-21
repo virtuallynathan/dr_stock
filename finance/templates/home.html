@@ -29,7 +29,7 @@
 {% endblock %}
 
 {% block content %}
-{% verbatim %}
+
 <div ng-app="homeApp">
 <div style="margin: auto; max-width: 1024px; height: 100%;" ng-controller="homeCtrl" >
     {% if user.is_authenticated %}
@@ -74,6 +74,7 @@
     </div>
     <div style="clear:both;"></div>
     <div class="row">
+    {% verbatim %}
         <div class="col-lg-4">
             <div class="smallstat box" ng-repeat="stock in risers">
                 <i class="fa fa-arrow-up green" style="width: 112px;">&nbsp;{{shortenFloat(stock.price.change,2)}}%</i>
@@ -175,7 +176,8 @@
             </div>
         </div>
     </div>
+    {% endverbatim %}
 </div>
 </div>
-{% endverbatim %}
+
 {% endblock %}
