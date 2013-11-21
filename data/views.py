@@ -16,10 +16,12 @@ def json_response(response):
 
 
 def serialize_price(price):
+    change = (price.price / price.last_close - 1) * 100
     return {'price': price.price,
             'last_close': price.last_close,
             'volume': price.volume,
-            'market_cap': price.market_cap}
+            'market_cap': price.market_cap,
+            'change': change}
 
 
 def serialize_symbol(symbol, price):
