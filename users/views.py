@@ -46,7 +46,7 @@ def profile(request, template_name='profile.html'):
     return render(request, template_name)
 
 class UserEditForm(forms.Form):
-    email = forms.EmailForm()
+    email = forms.EmailField()
     first_name = forms.CharField(max_length=50)
     last_name = forms.CharField(max_length=50)
 
