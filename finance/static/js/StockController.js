@@ -38,7 +38,7 @@ StockApp.directive('stockChart', function ($parse) {
         restrict: 'E',
         replace: false,
         scope: {},
-        controller: function (scope) {
+        /*controller: function (scope) {
           function processData(data) {
             for (index in data) {
               datum = data[index];
@@ -52,9 +52,9 @@ StockApp.directive('stockChart', function ($parse) {
             }).error(function(error) {
               console.log('you gone and fucked up again aintcha');
             });
-        },
+        }*/
         link: function (scope, element, attrs) {
-          scope.historical = []
+          scope.historical = [{date: '2012-01-01', close: 100}, {date: '2012-02-01', close:200}]
           scope.parseDate = d3.time.format("%Y-%m-%d").parse;
 
           scope.x = d3.time.scale().range([0, width]);
