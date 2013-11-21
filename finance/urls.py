@@ -28,7 +28,7 @@ urlpatterns = patterns('',
     url(r'^accounts/logout/$', logout, {'template_name': 'logout.html'}),
     url(r'^accounts/profile/$', profile, {'template_name': 'profile.html'}),
     url(r'^accounts/register/$', register, {'template_name': 'register.html'}),
-    url(r'^$', login, {'template_name': 'login.html'}), 
+    url(r'^$', view_home), 
 
     # Messing around with sending email
     url(r'^accounts/email/$',  send_email),

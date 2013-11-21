@@ -10,9 +10,6 @@
 {% block title %}Please Log In{% endblock %}
 
 {% block content %}
-<div class="text-center">
-	<img src="{%static "images/logo.png" %}" id="logo" />
-</div>
 <form class="form-signin" method="post" action="{% url 'django.contrib.auth.views.login' %}">
 	{% csrf_token %}
 	<h1 style="text-align:center;">Log In</h1>
