@@ -50,9 +50,9 @@ StockApp.directive('stockChart', function ($parse) {
             .success(function(data) {
               scope.historical = processData(data);
             }).error(function(error) {
-              console.log('you gone and fucked up again aintcha')
+              console.log('you gone and fucked up again aintcha');
             });
-        }
+        },
         link: function (scope, element, attrs) {
           scope.historical = []
           scope.parseDate = d3.time.format("%Y-%m-%d").parse;
