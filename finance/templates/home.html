@@ -30,7 +30,7 @@
 
 {% block content %}
 {% verbatim %}
-<div ng-app="homeApp"> 
+<div ng-app="homeApp">
 <div style="margin: auto; max-width: 1024px; height: 100%;" ng-controller="homeCtrl" >
 	<div class="row">
 		<div class="col-lg-9">
@@ -41,8 +41,8 @@
 				<div class="box-content">
 					<img style="max-height: 192px; position: relative; float: right; padding: 8px;" src="/static/images/logo.png" id="logo" />
 					<p> Bacon ipsum dolor sit amet spare ribs bresaola drumstick jerky pastrami pork loin. Fatback ground round capicola pork belly meatball tri-tip kevin cow, pancetta biltong pork loin bacon doner. Prosciutto short loin tri-tip flank tenderloin shoulder kevin sausage pastrami. Drumstick pancetta turducken cow pork, ribeye leberkas jowl.</p>
-					<p>Pork belly jowl capicola, ground round bacon turkey shank biltong. Pancetta frankfurter meatball boudin bacon. Jowl meatball brisket corned beef biltong spare ribs. Flank tongue andouille bacon. Ham hock boudin meatloaf shankle cow brisket bacon tongue chuck beef ribs pig pork belly leberkas sausage.</p>	
-				</div>	
+					<p>Pork belly jowl capicola, ground round bacon turkey shank biltong. Pancetta frankfurter meatball boudin bacon. Jowl meatball brisket corned beef biltong spare ribs. Flank tongue andouille bacon. Ham hock boudin meatloaf shankle cow brisket bacon tongue chuck beef ribs pig pork belly leberkas sausage.</p>
+				</div>
 			</div>
 		</div>
 		<div class="col-lg-3">
@@ -62,7 +62,7 @@
 			<div class="smallstat box" ng-repeat="stock in stocks">
 				<i class="fa fa-arrow-up green"></i>
 				<span class="title">Biggest Riser</span>
-				<span class="value">{{stocks.name}}</span>
+				<span class="value">{{stock.name}}</span>
 			</div>
 			<div class="verticalChart">
 				<div class="singleBar">
