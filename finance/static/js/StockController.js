@@ -33,12 +33,28 @@ StockApp.controller('HistoricalCtrl', function($scope, $http, $timeout) {
     );})();
 });
 
-StockApp.directive('barsChart', function ($parse) {
+StockApp.directive('stockChart', function ($parse) {
     var directiveDefinitionObject = {
         restrict: 'E',
         replace: false,
         scope: {},
+        controller: function (scope) {
+          function processData(data) {
+            for (index in data) {
+              datum = data[index];
+              datum.date = parseDate(datum.date)
+            }
+          }
+
+          $http.get('/data/historical/' + exchange + '/' + ticker + '/2013-10-21/2013-11-21/')
+            .success(function(data) {
+              scope.historical = processData(data);
+            }).error(function(error) {
+              console.log('you gone and fucked up again aintcha')
+            });
+        }
         link: function (scope, element, attrs) {
+          scope.historical = []
           scope.parseDate = d3.time.format("%Y-%m-%d").parse;
 
           scope.x = d3.time.scale().range([0, width]);
@@ -76,7 +92,7 @@ StockApp.directive('barsChart', function ($parse) {
               .text("Price");
 
           svg.append("path")
-              .datum(data)
+              .data(data)
               .attr("class", "line")
               .attr("d", line);
         }
