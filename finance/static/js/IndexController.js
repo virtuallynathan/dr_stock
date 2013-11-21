@@ -2,7 +2,7 @@ var IndexApp = angular.module('IndexApp', []);
 
 IndexApp.controller('IndexListCtrl', function($scope, $http, $timeout) {
 
-  $scope.getBarHeight = function(stocks, circ_id) {
+  $scope.getExchangeChanges = function(stocks, circ_id) {
     if (stocks == null) return "";
     var val = ((stocks.price.price / stocks.price.last_close - 1) * 100).toFixed(3);
 
