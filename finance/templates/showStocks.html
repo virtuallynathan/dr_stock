@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 
-{% extends "base.html" %}
+{% block pageheaders %}
+<script type="text/javascript">
+var exchange = {{ exchange }};
+var ticker = {{ ticker }};
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.min.js"></script>
+<script src="/static/js/StockController.js"></script>
+{% endblock %}
 
 {% block pagename %}
 
@@ -10,7 +17,80 @@
 
 
 {% block content %}
+{% verbatim %}
 
-	<p> Welcome to the stock page </p>
+<div ng-app="StockApp">
+<div style="margin: auto; max-width: 1024px; height: 100%;" ng-controller="StockListCtrl" >
 
+<div class="container" style="width: 70%;">
+<div class="row" style="padding-left: 14px; padding-right: 14px">
+  <div class="col-md-4 col-md-offset-4" style="text-align: center;">
+    <h1>{{stocks.name}}</h1>
+    <h2>{{stocks.ticker}}</h2>
+    <h3>{{stocks.exchange}}</h3>
+  </div>
+</div>
+
+<div class="tempStats row">
+        <div class="col-md-3 col-sm-4">
+          <div class="tempStatBox">
+            <div class="tempStat" style="border-color: rgb(103, 194, 239);">{{stocks.price.price.toFixed(2)}}</div>
+            <span>Price</span>
+          </div>
+        </div><!--/col-->
+
+        <div class="col-md-3 col-sm-4">
+          <div class="tempStatBox">
+            <div class="tempStat" style="border-color: rgb(250, 96, 61);">{{stocks.price.last_close.toFixed(2)}}</div>
+            <span>Last Close</span>
+          </div>
+        </div><!--/col-->
+
+        <div class="col-md-3 col-sm-4">
+          <div class="tempStatBox">
+            <div class="tempStat" style="border-color: rgb(103, 194, 239);">{{stocks.components.length}}</div>
+            <span>Components</span>
+          </div>
+        </div><!--/col-->
+
+        <div class="col-md-3 col-sm-4">
+          <div class="tempStatBox">
+            <div class="tempStat" style="border-color: rgb(234, 232, 116);">{{((stocks.price.price / stocks.price.last_close - 1) * 100).toFixed(3)}}%</div>
+            <span>Change</span>
+          </div>
+        </div><!--/col-->
+
+        <div class="clearfix"></div>
+</div>
+<!--
+<div>
+    <form role="form">
+        <input type="text" class="form-control" placeholder="Search" ng-model="query">
+    </form>
+</div>
+
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th><a href="" ng-click="reverse = predicate == 'name' && !reverse; predicate = 'ticker'">Ticker</a></th>
+        <th><a href="" ng-click="reverse = predicate == 'name' && !reverse; predicate = 'name'">Name</a></th>
+        <th><a href="" ng-click="reverse = predicate == 'price.price' && !reverse; predicate = 'price.price'">Price</a></th>
+        <th><a href="" ng-click="reverse = predicate == 'price.volume' && !reverse; predicate = 'price.volume'">Volume</a></th>
+        <th><a href="" ng-click="reverse = predicate == 'price.market_cap' && !reverse; predicate = 'price.market_cap'">Market Cap</a></th>
+      </tr>
+    </thead>
+      <tr ng-repeat="stock in stocks.components | filter:query | orderBy:predicate:reverse">
+        <td>{{stock.ticker}}</td>
+        <td>{{stock.name}}</td>
+        <td>{{stock.price.price.toFixed(2)}}</td>
+        <td>{{stock.price.volume.toFixed(2)}}</td>
+        <td>{{stock.price.market_cap.toFixed(2)}}</td>
+      </tr>
+  </table>
+-->
+</div>
+</div>
+</div>
+
+{% endverbatim %}
 {% endblock %}

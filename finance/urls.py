@@ -18,10 +18,9 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^data/', include(data.urls)),
 
-    url(r'^home/', view_home),
-    url(r'^view_index/', view_index),
-    url(r'^view_stock/', view_stock),
-    url(r'^view_historical_data/', view_historical_data),
+    url(r'^view_index/$', view_index),
+    url(r'^stock/(?P<exchange>[A-Z0-9]+)/(?P<ticker>[A-Z0-9]+)/$', view_stock),
+    url(r'^view_historical_data/$', view_historical_data),
 
     url(r'^accounts/login/$', login, {'template_name': 'login.html'}),
     url(r'^accounts/logout/$', logout, {'template_name': 'logout.html'}),

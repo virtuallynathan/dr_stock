@@ -2,7 +2,7 @@ var IndexApp = angular.module('IndexApp', []);
 
 IndexApp.controller('StockListCtrl', function($scope, $http, $timeout) {
   (function refresh() {
-    $http.get('/data/index/FTSE/').success(
+    $http.get('/data/stock/' + exchange + '/' + ticker + '/').success(
       function(data) {
         $scope.stocks = data;
         $timeout(refresh, 1000 * 60 * 5);
