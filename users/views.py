@@ -36,7 +36,7 @@ def register(request, template_name='register.html'):
 
     return render(request, template_name, {'form': form, REDIRECT_FIELD_NAME: redirect_to})
 
-
+@csrf_protect
 @login_required
 def profile(request, template_name='profile.html'):
     if request.method == 'POST': # If the form has been submitted...
