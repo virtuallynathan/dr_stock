@@ -76,12 +76,11 @@
       </tr>
     </thead>
       <tr ng-repeat="stock in stocks.components | filter:query | orderBy:predicate:reverse" >
-        <a href="/stock/{{stocks.exchange}}/{{stock.ticker}}/">
-          <td>{{stock.ticker}}</td>
-          <td>{{stock.name}}</td>
-          <td>{{stock.price.price.toFixed(2)}}</td>
-          <td>{{stock.price.volume.toFixed(2)}}</td>
-          <td>{{stock.price.market_cap.toFixed(2)}}</td>
+        <td><a href="/stock/{{stocks.exchange}}/{{stock.ticker}}/">{{stock.ticker}}</a></td>
+        <td><a href="/stock/{{stocks.exchange}}/{{stock.ticker}}/">{{stock.name}}</a></td>
+        <td><a href="/stock/{{stocks.exchange}}/{{stock.ticker}}/">{{stock.price.price.toFixed(2)}}</a></td>
+        <td><a href="/stock/{{stocks.exchange}}/{{stock.ticker}}/">{{stock.price.volume.toFixed(2)}}</a></td>
+        <td><a href="/stock/{{stocks.exchange}}/{{stock.ticker}}/">{{stock.price.market_cap.toFixed(2)}}</a></td>
         </a>
       </tr>
   </table>
