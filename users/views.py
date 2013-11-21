@@ -1,26 +1,40 @@
 from django import forms
-from django.contrib.auth import authenticate, login
+from django.conf import settings
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, resolve_url
 from django.core.mail import EmailMessage
+from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_protect
+from django.utils.http import is_safe_url
+
+
+REDIRECT_FIELD_NAME = 'next'
 
 
 @csrf_protect
 @never_cache
 def register(request, template_name='register.html'):
+    redirect_to = request.POST.get(REDIRECT_FIELD_NAME,
+                                   request.GET.get(REDIRECT_FIELD_NAME, ''));
+
+    if not is_safe_url(url=redirect_to, host=request.get_host()):
+        redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
+
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             new_user = form.save()
             new_user = authenticate(username=request.POST['username'],
                                     password=request.POST['password1'])
-            login(request, new_user)
-            return HttpResponseRedirect('/home/')
+            auth_login(request, new_user)
+            return HttpResponseRedirect(redirect_to)
     else:
         form = UserCreationForm()
-    return render(request, template_name, {'form': form})
+
+    return render(request, template_name, {'form': form, REDIRECT_FIELD_NAME: redirect_to})
 
 
 @login_required
@@ -55,28 +69,26 @@ def sent(request, template_name='sent.html'):
 @csrf_protect
 @never_cache
 def login(request, template_name='users/login.html'):
-    redirect_to = request.POST.get(redirect_field_name,
-                                   request.GET.get(redirect_field_name, ''))
+    redirect_to = request.POST.get(REDIRECT_FIELD_NAME,
+                                   request.GET.get(REDIRECT_FIELD_NAME, ''))
 
     if not is_safe_url(url=redirect_to, host=request.get_host()):
-        redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
+        redirect_to = resolve_url(redirect_to)
 
-    if user.is_authenticated():
+    if request.user.is_authenticated():
         return HttpResponseRedirect(redirect_to)
 
     if request.method == "POST":
-        form = authentication_form(request, data=request.POST)
+        form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
             return HttpResponseRedirect(redirect_to)
     else:
-        form = authentication_form(request)
-
-    current_site = get_current_site(request)
+        form = AuthenticationForm(request)
 
     context = {
         'form': form,
-        'next': redirect_to
+        REDIRECT_FIELD_NAME: redirect_to
     }
 
     return render(request, template_name, context)
@@ -85,15 +97,11 @@ def login(request, template_name='users/login.html'):
 def logout(request, template_name='users/logout.html'):
     auth_logout(request)
 
-    redirect_to = request.POST.get(redirect_field_name,
-                                   request.GET.get(redirect_field_name, ''))
+    redirect_to = request.POST.get(REDIRECT_FIELD_NAME,
+                                   request.GET.get(REDIRECT_FIELD_NAME, ''))
 
     if not is_safe_url(url=redirect_to, host=request.get_host()):
         redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
 
-    if redirect_to:
-        # Redirect to this page until the session has been cleared.
-        return HttpResponseRedirect(next_page)
-
-    return HttpResponseReidrect('/')
+    return HttpResponseRedirect(redirect_to)
 

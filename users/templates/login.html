@@ -10,7 +10,7 @@
 {% block title %}Please Log In{% endblock %}
 
 {% block content %}
-<form class="form-signin" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+<form class="form-signin" method="post" action="{% url 'users.views.login' %}">
 	{% csrf_token %}
 	<h1 style="text-align:center;">Log In</h1>
 	{{ form.username|attr:"placeholder:Username"|attr:"required:true"|add_class:"form-control" }}

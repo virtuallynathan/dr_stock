@@ -106,13 +106,13 @@
         <ul class="nav navbar-nav pull-right">
           {% if user.is_authenticated %}
           <li>
-            <a class="btn" href="/accounts/profile">
+            <a class="btn" href="{% url 'users.views.profile' %}">
               <i class="fa fa-user"></i>
               <span>{{ user.username }}</span>
             </a>
           </li>
           <li>
-            <a class="btn" href="/accounts/logout/">
+            <a class="btn" href="{% url 'users.views.logout' %}?next={{ request.path }}">
               <i class="fa fa-eject"></i>
               <span>Log Out</span>
             </a>
@@ -129,19 +129,19 @@
               </li> 
               <li style="width: 256px;">
                   <div style="width: 100%; padding: 8px;">
-                    <form class="drop-login" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+                    <form class="drop-login" method="post" action="{% url 'users.views.login' %}">
                       {% csrf_token %}
                       <input class="form-control" id="id_username" maxlength="254" name="username" placeholder="Username" required="true" type="text" />
                       <input class="form-control" id="id_password" name="password" placeholder="Password" required="true" type="password" />
                       <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
-                      <input type="hidden" name="next" value="{{ next }}" />
+                      <input type="hidden" name="next" value="{% if next %}{{ next }}{% else %}{{ request.path }}{% endif %}" />
                     </form>
                   </div>
               </li>
             </ul>
           </li>
           <li>
-            <a class="btn" href="/accounts/register/">
+            <a class="btn" href="{% url 'users.views.register' %}?next={{ request.path }}">
               <i class="fa fa-book"></i>
               <span>Sign Up</span>
             </a>

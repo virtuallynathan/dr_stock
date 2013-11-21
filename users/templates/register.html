@@ -17,6 +17,7 @@
 
 	{{ form.password1|attr:"placeholder:Password"|attr:"required:true"|add_class:"form-control" }}
 	{{ form.password2|attr:"placeholder:Confirm Password"|attr:"required:true"|add_class:"form-control" }}
+        <input type="hidden" name="next" value="{{ next }}"/>
 	<button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
 </form>
 
