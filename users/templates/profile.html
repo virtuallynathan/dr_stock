@@ -11,21 +11,24 @@
 
 	<p> Welcome to your profile page </p>
 
-	<form action="." method="post">
-{% csrf_token %}    
-    First Name:
-    <input type="text" name="user" value="{{ user.first_name}}" /><br />
-      First Name:
-    <input type="text" name="user" value="{{user.last_name}}" /><br />
-    Username:
-    <input type="text" name="name" value="{{user.username}}" /><br />
-
-    Email:
-    <input type="text" name="address" value="{{ user.email}}" /><br />
-
-    <input type="submit" value="Save Changes" name="save" />
-    <input type="submit" value="Cancel" name="cancel" />
-    <br/>
+<form role="form" action="." method="post">
+  <div class="form-group">
+    <label for="inputEmail">Email address</label>
+    <input type="email" class="form-control" id="inputEmail1" placeholder="{{user.email}}">
+  </div>
+  <div class="form-group">
+    <label for="inputUsername">Username</label>
+    <input type="username" class="form-control" id="inputUsername" placeholder="{{user.username}}">
+  </div>
+  <div class="form-group">
+    <label for="inputFirstName">First Name</label>
+    <input type="firstname" class="form-control" id="inputFirstName" placeholder="{{user.first_name}}">
+  </div>
+  <div class="form-group">
+    <label for="inputFirstName">Last Name</label>
+    <input type="lastname" class="form-control" id="inputLastName" placeholder="{{user.last_name}}">
+  </div>
+  <button type="submit" class="btn btn-default">Submit</button>
 </form>
 
 {% endblock %}
