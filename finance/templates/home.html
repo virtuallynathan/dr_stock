@@ -60,31 +60,31 @@
     <div class="row">
         <div class="col-lg-4">
             <div class="smallstat box" ng-repeat="stock in risers">
-                <i class="fa fa-arrow-up green">{{stock.price.change}}%</i>
-                <span class="title">Biggest riser</span>
-                <span class="value">{{stock.name}}</span>
+                <i class="fa fa-arrow-up green" style="width: 112px;">{{shortenFloat(stock.price.change,2)}}%</i>
+                <span class="title">Biggest Riser</span>
+                <span class="value">{{cropName(stock.name,20)}}</span>
             </div>
             <div class="verticalChart">
                 <div class="singleBar">
-                    <div class="bar">
+                    <div class="bar" id="riser0">
                         <div class="value">
-                            <span>81%</span>
+                            <span>{{getBarHeight(risers, 0, 'riser0', false)}}</span>
                         </div>
                     </div>
                     <div class="title">{{risers[0].ticker}}</div>
                 </div>
                 <div class="singleBar">
-                    <div class="bar">
+                    <div class="bar" id="riser1">
                         <div class="value">
-                            <span>71%</span>
+                            <span>{{getBarHeight(risers, 1, 'riser1', false)}}</span>
                         </div>
                     </div>
                     <div class="title">{{risers[1].ticker}}</div>
                 </div>
                 <div class="singleBar">
-                    <div class="bar">
+                    <div class="bar" id="riser2">
                         <div class="value">
-                            <span>12%</span>
+                            <span>{{getBarHeight(risers, 2, 'riser2', false)}}</span>
                         </div>
                     </div>
                     <div class="title">{{risers[2].ticker}}</div>
@@ -93,31 +93,31 @@
         </div>
         <div class="col-lg-4">
             <div class="smallstat box" ng-repeat="stock in fallers">
-                <i class="fa fa-arrow-down red">{{stock.price.change}}%</i>
-                <span class="title">Biggest faller</span>
-                <span class="value">{{stock.name}}</span>
+                <i class="fa fa-arrow-down red" style="width: 112px;">{{shortenFloat(stock.price.change,2)}}%</i>
+                <span class="title">Biggest Faller</span>
+                <span class="value">{{cropName(stock.name,20)}}</span>
             </div>
             <div class="verticalChart">
                 <div class="singleBar">
-                    <div class="bar">
+                    <div class="bar" id="faller0">
                         <div class="value red">
-                            <span>88%</span>
+                            <span>{{getBarHeight(fallers, 0, 'faller0', false)}}</span>
                         </div>
                     </div>
                     <div class="title">{{fallers[0].ticker}}</div>
                 </div>
                 <div class="singleBar">
-                    <div class="bar">
+                    <div class="bar" id="faller1">
                         <div class="value red">
-                            <span>41%</span>
+                            <span>{{getBarHeight(fallers, 1, 'faller1', false)}}</span>
                         </div>
                     </div>
                     <div class="title">{{fallers[1].ticker}}</div>
                 </div>
                 <div class="singleBar">
-                    <div class="bar">
+                    <div class="bar" id="faller2">
                         <div class="value red">
-                            <span>37%</span>
+                            <span>{{getBarHeight(fallers, 2, 'faller2', false)}}</span>
                         </div>
                     </div>
                     <div class="title">{{fallers[2].ticker}}</div>
@@ -127,30 +127,30 @@
         <div class="col-lg-4">
             <div class="smallstat box" ng-repeat="stock in biggest">
                 <i class="fa fa-money blue"></i>
-                <span class="title">Biggest market cap</span>
-                <span class="value">{{stock.name}}</span>
+                <span class="title">Biggest by Market Cap</span>
+                <span class="value">{{cropName(stock.name,20)}}</span>
             </div>
             <div class="verticalChart">
                 <div class="singleBar">
-                    <div class="bar">
+                    <div class="bar" id="biggest0">
                         <div class="value blue">
-                            <span>83%</span>
+                            <span>{{getBarHeight(biggest, 0, 'biggest0', true)}}</span>
                         </div>
                     </div>
                     <div class="title">{{biggest[0].ticker}}</div>
                 </div>
                 <div class="singleBar">
-                    <div class="bar">
+                    <div class="bar" id="biggest1">
                         <div class="value blue">
-                            <span>66%</span>
+                            <span>{{getBarHeight(biggest, 1, 'biggest1', true)}}</span>
                         </div>
                     </div>
                     <div class="title">{{biggest[1].ticker}}</div>
                 </div>
                 <div class="singleBar">
-                    <div class="bar">
+                    <div class="bar" id="biggest2">
                         <div class="value blue">
-                            <span>54%</span>
+                            <span>{{getBarHeight(biggest, 2, 'biggest2', true)}}</span>
                         </div>
                     </div>
                     <div class="title">{{biggest[2].ticker}}</div>

@@ -221,21 +221,7 @@ $(document).ready(function(){
 	});
 		
 	/* ---------- Vertical Chart ---------- */
-	if($('.verticalChart')) {
-		
-		$('.singleBar').each(function(){
-			
-			var percent = $(this).find('.value span').html();
-			
-			$(this).find('.value').animate({height:percent}, 2000, function() {
-			    
-				$(this).find('span').fadeIn();
-			 
-			});
-			
-		});
-		
-	}
+
 	
 	/* ---------- Main Chart ---------- */
 	if($('.main-chart')) {
