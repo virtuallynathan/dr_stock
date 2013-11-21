@@ -14,7 +14,7 @@ IndexApp.controller('IndexListCtrl', function($scope, $http, $timeout) {
       $("#"+circ_id).css('border-color', '#36a9e1');
     }
     return val + "%";
-  }
+  };
 
   (function refresh() {
     $http.get('/data/index/FTSE/').success(
