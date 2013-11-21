@@ -106,6 +106,12 @@
         <ul class="nav navbar-nav pull-right">
           {% if user.is_authenticated %}
           <li>
+            <a class="btn" href="/accounts/profile">
+              <i class="fa fa-user"></i>
+              <span>{{ user.username }}</span>
+            </a>
+          </li>
+          <li>
             <a class="btn" href="/accounts/logout/">
               <i class="fa fa-user"></i>
               <span>Log Out</span>
