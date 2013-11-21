@@ -42,6 +42,7 @@ def profile(request, template_name='profile.html'):
     if request.method == 'POST': # If the form has been submitted...
         form = UserEditForm(request.POST) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass
+            form.save()
             return HttpResponseRedirect('/accounts/profile') # Redirect after POST
     return render(request, template_name)
 
