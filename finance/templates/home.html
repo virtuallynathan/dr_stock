@@ -2,6 +2,7 @@
 {% load staticfiles %}
 {% block pagename %}Welcome{% endblock %}
 {% block pageheaders %}
+<script src="/static/js/HomeController.js"></script>
 <style type="text/css">
 
 .quick-button {
@@ -27,7 +28,9 @@
 {% endblock %}
 
 {% block content %}
-<div style="margin: auto; max-width: 1024px; height: 100%;">
+{% verbatim %}
+<div ng-app="HomeApp"> 
+<div style="margin: auto; max-width: 1024px; height: 100%;" ng-controller="homeCtrl" >
 	<div class="row">
 		<div class="col-lg-9">
 			<div class="box blue">
@@ -58,7 +61,7 @@
 			<div class="smallstat box">
 				<i class="fa fa-arrow-up green"></i>
 				<span class="title">Biggest Riser</span>
-				<span class="value">[[Company Name]]</span>
+				<span class="value">{{stock.name}}</span>
 			</div>
 			<div class="verticalChart">
 				<div class="singleBar">
@@ -155,4 +158,6 @@
 		</div>
 	</div>
 </div>
+</div>
+{% endverbatim %}
 {% endblock %}
