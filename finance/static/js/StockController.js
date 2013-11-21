@@ -1,6 +1,6 @@
-var IndexApp = angular.module('IndexApp', []);
+var StockApp = angular.module('StockApp', []);
 
-IndexApp.controller('StockListCtrl', function($scope, $http, $timeout) {
+StockApp.controller('StockListCtrl', function($scope, $http, $timeout) {
   (function refresh() {
     $http.get('/data/stock/' + exchange + '/' + ticker + '/').success(
       function(data) {

@@ -1,6 +1,6 @@
 var IndexApp = angular.module('IndexApp', []);
 
-IndexApp.controller('StockListCtrl', function($scope, $http, $timeout) {
+IndexApp.controller('IndexListCtrl', function($scope, $http, $timeout) {
   (function refresh() {
     $http.get('/data/index/FTSE/').success(
       function(data) {
