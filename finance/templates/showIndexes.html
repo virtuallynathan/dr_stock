@@ -12,8 +12,8 @@ function toggleStockPage(sender) {
   if (parent_row.className.match(/\bacc_open\b/)) {
 
     parent_row.className = parent_row.className.replace('acc_open','');
-
-    parent_row.parentNode.removeChild(parent_row.nextSibling);
+    $(parent_row.nextSibling).animate({height: '0px'}, {complete: function(){ parent_row.parentNode.removeChild(parent_row.nextSibling); }});
+    
   } else {
     var new_row = document.createElement('tr');
 
