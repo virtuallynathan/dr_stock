@@ -84,7 +84,7 @@ function toggleStockPage(ticker) {
     </thead>
       <tr ng-repeat="stock in stocks.components | filter:query | orderBy:predicate:reverse" id="tbl-row-{{stock.ticker}}">
         <td><a href="/stock/{{stocks.exchange}}/{{stock.ticker}}/" class="label label-info">{{stock.ticker}}</a></td>
-        <td><a onclick="toggleStockPage({{stock.ticker}});">{{stock.name}}</a></td>
+        <td><a href="javascript:toggleStockPage('tbl-row-{{stock.ticker}}'');">{{stock.name}}</a></td>
         <td>{{stock.price.price.toFixed(2)}}</td>
         <td>{{stock.price.volume.toFixed(2)}}</td>
         <td>{{stock.price.market_cap.toFixed(2)}}</td>
