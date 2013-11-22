@@ -7,7 +7,7 @@
 
 function toggleStockPage(sender) {
   
-  var parent_row = sender.parentElement.parentElement;
+  var parent_row = sender;
 
   if (parent_row.className.match(/\bacc_open\b/)) {
 
@@ -124,9 +124,9 @@ function switchComp() {
           <th><a href="" ng-click="reverse = predicate == 'price.market_cap' && !reverse; predicate = 'price.market_cap'">Market Cap</a></th>
         </tr>
       </thead>
-        <tr ng-repeat="stock in stocks.components | filter:query | orderBy:predicate:reverse" id="tbl-row-{{stock.ticker}}">
+        <tr ng-repeat="stock in stocks.components | filter:query | orderBy:predicate:reverse" id="tbl-row-{{stock.ticker}}" onclick="toggleStockPage(this);" style="cursor: pointer;">
           <td><a href="/stock/{{stocks.exchange}}/{{stock.ticker}}/" class="label label-info">{{stock.ticker}}</a></td>
-          <td><a onclick="toggleStockPage(this);" style="cursor: pointer;">{{stock.name}}</a></td>
+          <td>{{stock.name}}</td>
           <td>{{stock.price.price.toFixed(2)}}</td>
           <td>{{stock.price.volume.toFixed(2)}}</td>
           <td>{{stock.price.market_cap.toFixed(2)}}</td>
