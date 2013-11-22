@@ -90,7 +90,9 @@ var ticker = "{{ ticker }}";
 </div>
 
 <div style="background-color: #36A9E1; border-radius: 2px;">
-<stock-chart exchange="LSE" ticker="GSK"/>
+{% endverbatim %}
+<stock-chart exchange="{{ exchange }}" ticker="{{ ticker }}"/>
+{% verbatim %}
 </div>
 </div>
 </div>
