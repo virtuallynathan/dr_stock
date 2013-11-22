@@ -7,7 +7,12 @@
 
 function toggleStockPage(sender) {
   var parent_row = sender.parentElement.parentElement;
-  alert(parent_row.innerHTML);
+  var new_row = document.createElement('tr');
+
+  new_row.innerHTML = "<td style="background-color: #36a9e1; color: #FFFFFF;" colspan="5">Hello</td>";
+
+  parent_row.parentNode.insertBefore(new_row, parent_row.nextSibling);
+  
 }
 
 </script>
