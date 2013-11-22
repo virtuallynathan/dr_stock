@@ -18,19 +18,36 @@ var ticker = "{{ ticker }}";
 .axis path,
 .axis line {
   fill: none;
-  stroke: #54B6E5;
+  stroke: #54b6e5;
+  stroke-width: 2px;
   shape-rendering: crispEdges;
 }
 
+.grid path,
+.grid line {
+  fill: none;
+  stroke: #54b6e5;
+  stroke-width: 2px;
+  shape-rendering: crispEdges;
+}
+
+.domain {
+  stroke-width: 2px;
+}
+
 .axis text {
-  fill: #ffffff;
-  color: #ffffff;
+  fill: #fff;
 }
 
 .line {
   fill: none;
-  stroke: #ffffff;
-  stroke-width: 4px;
+  stroke: #fff;
+  stroke-width: 3px;
+}
+
+.area {
+  fill: #fff;
+  opacity: 0.4;
 }
 </style>
 {% endblock %}

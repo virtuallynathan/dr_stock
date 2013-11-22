@@ -40,7 +40,10 @@ StockApp.directive('stockChart', function ($parse) {
 
             $scope.svg.select(".x.axis").call($scope.xAxis);
             $scope.svg.select(".y.axis").call($scope.yAxis);
-            $scope.svg.selectAll("path.line").data([data]).attr("d", $scope.line);
+            $scope.svg.select(".x.grid").call($scope.xAxis.tickSize(-$scope.height, 0, 0).tickFormat(""));
+            $scope.svg.select(".y.grid").call($scope.yAxis.tickSize(-$scope.width, 0, 0).tickFormat(""));
+            $scope.svg.selectAll("path.area").datum(data).attr("d", $scope.area);
+            $scope.svg.selectAll("path.line").datum(data).attr("d", $scope.line);
           }
 
           $scope.fetchData = function(exchange, ticker, startDate, endDate) {
@@ -48,10 +51,7 @@ StockApp.directive('stockChart', function ($parse) {
             var endDateStr = $scope.formatDate(endDate);
             $http.get('/data/historical/' + exchange + '/' + ticker + '/' + startDateStr + '/' + endDateStr + '/')
               .success(function(data) {
-                console.log($scope.historical);
-                console.log('going to set');
                 $scope.historical = $scope.processData(data.historical);
-                console.log($scope.historical);
                 $scope.updateChart($scope.historical);
               }).error(function(error) {
                 console.log('you gone and fucked up again aintcha');
@@ -63,12 +63,12 @@ StockApp.directive('stockChart', function ($parse) {
           $scope.fetchData($scope.exchange, $scope.ticker, startDate, endDate);
         },
         link: function (scope, element, attrs) {
-          var margin = {top: 20, right: 20, bottom: 30, left: 50},
-              width = 960 - margin.left - margin.right,
-              height = 500 - margin.top - margin.bottom;
+          var margin = {top: 20, right: 20, bottom: 30, left: 50};
+          scope.width = 960 - margin.left - margin.right;
+          scope.height = 500 - margin.top - margin.bottom;
 
-          scope.x = d3.time.scale().range([0, width]);
-          scope.y = d3.scale.linear().range([height, 0]);
+          scope.x = d3.time.scale().range([0, scope.width]);
+          scope.y = d3.scale.linear().range([scope.height, 0]);
 
           scope.xAxis = d3.svg.axis().scale(scope.x).orient("bottom");
           scope.yAxis = d3.svg.axis().scale(scope.y).orient("left");
@@ -77,15 +77,20 @@ StockApp.directive('stockChart', function ($parse) {
               .x(function(d) { return scope.x(d.date); })
               .y(function(d) { return scope.y(d.close); });
 
+          scope.area = d3.svg.area()
+              .x(function(d) { return scope.x(d.date); })
+              .y0(scope.height)
+              .y1(function(d) { return scope.y(d.close); });
+
           scope.svg = d3.select(element[0]).append("svg")
-              .attr("width", width + margin.left + margin.right)
-              .attr("height", height + margin.top + margin.bottom)
+              .attr("width", scope.width + margin.left + margin.right)
+              .attr("height", scope.height + margin.top + margin.bottom)
             .append("g")
               .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
           scope.svg.append("g")
               .attr("class", "x axis")
-              .attr("transform", "translate(0," + height + ")")
+              .attr("transform", "translate(0," + scope.height + ")")
 
           scope.svg.append("g")
               .attr("class", "y axis")
@@ -96,7 +101,15 @@ StockApp.directive('stockChart', function ($parse) {
               .style("text-anchor", "end")
               .text("Price");
 
+          scope.svg.append("g")
+              .attr("class", "x grid")
+              .attr("transform", "translate(0," + scope.height + ")")
+
+          scope.svg.append("g")
+              .attr("class", "y grid")
+
           scope.svg.append("path").attr("class", "line");
+          scope.svg.append("path").attr("class", "area");
         }
     };
     return directiveDefinitionObject;
