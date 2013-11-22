@@ -6,13 +6,22 @@
 <script type="text/javascript">
 
 function toggleStockPage(sender) {
-  alert("hello");
+  
   var parent_row = sender.parentElement.parentElement;
-  var new_row = document.createElement('tr');
 
-  new_row.innerHTML = "<td style=\"background-color: #36a9e1; color: #FFFFFF;\" colspan=\"5\">Hello</td>";
+  if (parent_row.className.match(/\bacc_open\b/)) {
 
-  parent_row.parentNode.insertBefore(new_row, parent_row.nextSibling);
+    parent_row.className = parent_row.className.replace('acc_open','');
+
+    parent_row.parentNode.removeChild(parent_row.nextSibling);
+  } else {
+    var new_row = document.createElement('tr');
+
+    new_row.innerHTML = "<td style=\"background-color: #36a9e1; color: #FFFFFF;\" colspan=\"5\">Hello</td>";
+
+    parent_row.parentNode.insertBefore(new_row, parent_row.nextSibling);
+    parent_row.className += 'acc_open';
+  }
   
 }
 
