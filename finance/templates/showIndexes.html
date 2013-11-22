@@ -17,8 +17,11 @@ function toggleStockPage(sender) {
   } else {
     var new_row = document.createElement('tr');
 
-    new_row.innerHTML = "<td style=\"background-color: #36a9e1; color: #FFFFFF;\" colspan=\"5\">" +
-    "<div style=\"height: 0px;\">Howdy</div>" +
+    var ticker = parent_row.firstChild.firstChild.innerHTML;
+    new_row.innerHTML = "<td style=\"background-color: #36a9e1; color: #FFFFFF; height: 0px;\" colspan=\"5\">" +
+    "<div>" +
+    "<stock-chart exchange=\""+$('#exc-name').html()+"\" ticker=\""+ticker+"\"/>"
+    "</div>" +
     "</td>";
 
 
@@ -66,7 +69,7 @@ function switchComp() {
   <div class="col-md-4 col-md-offset-4" style="text-align: center;">
     <h1>{{stocks.name}}</h1>
     <h2>{{stocks.ticker}}</h2>
-    <h3>{{stocks.exchange}}</h3>
+    <h3 id="exc-name">{{stocks.exchange}}</h3>
   </div>
 </div>
 
