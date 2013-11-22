@@ -76,7 +76,7 @@
       </tr>
     </thead>
       <tr ng-repeat="stock in stocks.components | filter:query | orderBy:predicate:reverse" >
-        <td><a href="/stock/{{stocks.exchange}}/{{stock.ticker}}/"><span class="label label-info" style="width: 100%;">{{stock.ticker}}</span></a></td>
+        <td><a href="/stock/{{stocks.exchange}}/{{stock.ticker}}/" class="label label-info" style="width: 100%;">{{stock.ticker}}</a></td>
         <td><a href="/stock/{{stocks.exchange}}/{{stock.ticker}}/">{{stock.name}}</a></td>
         <td><a href="/stock/{{stocks.exchange}}/{{stock.ticker}}/">{{stock.price.price.toFixed(2)}}</a></td>
         <td><a href="/stock/{{stocks.exchange}}/{{stock.ticker}}/">{{stock.price.volume.toFixed(2)}}</a></td>
