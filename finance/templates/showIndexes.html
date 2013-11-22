@@ -6,7 +6,7 @@
 <script type="text/javascript">
 
 function toggleStockPage(sender) {
-  var parent_row = sender.parent;
+  var parent_row = sender.parentElement.parentElement;
   alert(parent_row.innerHTML());
 }
 
