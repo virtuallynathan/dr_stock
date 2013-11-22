@@ -3,6 +3,13 @@
 {% block pageheaders %}
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.min.js"></script>
 <script src="/static/js/IndexController.js"></script>
+<script type="text/javascript">
+
+function toggleStockPage(ticker) {
+  alert(ticker);
+}
+
+</script>
 {% endblock %}
 
 {% block pagename %}
@@ -77,14 +84,11 @@
     </thead>
       <tr ng-repeat="stock in stocks.components | filter:query | orderBy:predicate:reverse" id="tbl-row-{{stock.ticker}}">
         <td><a href="/stock/{{stocks.exchange}}/{{stock.ticker}}/" class="label label-info">{{stock.ticker}}</a></td>
-        <td><a href="/stock/{{stocks.exchange}}/{{stock.ticker}}/">{{stock.name}}</a></td>
+        <td><a href="javascript:toggleStockPage({{stock.ticker}});">{{stock.name}}</a></td>
         <td>{{stock.price.price.toFixed(2)}}</td>
         <td>{{stock.price.volume.toFixed(2)}}</td>
         <td>{{stock.price.market_cap.toFixed(2)}}</td>
         </a>
-      </tr>
-      <tr>
-        <td style="background-color: #36a9e1; color: #FFFFFF;" colspan="5">Hello</td>
       </tr>
   </table>
 
