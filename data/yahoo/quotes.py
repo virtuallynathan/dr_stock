@@ -38,7 +38,11 @@ def scrape_quotes(symbol, start_date, end_date):
 
     quotes = []
     for quote in (q.split(',') for q in lines):
-        date, open, high, low, close, volume, adj = quote
+        date = quote[0]
+        open, high, low, close = (float(x) for x in quote[1:5])
+        volume = int(quote[5])
+        adj = float(quote[6])
+
         date = datetime.datetime.strptime(date, '%Y-%m-%d')
 
         quote = Quote(symbol=symbol, date=date, volume=volume,
