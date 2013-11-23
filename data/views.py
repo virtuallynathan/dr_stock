@@ -68,6 +68,25 @@ def view_index(request, ticker):
 
     return json_response(result)
 
+def view_lite_index(request, ticker):
+    try:
+        index = Symbol.objects.get(ticker=ticker)
+    except Symbol.DoesNotExist:
+        return json_response({'error': 'Index not found'})
+
+    price = get_price(index)
+    components = get_components(index)
+
+    result = serialize_symbol()
+    result['components'] = []
+
+    for component in components:
+        price = get_price(component)
+        symbol = serialize_symbol()
+        result['components'].append(symbol)
+
+    return json_response(result)
+
 
 def view_stock(request, exchange, ticker):
     try:

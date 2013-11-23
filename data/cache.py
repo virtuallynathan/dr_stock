@@ -26,6 +26,14 @@ def get_quotes(symbol, start_date, end_date):
 
     return quotes
 
+def get_stuff(symbol):
+    '''
+    DO some search shit
+    '''
+    quotes = Quote.objects.filter(symbol=symbol)
+
+    return quotes
+
 
 def get_components(index):
     '''

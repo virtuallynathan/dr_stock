@@ -6,6 +6,7 @@ from data.views import view_risers, view_fallers, view_biggest
 
 urlpatterns = patterns('',
     url(r'^index/(?P<ticker>[A-Z0-9]+)/$', view_index),
+    url(r'^index_lite/(?P<ticker>[A-Z0-9]+)/$', view_lite_index),
     url(r'^stock/(?P<exchange>[A-Z0-9]+)/(?P<ticker>[A-Z0-9]+)/$', view_stock),
 
     url(r'^historical/(?P<exchange>[A-Z0-9]+)/(?P<ticker>[A-Z0-9]+)/' +
