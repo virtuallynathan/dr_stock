@@ -30,12 +30,6 @@ def serialize_symbol(symbol, price):
             'exchange': symbol.exchange.abbreviation,
             'price': serialize_price(price)}
 
-def serialize_symbol_lite(symbol):
-    return {'ticker': symbol.ticker,
-            'name': symbol.name,
-            'exchange': symbol.exchange.abbreviation}
-
-
 def serialize_quote(quote):
     return {'date': quote.date.strftime('%Y-%m-%d'),
             'volume': quote.volume,
@@ -69,25 +63,6 @@ def view_index(request, ticker):
     for component in components:
         price = get_price(component)
         symbol = serialize_symbol(component, price)
-        result['components'].append(symbol)
-
-    return json_response(result)
-
-def view_lite_index(request, ticker):
-    try:
-        index = Symbol.objects.get(ticker=ticker)
-    except Symbol.DoesNotExist:
-        return json_response({'error': 'Index not found'})
-
-    price = get_price(index)
-    components = get_components(index)
-
-    result = serialize_symbol_lite(index)
-    result['components'] = []
-
-    for component in components:
-        price = get_price(component)
-        symbol = serialize_symbol_lite(component)
         result['components'].append(symbol)
 
     return json_response(result)
