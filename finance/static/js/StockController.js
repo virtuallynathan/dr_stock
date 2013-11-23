@@ -1,6 +1,16 @@
 var StockApp = angular.module('StockApp', []);
 
 StockApp.controller('StockListCtrl', function($scope, $http, $timeout) {
+  $scope.abbreviateNumber = function(stocks) {
+    with (Math) {
+        var n = stocks.price.volume;
+        var base = floor(log(abs(n))/log(1000));
+        var suffix = 'kmb'[base-1];
+        return suffix ? String(n / pow(1000, base)).substring(0, 3) + suffix : '' + n;
+    }
+  }
+
+
   (function refresh() {
     $http.get('/data/stock/' + exchange + '/' + ticker + '/').success(
       function(data) {
