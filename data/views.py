@@ -82,12 +82,12 @@ def view_lite_index(request, ticker):
     price = get_price(index)
     components = get_components(index)
 
-    result = serialize_symbol_lite()
+    result = serialize_symbol_lite(index)
     result['components'] = []
 
     for component in components:
         price = get_price(component)
-        symbol = serialize_symbol_lite()
+        symbol = serialize_symbol_lite(component)
         result['components'].append(symbol)
 
     return json_response(result)
