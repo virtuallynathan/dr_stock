@@ -49,7 +49,6 @@ INSTALLED_APPS = (
 
     # Our apps
     'data',
-    'stocks',
     'users',
 )
 
