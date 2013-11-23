@@ -84,7 +84,7 @@ def login(request, template_name='users/login.html'):
                                    request.GET.get(REDIRECT_FIELD_NAME, ''))
 
     if not is_safe_url(url=redirect_to, host=request.get_host()):
-        redirect_to = resolve_url(redirect_to)
+        redirect_to = resolve_url('users/login.html')
 
     if request.user.is_authenticated():
         return HttpResponseRedirect(redirect_to)
