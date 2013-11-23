@@ -14,6 +14,9 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.utils.http import is_safe_url
 
+from data.models import Symbol
+from data.views import serialize_symbol, json_response
+
 
 REDIRECT_FIELD_NAME = 'next'
 
@@ -58,7 +61,7 @@ class UserEditForm(forms.ModelForm):
     email = forms.EmailField()
     first_name = forms.CharField(max_length=50)
     last_name = forms.CharField(max_length=50)
-    
+
     class Meta:
         model = User
         fields = ('email', 'first_name', 'last_name')
@@ -128,3 +131,43 @@ def logout(request, template_name='users/logout.html'):
 
     return HttpResponseRedirect(redirect_to)
 
+
+def _favourite_symbol(request, add, symbol):
+    if not request.user.is_authenticated():
+        return json_response({'failure': 'naw'})
+
+    investor = request.user.investor
+    if add:
+        investor.favourites.add(symbol)
+    else:
+        investor.favourites.remove(symbol)
+    investor.save()
+    return json_response({'success': 'that\'s what i\'m talking about'})
+
+
+def favourite_stock(request, exchange, ticker):
+    symbol = Symbol.objects.get(exchange__abbreviation=exchange, ticker=ticker)
+    return _favourite_symbol(request, add=True, symbol=symbol)
+
+
+def favourite_index(request, ticker):
+    symbol = Symbol.objects.get(ticker=ticker)
+    return _favourite_symbol(request, add=True, symbol=symbol)
+
+
+def unfavourite_stock(request, exchange, ticker):
+    symbol = Symbol.objects.get(exchange__abbreviation=exchange, ticker=ticker)
+    return _favourite_symbol(request, add=False, symbol=symbol)
+
+
+def unfavourite_index(request, ticker):
+    symbol = Symbol.objects.get(ticker=ticker)
+    return _favourite_symbol(request, add=False, symbol=symbol)
+
+
+def list_favourites(request):
+    if not request.user.is_authenticated():
+        return json_response({'failure': 'naw'})
+
+    symbols = request.user.investor.favourites.all()
+    return json_response([{'name': s.name, 'ticker': s.ticker, 'exchange': s.exchange.abbreviation} for s in symbols])

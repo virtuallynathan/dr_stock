@@ -6,6 +6,8 @@ from users.views import profile, register, send_email, sent, login, logout
 from finance.views import view_index, view_home, view_stock
 from finance.views import view_historical_data
 
+from users.views import favourite_stock, favourite_index, list_favourites
+from users.views import unfavourite_stock, unfavourite_index
 
 admin.autodiscover()
 
@@ -31,4 +33,11 @@ urlpatterns = patterns('',
     # Messing around with sending email
     url(r'^accounts/email/$',  send_email),
     url(r'^accounts/sent/$',  sent, {'template_name': 'sent.html'}),
+
+    # API for favouriting shit
+    url(r'^accounts/favourite/(?P<exchange>[A-Z0-9]+)/(?P<ticker>[A-Z0-9]+)/$', favourite_stock),
+    url(r'^accounts/favourite/(?P<ticker>[A-Z0-9]+)/$', favourite_index),
+    url(r'^accounts/unfavourite/(?P<exchange>[A-Z0-9]+)/(?P<ticker>[A-Z0-9]+)/$', unfavourite_stock),
+    url(r'^accounts/unfavourite/(?P<ticker>[A-Z0-9]+)/$', unfavourite_index),
+    url(r'^accounts/favourites/$', list_favourites),
 )
