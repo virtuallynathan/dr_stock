@@ -30,7 +30,7 @@ def serialize_symbol(symbol, price):
             'exchange': symbol.exchange.abbreviation,
             'price': serialize_price(price)}
 
-def serialize_symbol_lol(symbol):
+def serialize_symbol_lite(symbol):
     return {'ticker': symbol.ticker,
             'name': symbol.name,
             'exchange': symbol.exchange.abbreviation}
