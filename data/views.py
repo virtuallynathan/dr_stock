@@ -30,6 +30,11 @@ def serialize_symbol(symbol, price):
             'exchange': symbol.exchange.abbreviation,
             'price': serialize_price(price)}
 
+def serialize_symbol_lol(symbol):
+    return {'ticker': symbol.ticker,
+            'name': symbol.name,
+            'exchange': symbol.exchange.abbreviation}
+
 
 def serialize_quote(quote):
     return {'date': quote.date.strftime('%Y-%m-%d'),
@@ -77,12 +82,12 @@ def view_lite_index(request, ticker):
     price = get_price(index)
     components = get_components(index)
 
-    result = serialize_symbol()
+    result = serialize_symbol_lite()
     result['components'] = []
 
     for component in components:
         price = get_price(component)
-        symbol = serialize_symbol()
+        symbol = serialize_symbol_lite()
         result['components'].append(symbol)
 
     return json_response(result)
