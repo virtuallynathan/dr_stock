@@ -36,7 +36,6 @@ StockApp.directive('stockChart', function ($parse) {
           $scope.parseDate = $scope.formatDate.parse;
 
           $scope.redraw = function() {
-            console.log($scope.x.domain())
             $scope.newDataRange();
             $scope.svg.select(".x.axis").call($scope.xAxis.tickSize(6).tickFormat(null));
             $scope.svg.select(".y.axis").call($scope.yAxis.tickSize(6).tickFormat(null));
@@ -44,7 +43,6 @@ StockApp.directive('stockChart', function ($parse) {
             $scope.svg.select(".y.grid").call($scope.yAxis.tickSize(-$scope.width, 0, 0).tickFormat(""));
             $scope.svg.select("path.area").attr("d", $scope.area);
             $scope.svg.select("path.line").attr("d", $scope.line);
-            console.log($scope.area)
           }
 
           $scope.updateChart = function(data) {
@@ -65,10 +63,7 @@ StockApp.directive('stockChart', function ($parse) {
             var currentRange = $scope.x.domain();
             var period = currentRange[1].getTime() - currentRange[0].getTime();
             var requiredMin = new Date(currentRange[0].getTime() - period);
-            console.log(requiredMin);
-            console.log($scope.currentMin);
             if (requiredMin < $scope.currentMin) {
-              console.log("neeed to fetch more");
               var newMin = new Date(requiredMin.getTime() - 2 * period);
               $scope.fetchData($scope.exchange, $scope.ticker, newMin, $scope.currentMin);
               $scope.currentMin = newMin;
