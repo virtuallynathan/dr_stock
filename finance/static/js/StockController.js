@@ -26,6 +26,15 @@ StockApp.directive('stockChart', function ($parse) {
           $scope.formatDate = d3.time.format("%Y-%m-%d");
           $scope.parseDate = $scope.formatDate.parse;
 
+          $scope.redraw = function() {
+            $scope.svg.select(".x.axis").call($scope.xAxis.tickSize(6).tickFormat(null));
+            $scope.svg.select(".y.axis").call($scope.yAxis.tickSize(6).tickFormat(null));
+            $scope.svg.select(".x.grid").call($scope.xAxis.tickSize(-$scope.height, 0, 0).tickFormat(""));
+            $scope.svg.select(".y.grid").call($scope.yAxis.tickSize(-$scope.width, 0, 0).tickFormat(""));
+            $scope.svg.select("path.area").attr("d", $scope.area);
+            $scope.svg.select("path.line").attr("d", $scope.line);
+          }
+
           $scope.processData = function(data) {
             for (index in data) {
               data[index].date = $scope.parseDate(data[index].date);
@@ -37,13 +46,10 @@ StockApp.directive('stockChart', function ($parse) {
             $scope.x.domain(d3.extent(data, function(d) { return d.date; }));
             $scope.y.domain(d3.extent(data, function(d) { return d.close; }));
             $scope.y.nice();
-
-            $scope.svg.select(".x.axis").call($scope.xAxis);
-            $scope.svg.select(".y.axis").call($scope.yAxis);
-            $scope.svg.select(".x.grid").call($scope.xAxis.tickSize(-$scope.height, 0, 0).tickFormat(""));
-            $scope.svg.select(".y.grid").call($scope.yAxis.tickSize(-$scope.width, 0, 0).tickFormat(""));
-            $scope.svg.selectAll("path.area").datum(data).attr("d", $scope.area);
-            $scope.svg.selectAll("path.line").datum(data).attr("d", $scope.line);
+            $scope.svg.select("path.area").datum(data);
+            $scope.svg.select("path.line").datum(data);
+            $scope.zoom.x($scope.x);
+            $scope.redraw();
           }
 
           $scope.fetchData = function(exchange, ticker, startDate, endDate) {
@@ -88,6 +94,7 @@ StockApp.directive('stockChart', function ($parse) {
             .append("g")
               .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+          // X and Y axes
           scope.svg.append("g")
               .attr("class", "x axis")
               .attr("transform", "translate(0," + scope.height + ")")
@@ -95,6 +102,7 @@ StockApp.directive('stockChart', function ($parse) {
           scope.svg.append("g")
               .attr("class", "y axis")
 
+          // X and Y grids (axes with ticks that span the whole graph)
           scope.svg.append("g")
               .attr("class", "x grid")
               .attr("transform", "translate(0," + scope.height + ")")
@@ -102,8 +110,24 @@ StockApp.directive('stockChart', function ($parse) {
           scope.svg.append("g")
               .attr("class", "y grid")
 
-          scope.svg.append("path").attr("class", "line");
-          scope.svg.append("path").attr("class", "area");
+          // Two paths - one for the line, one for the shaded area
+          scope.svg.append("path").attr("class", "line").attr("clip-path", "url(#clip)");
+          scope.svg.append("path").attr("class", "area").attr("clip-path", "url(#clip)");
+
+          // Zoom pane and behaviour
+		  scope.zoom = d3.behavior.zoom().on("zoom", scope.redraw);
+          scope.svg.append("rect").attr("class", "pane")
+              .attr("width", scope.width)
+              .attr("height", scope.height)
+              .call(scope.zoom)
+
+          scope.svg.append("clipPath")
+              .attr("id", "clip")
+            .append("rect")
+              .attr("x", scope.x(0))
+              .attr("y", scope.y(1))
+              .attr("width", scope.x(1) - scope.x(0))
+              .attr("height", scope.y(0) - scope.y(1));
         }
     };
     return directiveDefinitionObject;
