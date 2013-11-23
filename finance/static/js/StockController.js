@@ -44,8 +44,6 @@ StockApp.directive('stockChart', function ($parse) {
               d2 = d2.date;
               return d1 < d2 ? -1 : (d1 > d2 ? 1 : 0);
             });
-            console.log(data);
-            //$scope.x.domain(d3.extent(data, function(d) { return d.date; }));
             $scope.y.domain(d3.extent(data, function(d) { return d.close; }));
             $scope.y.nice();
             $scope.svg.select("path.area").datum(data);
@@ -62,8 +60,8 @@ StockApp.directive('stockChart', function ($parse) {
             console.log($scope.currentMin);
             if (requiredMin < $scope.currentMin) {
               console.log("neeed to fetch more");
-              var newMin = new Date(requiredMin.getTime() - period);
-              $scope.fetchData($scope.exchange, $scope.ticker, newMin, currentRange[0]);
+              var newMin = new Date(requiredMin.getTime() - 2 * period);
+              $scope.fetchData($scope.exchange, $scope.ticker, newMin, $scope.currentMin);
               $scope.currentMin = newMin;
             }
           }
@@ -93,9 +91,10 @@ StockApp.directive('stockChart', function ($parse) {
           $scope.x = d3.time.scale().range([0, $scope.width]);
           $scope.y = d3.scale.linear().range([$scope.height, 0]);
 
-          $scope.currentMin = $scope.parseDate($scope.startDate);
+          var startDate = $scope.parseDate($scope.startDate);
           var endDate = $scope.parseDate($scope.endDate);
-          $scope.x.domain([$scope.currentMin, endDate]);
+          $scope.currentMin = new Date(startDate.getTime() - 2 * (endDate.getTime() - startDate.getTime()))
+          $scope.x.domain([startDate, endDate]);
           $scope.fetchData($scope.exchange, $scope.ticker, $scope.currentMin, endDate);
         },
         link: function (scope, element, attrs) {
