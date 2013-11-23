@@ -13,6 +13,3 @@ def view_index(request):
 
 def view_stock(request, exchange, ticker):
 	return render(request, 'showStocks.html', {'exchange': exchange, 'ticker': ticker})
-
-def view_historical_data(request):
-	return render(request, 'showHistoricalData.html')
