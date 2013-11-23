@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block pagename %}
+
+  Profile page
+
+{% endblock %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+
+  <p> You have successfully updated your profile information </p>
+
+<form role="form" action="{% url 'users.views.profile' %}" method="post">
+ {% csrf_token %}
+  <div class="form-group">
+    <label for="inputEmail">Email address</label>
+    {{ form.email|attr:"placeholder:email"|attr:"required:false"|add_class:"form-control" }}
+  </div>
+  <div class="form-group">
+    <label for="inputFirstName">First Name</label>
+     {{ form.first_name|attr:"placeholder:first name"|attr:"required:false"|add_class:"form-control" }}
+  </div>
+  <div class="form-group">
+    <label for="inputFirstName">Last Name</label>
+     {{ form.last_name|attr:"placeholder:second name"|attr:"required:false"|add_class:"form-control" }}
+  </div>
+  <button type="submit" class="btn btn-default">Submit</button>
+</form>
+
+
+
+{% endblock %}
