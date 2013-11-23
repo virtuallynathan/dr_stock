@@ -2,7 +2,7 @@ from django.conf.urls import patterns, url
 
 from data.views import view_index, view_stock, view_historical
 from data.views import view_risers, view_fallers, view_biggest
-from data.vnews import view_lite_index
+from data.views import view_lite_index
 
 
 urlpatterns = patterns('',
