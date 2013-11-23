@@ -27,23 +27,25 @@ StockApp.directive('stockChart', function ($parse) {
           $scope.parseDate = $scope.formatDate.parse;
 
           $scope.redraw = function() {
+            console.log($scope.x.domain())
+            $scope.newDataRange();
             $scope.svg.select(".x.axis").call($scope.xAxis.tickSize(6).tickFormat(null));
             $scope.svg.select(".y.axis").call($scope.yAxis.tickSize(6).tickFormat(null));
             $scope.svg.select(".x.grid").call($scope.xAxis.tickSize(-$scope.height, 0, 0).tickFormat(""));
             $scope.svg.select(".y.grid").call($scope.yAxis.tickSize(-$scope.width, 0, 0).tickFormat(""));
             $scope.svg.select("path.area").attr("d", $scope.area);
             $scope.svg.select("path.line").attr("d", $scope.line);
-          }
-
-          $scope.processData = function(data) {
-            for (index in data) {
-              data[index].date = $scope.parseDate(data[index].date);
-            }
-            return data;
+            console.log($scope.area)
           }
 
           $scope.updateChart = function(data) {
-            $scope.x.domain(d3.extent(data, function(d) { return d.date; }));
+            data.sort(function (d1, d2) {
+              d1 = d1.date;
+              d2 = d2.date;
+              return d1 < d2 ? -1 : (d1 > d2 ? 1 : 0);
+            });
+            console.log(data);
+            //$scope.x.domain(d3.extent(data, function(d) { return d.date; }));
             $scope.y.domain(d3.extent(data, function(d) { return d.close; }));
             $scope.y.nice();
             $scope.svg.select("path.area").datum(data);
@@ -52,30 +54,52 @@ StockApp.directive('stockChart', function ($parse) {
             $scope.redraw();
           }
 
+          $scope.newDataRange = function() {
+            var currentRange = $scope.x.domain();
+            var period = currentRange[1].getTime() - currentRange[0].getTime();
+            var requiredMin = new Date(currentRange[0].getTime() - period);
+            console.log(requiredMin);
+            console.log($scope.currentMin);
+            if (requiredMin < $scope.currentMin) {
+              console.log("neeed to fetch more");
+              var newMin = new Date(requiredMin.getTime() - period);
+              $scope.fetchData($scope.exchange, $scope.ticker, newMin, currentRange[0]);
+              $scope.currentMin = newMin;
+            }
+          }
+
           $scope.fetchData = function(exchange, ticker, startDate, endDate) {
             var startDateStr = $scope.formatDate(startDate);
             var endDateStr = $scope.formatDate(endDate);
             $http.get('/data/historical/' + exchange + '/' + ticker + '/' + startDateStr + '/' + endDateStr + '/')
               .success(function(data) {
-                $scope.historical = $scope.processData(data.historical);
-                $scope.updateChart($scope.historical);
+                for (var index in data.historical) {
+                  var datum = data.historical[index];
+                  var dateStr = datum.date;
+                  datum.date = $scope.parseDate(dateStr);
+                  $scope.historical.set(dateStr, datum);
+                }
+                $scope.updateChart($scope.historical.values());
               }).error(function(error) {
                 console.log('you gone and fucked up again aintcha');
               });
           }
 
-          var startDate = $scope.parseDate($scope.startDate);
+          $scope.historical = d3.map();
+          var margin = {top: 20, right: 20, bottom: 30, left: 50};
+          $scope.width = 960 - margin.left - margin.right;
+          $scope.height = 500 - margin.top - margin.bottom;
+
+          $scope.x = d3.time.scale().range([0, $scope.width]);
+          $scope.y = d3.scale.linear().range([$scope.height, 0]);
+
+          $scope.currentMin = $scope.parseDate($scope.startDate);
           var endDate = $scope.parseDate($scope.endDate);
-          $scope.fetchData($scope.exchange, $scope.ticker, startDate, endDate);
+          $scope.x.domain([$scope.currentMin, endDate]);
+          $scope.fetchData($scope.exchange, $scope.ticker, $scope.currentMin, endDate);
         },
         link: function (scope, element, attrs) {
           var margin = {top: 20, right: 20, bottom: 30, left: 50};
-          scope.width = 960 - margin.left - margin.right;
-          scope.height = 500 - margin.top - margin.bottom;
-
-          scope.x = d3.time.scale().range([0, scope.width]);
-          scope.y = d3.scale.linear().range([scope.height, 0]);
-
           scope.xAxis = d3.svg.axis().scale(scope.x).orient("bottom");
           scope.yAxis = d3.svg.axis().scale(scope.y).orient("left");
 
@@ -115,7 +139,7 @@ StockApp.directive('stockChart', function ($parse) {
           scope.svg.append("path").attr("class", "area").attr("clip-path", "url(#clip)");
 
           // Zoom pane and behaviour
-		  scope.zoom = d3.behavior.zoom().on("zoom", scope.redraw);
+		      scope.zoom = d3.behavior.zoom().on("zoom", scope.redraw);
           scope.svg.append("rect").attr("class", "pane")
               .attr("width", scope.width)
               .attr("height", scope.height)
@@ -124,10 +148,10 @@ StockApp.directive('stockChart', function ($parse) {
           scope.svg.append("clipPath")
               .attr("id", "clip")
             .append("rect")
-              .attr("x", scope.x(0))
-              .attr("y", scope.y(1))
-              .attr("width", scope.x(1) - scope.x(0))
-              .attr("height", scope.y(0) - scope.y(1));
+              .attr("x", 0)
+              .attr("y", 0)
+              .attr("width", scope.width)
+              .attr("height", scope.height);
         }
     };
     return directiveDefinitionObject;
