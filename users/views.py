@@ -1,4 +1,5 @@
 from django import forms
+from django.template import Context
 from django.forms import ModelForm, Textarea
 from django.db import models
 from django.conf import settings
@@ -42,20 +43,21 @@ def register(request, template_name='register.html'):
 @csrf_protect
 @login_required
 def profile(request, nav="profile", template_name='profile.html'):
+    context = {}
     if request.method == 'POST': # If the form has been submitted...
         form = UserEditForm(request.POST, instance=request.user) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass
-            form = form.save()
-            return HttpResponseRedirect('/accounts/updated_profile') # Redirect after POST
+            form.save()
+            context ['success'] = True
     else:
-        form = UserEditForm(instance = request.user)
-
-    return render(request, template_name,{'form': form})
+        form = UserEditForm(instance=request.user)
+    context ['form'] = form
+    return render(request, template_name,context)
 
 class UserEditForm(forms.ModelForm):
     email = forms.EmailField()
-    first_name = forms.CharField(max_length=50, widget = forms.TextInput(attrs = {'placeholder':'Update first name ','class':''}))
-    last_name = forms.CharField(max_length=50, widget = forms.TextInput(attrs = {'placeholder':'Update last name ','class':''}))
+    first_name = forms.CharField(max_length=50)
+    last_name = forms.CharField(max_length=50)
     
     class Meta:
         model = User
