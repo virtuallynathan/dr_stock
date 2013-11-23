@@ -1,6 +1,9 @@
 from django import forms
+from django.forms import ModelForm, Textarea
+from django.db import models
 from django.conf import settings
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.http import HttpResponseRedirect
@@ -38,18 +41,35 @@ def register(request, template_name='register.html'):
 
 @csrf_protect
 @login_required
-def profile(request, template_name='profile.html'):
+def profile(request, nav="profile", template_name='profile.html',context = {},extra_context = None):
     if request.method == 'POST': # If the form has been submitted...
-        form = UserEditForm(request.POST) # A form bound to the POST data
+        form = UserEditForm(request.POST, instance=request.user) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass
             form.save()
-            return HttpResponseRedirect('/accounts/profile') # Redirect after POST
-    return render(request, template_name)
+            return HttpResponseRedirect('/accounts/updated_profile') # Redirect after POST
+    else:
+        form = UserEditForm(instance = request.user)
 
-class UserEditForm(forms.Form):
+    context = {
+        'form': form,
+    }
+    return render(request, template_name, context)
+
+class UserEditForm(ModelForm):
+    username = forms.CharField(max_length=50, widget = forms.TextInput(attrs = {'placeholder':'Change username ','class':''}))
     email = forms.EmailField()
-    first_name = forms.CharField(max_length=50)
-    last_name = forms.CharField(max_length=50)
+    first_name = forms.CharField(max_length=50, widget = forms.TextInput(attrs = {'placeholder':'Update first name ','class':''}))
+    last_name = forms.CharField(max_length=50, widget = forms.TextInput(attrs = {'placeholder':'Update last name ','class':''}))
+    
+    def save(self, *args, **kw):
+            self.instance.first_name = self.cleaned_data.get("first_name")
+            self.instance.last_name = self.cleaned_data.get("last_name")
+            self.instance.save()
+            return self.instance
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'first_name', 'last_name')
 
 
 
