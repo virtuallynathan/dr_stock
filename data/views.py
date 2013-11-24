@@ -94,7 +94,6 @@ def view_historical(request, exchange, ticker, start_date, end_date):
     result = serialize_historical(symbol, quotes)
     return json_response(result)
 
-
 def view_risers(request, number):
     prices = get_risers(number)
     result = [serialize_symbol(p.symbol, p) for p in prices]
@@ -111,3 +110,8 @@ def view_biggest(request, number):
     prices = get_biggest(number)
     result = [serialize_symbol(p.symbol, p) for p in prices]
     return json_response(result)
+
+def return_recommendation(request, number):
+    get stocks
+    calc the diff between the last week max price and the 52 wk high (now - 1 wk to now - 53 wks), order by smallest difference. 
+    Return N stocks
