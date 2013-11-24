@@ -131,23 +131,26 @@
                     </div>
                     <div class="title"><a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/" class="label label-info">{{fallers[1].ticker}}</a></div>
                 </div>
-                <a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/">
                 <div class="singleBar">
                     <div class="bar" id="faller2">
                         <div class="value red">
                             <span>{{getBarHeight(fallers, 2, 'faller2', false)}}</span>
                         </div>
                     </div>
-                    <div class="title">{{fallers[2].ticker}}</div>
-                </div></a>
+                    <div class="title"><a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/" class="label label-info">{{fallers[2].ticker}}</a></div>
+                </div>
             </div>
         </div>
         <div class="col-lg-4">
             <div class="smallstat box" ng-repeat="stock in biggest">
-                <i class="fa fa-money blue"></i>
-                <span class="title">Biggest by Market Cap</span>
-               <a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/" class="label label-info">{{cropName(stock.name,20)}}</a>
-                <span class="notification blue">£{{stock.price.market_cap/1000000000}} bil</span>
+                <a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/" class="label label-info">
+                <div>
+                    <i class="fa fa-money blue"></i>
+                    <span class="title">Biggest by Market Cap</span>
+                    <span>{{cropName(stock.name,20)}}</span>
+                    <span class="notification blue">£{{stock.price.market_cap/1000000000}} bil</span>
+                </div>
+                </a>
             </div>
             <div class="verticalChart">
                 <div class="singleBar">
