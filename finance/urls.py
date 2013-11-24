@@ -4,7 +4,6 @@ from django.contrib import admin
 import data.urls
 from users.views import profile, register, send_email, sent, login, logout
 from finance.views import view_index, view_home, view_stock
-from finance.views import view_historical_data
 
 from users.views import favourite_stock, favourite_index, list_favourites
 from users.views import unfavourite_stock, unfavourite_index
