@@ -1,7 +1,7 @@
 var homeApp = angular.module('homeApp', []);
 
 
-homeApp.controller('favouriteCtrl', function($scope, $http, $timeout)
+homeApp.controller('favouritesCtrl', function($scope, $http, $timeout)
   var fetchData = function() {
     $http.get('/accounts/favourites/')
       .success(function(data) {
