@@ -1,7 +1,7 @@
 var homeApp = angular.module('homeApp', []);
 
 
-homeApp.controller('favouritesCtrl', function($scope, $http, $timeout)
+homeApp.controller('favouritesCtrl', function($scope, $http, $timeout) {
   var fetchData = function() {
     $http.get('/accounts/favourites/')
       .success(function(data) {
@@ -16,7 +16,7 @@ homeApp.controller('favouritesCtrl', function($scope, $http, $timeout)
 
 
 
-  );
+  });
 
 homeApp.controller('homeCtrl', function($scope, $http, $timeout) {
   $scope.getBarHeight = function(datas, index, id, capOrChange) {
