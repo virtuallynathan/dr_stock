@@ -16,6 +16,13 @@ IndexApp.controller('IndexListCtrl', function($scope, $http, $timeout) {
     return val + "%";
   };
 
+  $scope.recommendStock = function(components) {
+    if (components == null) return "";
+    var random = Math.floor((Math.random()*components.lenght)+1);
+    var val = components[random].ticker;
+    return val;
+  };
+
   (function refresh() {
     $http.get('/data/index/FTSE/').success(
       function(data) {

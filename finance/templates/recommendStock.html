@@ -17,9 +17,8 @@
 {% verbatim %}
 <div ng-app="IndexApp">
 <div style="margin: auto; max-width: 1024px; height: 100%;" ng-controller="IndexListCtrl" >
-<script>var random = Math.floor((Math.random()*100)+1);
-{{stocks.components[random].ticker}}
-</script>
+{{recommendStock(stocks.components)}}
+
 </div>
 </div>
 
