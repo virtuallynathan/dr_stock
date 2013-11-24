@@ -23,8 +23,8 @@ StockApp.controller('StockParams', function($scope, $routeParams) {
   $scope.ticker = $routeParams.ticker;
 });
 
-StockApp.controller('StockFavorite', function($scope, $http) {
-  $scope.value = "Favorite";
+StockApp.controller('StockFavourite', function($scope, $http) {
+  $scope.value = "Favourite";
   $scope.style = "primary";
   var favouriteStock = function() {
     $http.get('/accounts/favourite/' + $scope.stock.exchange + '/' + $scope.stock.ticker + '/')
@@ -36,7 +36,7 @@ StockApp.controller('StockFavorite', function($scope, $http) {
         console.log("ewps...")
       });
   };
-  var unfavoriteStock = function() {
+  var unfavouriteStock = function() {
     $http.get('/accounts/unfavourite/' + $scope.stock.exchange + '/' + $scope.stock.ticker + '/')
       .success(function(data) {
         $scope.value = "Favourite";
@@ -47,16 +47,15 @@ StockApp.controller('StockFavorite', function($scope, $http) {
       });
   };
 
-  $scope.favorite = function() {
-    if ($scope.value == "Favorite") {
-      favoriteStock();
+  $scope.favourite = function() {
+    if ($scope.value == "Favourite") {
+      favouriteStock();
     }
 
-    if ($scope.value == "Favorited"){
-      unfavoriteStock();
+    if ($scope.value == "Favourited"){
+      unfavouriteStock();
     } 
-
-  }
+  };
 
 
 // /accounts/favourite/<EXCHANGE>/<TICKER>
