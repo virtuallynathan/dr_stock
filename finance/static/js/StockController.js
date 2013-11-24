@@ -26,15 +26,10 @@ StockApp.controller('StockParams', function($scope, $routeParams) {
 StockApp.controller('StockFavorite', function($scope) {
   $scope.value = "Favorite";
   $scope.style = "primary"
-  $scope.favorite = function() {
-    if ($scope.value = "Favorite") {
-      $scope.value = "Favorited"
-      $scope.style = "success"
-    }
-    else {
-      $scope.value = "Favorite"
-      $scope.style = "primary"
-    }
+  $scope.favorite = function() { 
+    $scope.value = $scope.value == "Favorite" ? "Favorited" : "Favorite";
+    $scope.style = $scope.style == "Primary" ? "Success" : "Pimary";
+  }
 
   }
 });
