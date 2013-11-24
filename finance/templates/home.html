@@ -79,7 +79,7 @@
             <div class="smallstat box" ng-repeat="stock in risers">
                 <i class="fa fa-arrow-up green" style="width: 112px;">&nbsp;{{shortenFloat(stock.price.change,2)}}%</i>
                 <span class="title">Biggest Riser</span>
-                <span class="value">{{cropName(stock.name,20)}}</span>
+                <a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/" class="label label-info">{{cropName(stock.name,20)}}</a>
             </div>
             <div class="verticalChart">
                 <div class="singleBar">
@@ -112,7 +112,7 @@
             <div class="smallstat box" ng-repeat="stock in fallers">
                 <i class="fa fa-arrow-down red" style="width: 112px;">&nbsp;{{shortenFloat(-stock.price.change,2)}}%</i>
                 <span class="title">Biggest Faller</span>
-                <span class="value">{{cropName(stock.name,20)}}</span>
+                <a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/" class="label label-info">{{cropName(stock.name,20)}}</a>
             </div>
             <div class="verticalChart">
                 <div class="singleBar">
@@ -145,7 +145,7 @@
             <div class="smallstat box" ng-repeat="stock in biggest">
                 <i class="fa fa-money blue"></i>
                 <span class="title">Biggest by Market Cap</span>
-                <span class="value">{{cropName(stock.name,28)}}</span>
+               <a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/" class="label label-info">{{cropName(stock.name,20)}}</a>
                 <span class="notification blue">£{{stock.price.market_cap/1000000000}} bil</span>
             </div>
             <div class="verticalChart">
