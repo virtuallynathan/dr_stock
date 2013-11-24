@@ -1,25 +1,93 @@
-var StockApp = angular.module('StockApp', []);
+var StockApp = angular.module('StockApp', ['ngRoute']);
 
-StockApp.controller('StockListCtrl', function($scope, $http, $timeout) {
-  $scope.abbreviateNumber = function(n) {
-    with (Math) {
-        var base = floor(log(abs(n))/log(1000));
-        var suffix = 'kmb'[base - 1];
-        return suffix ? String(n / pow(1000, base)).substring(0, 3) + suffix : '' + n;
+
+StockApp.config(function($routeProvider) {
+  $routeProvider.
+    when('/:ticker', {
+      templateUrl: '/static/partials/index-view.html',
+      controller: 'IndexParams'
+    }).
+    when('/:exchange/:ticker', {
+      templateUrl: '/static/partials/stock-view.html',
+      controller: 'StockParams'
+    }).
+    otherwise({
+      redirectTo: '/FTSE'
+    });
+});
+
+var getIndexChange = function(index) {
+};
+
+var getIndexChangeStyle = function(change) {
+
+};
+
+var abbreviateNumber = function(n) {
+  with (Math) {
+    var base = floor(log(abs(n)) / 3);
+    var suffix = 'kmb'[base - 1];
+    return suffix ? String(n / pow(1000, base)).substring(0, 3) + suffix : '' + n;
+  }
+};
+
+
+StockApp.controller('StockParams', function($scope, $routeParams) {
+  // Please someone teach how to use Angular properly
+  $scope.exchange = $routeParams.exchange;
+  $scope.ticker = $routeParams.ticker;
+});
+
+StockApp.controller('StockDataCtrl', function($scope, $http, $timeout) {
+  var fetchData = function() {
+    $http.get('/data/stock/' + $scope.exchange + '/' + $scope.ticker + '/')
+      .success(function(data) {
+        $scope.stock = data;
+        $timeout(fetchData, 1000 * 60 * 5);
+      })
+      .error(function(error) {
+        $timeout(fetchData, 1000 * 60 * 5);
+      });
+  };
+  fetchData();
+});
+
+StockApp.controller('IndexParams', function($scope, $routeParams) {
+  $scope.ticker = $routeParams.ticker;
+});
+
+StockApp.controller('IndexDataCtrl', function($scope, $http, $timeout) {
+  var indexChange = function(index) {
+    var ratio = index.price.price / index.price.last_close;
+    return ((ratio - 1) * 100).toFixed(3);;
+  };
+
+  var indexStyle = function(change) {
+    if (change > 0) {
+      return 'border-color: #bdea74';
+    } else if (change < 0) {
+      return 'border-color: #ff5454';
+    } else {
+      return 'border-color: #36a9e1';
     }
   };
 
-  (function refresh() {
-    $http.get('/data/stock/' + exchange + '/' + ticker + '/').success(
-      function(data) {
-        $scope.stocks = data;
-        $timeout(refresh, 1000 * 60 * 5);
-      }).error(
-        function(error) {
-          $scope.stocks = ['everythings fucked'];
-          $timeout(refresh, 1000 * 60 * 5);
-        }
-    );})();
+  var fetchData = function() {
+    $http.get('/data/index/' + $scope.ticker + '/')
+      .success(function(data) {
+        $scope.index = data;
+
+        var change = indexChange($scope.index);
+        $scope.index_change = change + "%";
+        $scope.index_change_colour = indexStyle(change);
+        $timeout(fetchData, 1000 * 60 * 5);
+      })
+      .error(function(error) {
+        $timeout(fetchData, 1000 * 60 * 5);
+      });
+  };
+
+  fetchData();
 });
 
 

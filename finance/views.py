@@ -6,13 +6,10 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 def view_home(request):
-	return render(request, 'home.html')
+    return render(request, 'home.html')
 
-def view_index(request):
-	return render(request, 'showIndexes.html')
-
-def view_stock(request, exchange, ticker):
-	return render(request, 'showStocks.html', {'exchange': exchange, 'ticker': ticker})
+def view_stock(request):
+    return render(request, 'stocks.html')
 
 def view_recommendation(request):
-	return render(request, 'recommendStock.html')
+    return render(request, 'recommendStock.html')

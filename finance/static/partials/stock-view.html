@@ -1,0 +1,56 @@
+<div class="container" ng-controller="StockDataCtrl">
+
+<div class="row" style="padding-left: 14px; padding-right: 14px">
+  <div class="col-md-4 col-md-offset-4" style="text-align: center;">
+    <h1>{{stock.name}}</h1>
+    <h2>{{stock.ticker}}</h2>
+    <h3>{{stock.exchange}}</h3>
+  </div>
+</div>
+
+<div class="tempStats row">
+  <div class="col-md-3 col-sm-4">
+    <div class="tempStatBox">
+      <div class="tempStat" style="border-color: rgb(103, 194, 239);">
+        {{stock.price.price.toFixed(2)}}
+      </div>
+      <span>Price</span>
+    </div>
+  </div><!--/col-->
+
+  <div class="col-md-3 col-sm-4">
+    <div class="tempStatBox">
+      <div class="tempStat" style="border-color: rgb(250, 96, 61);">
+        {{stock.price.last_close.toFixed(2)}}
+      </div>
+    <span>Last Close</span>
+    </div>
+  </div><!--/col-->
+
+  <div class="col-md-3 col-sm-4">
+    <div class="tempStatBox">
+      <div class="tempStat" style="border-color: rgb(103, 194, 239);">
+        {{abbreviateNumber(stock.price.volume)}}
+      </div>
+      <span>Volume</span>
+    </div>
+  </div><!--/col-->
+
+
+  <div class="col-md-3 col-sm-4">
+    <div class="tempStatBox">
+      <div class="tempStat" style="border-color: rgb(234, 232, 116);">
+        {{((stock.price.price / stock.price.last_close - 1) * 100).toFixed(3)}}%
+      </div>
+      <span>Change</span>
+    </div>
+  </div><!--/col-->
+
+  <div class="clearfix"></div>
+</div>
+
+<div style="background-color: #36A9E1; border-radius: 2px;">
+  <stock-chart exchange="{{ exchange }}" ticker="{{ ticker }}" start-date="2013-03-22" end-date="2013-11-22"/>
+</div>
+
+</div>
