@@ -2,8 +2,7 @@
 <div class="row" style="padding-left: 14px; padding-right: 14px">
   <div class="col-md-4 col-md-offset-4" style="text-align: center;">
     <h1>{{index.name}}</h1>
-    <button type="button" class="btn btn-primary" ng-click="favorite=1" ng-init="favorite=0">Favorite</button>
-    <h3>Test: {{favorite}}</h3>
+    <button type="button" class="btn btn-primary" ng-click="favorite()" ng-dblclick="unfavorite()" ng-controller="StockFavorite">{{value}}</button>
     <h2>{{index.ticker}}</h2>
     <h3 id="exc-name">{{index.exchange}}</h3>
   </div>
@@ -69,8 +68,7 @@
       <td>{{stock.price.price.toFixed(2)}}</td>
       <td>{{stock.price.volume.toFixed(2)}}</td>
       <td>{{stock.price.market_cap.toFixed(2)}}</td>
-      <td><button type="button" class="btn btn-primary" ng-click="favorite=1" ng-init="favorite=0" ng-dblclick="favorite=0">Favorite</button></td>
-      <td>Favorite?: {{favorite}}</td>
+      <td><button type="button" class="btn btn-primary" ng-click="favorite()" ng-dblclick="unfavorite()" ng-controller="StockFavorite">{{value}}</button></td>
       </a>
     </tr>
   </table>

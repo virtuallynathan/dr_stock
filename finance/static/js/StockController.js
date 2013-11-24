@@ -23,6 +23,16 @@ StockApp.controller('StockParams', function($scope, $routeParams) {
   $scope.ticker = $routeParams.ticker;
 });
 
+StockApp.controller('StockFavorite', function($scope) {
+  $scope.favorite = function() {
+    $scope.value = "Favorited"
+  }
+  $scope.unfavorite = function() {
+    $scope.value = "Favorite"
+  }
+
+};
+
 
 StockApp.controller('StockDataCtrl', function($scope, $http, $timeout) {
 
