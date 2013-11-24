@@ -19,6 +19,7 @@ from data.views import serialize_symbol, json_response
 
 
 REDIRECT_FIELD_NAME = 'next'
+DEFAULT_REDIRECT = '/'
 
 
 @csrf_protect
@@ -28,7 +29,7 @@ def register(request, template_name='register.html'):
                                    request.GET.get(REDIRECT_FIELD_NAME, ''));
 
     if not is_safe_url(url=redirect_to, host=request.get_host()):
-        redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
+        redirect_to = resolve_url(DEFAULT_REDIRECT)
 
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -99,7 +100,7 @@ def login(request, template_name='users/login.html'):
                                    request.GET.get(REDIRECT_FIELD_NAME, ''))
 
     if not is_safe_url(url=redirect_to, host=request.get_host()):
-        redirect_to = resolve_url('users/login.html')
+        redirect_to = resolve_url(DEFAULT_REDIRECT)
 
     if request.user.is_authenticated():
         return HttpResponseRedirect(redirect_to)
@@ -127,7 +128,7 @@ def logout(request, template_name='users/logout.html'):
                                    request.GET.get(REDIRECT_FIELD_NAME, ''))
 
     if not is_safe_url(url=redirect_to, host=request.get_host()):
-        redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
+        redirect_to = resolve_url(DEFAULT_REDIRECT)
 
     return HttpResponseRedirect(redirect_to)
 
