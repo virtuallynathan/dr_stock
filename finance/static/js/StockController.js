@@ -9,7 +9,6 @@ StockApp.controller('StockListCtrl', function($scope, $http, $timeout) {
     }
   };
 
-
   (function refresh() {
     $http.get('/data/stock/' + exchange + '/' + ticker + '/').success(
       function(data) {
