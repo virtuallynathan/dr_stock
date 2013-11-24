@@ -27,14 +27,16 @@ StockApp.controller('StockFavorite', function($scope) {
   $scope.value = "Favorite";
   $scope.style = "primary"
   $scope.favorite = function() {
-    $scope.value = "Favorited"
-    $scope.style = "success"
-  }
-  $scope.unfavorite = function() {
-    $scope.value = "Favorite"
-    $scope.style = "primary"
-  }
+    if ($scope.value = "Favorite") {
+      $scope.value = "Favorited"
+      $scope.style = "success"
+    }
+    else {
+      $scope.value = "Favorite"
+      $scope.style = "primary"
+    }
 
+  }
 });
 
 
