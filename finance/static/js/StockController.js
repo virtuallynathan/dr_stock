@@ -32,7 +32,7 @@ StockApp.controller('StockFavorite', function($scope) {
   }
   $scope.unfavorite = function() {
     $scope.value = "Favorite"
-    $scope.style = "success"
+    $scope.style = "primary"
   }
 
 });
