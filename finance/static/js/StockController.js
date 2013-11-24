@@ -30,8 +30,6 @@ StockApp.controller('StockFavorite', function($scope) {
     $scope.value = $scope.value == "Favorite" ? "Favorited" : "Favorite";
     $scope.style = $scope.style == "Primary" ? "Success" : "Pimary";
   }
-
-  }
 });
 
 
