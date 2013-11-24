@@ -163,30 +163,36 @@
                 </a>
             </div>
             <div class="verticalChart">
+            <a href="/stock/#/{{biggest[0].exchange}}/{{biggest[0].ticker}}/">
                 <div class="singleBar">
                     <div class="bar" id="biggest0">
                         <div class="value blue">
                             <span>{{getBarHeight(biggest, 0, 'biggest0', true)}}</span>
                         </div>
                     </div>
-                    <div class="title"><a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/" class="label label-info">{{biggest[0].ticker}}</a></div>
+                    <div class="title">{{biggest[0].ticker}}</div>
                 </div>
+                </a>
+                <a href="/stock/#/{{biggest[1].exchange}}/{{biggest[1].ticker}}/">
                 <div class="singleBar">
                     <div class="bar" id="biggest1">
                         <div class="value blue">
                             <span>{{getBarHeight(biggest, 1, 'biggest1', true)}}</span>
                         </div>
                     </div>
-                    <div class="title"><a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/" class="label label-info">{{biggest[1].ticker}}</a></div>
+                    <div class="title">{{biggest[1].ticker}}</div>
                 </div>
+                </a>
+                <a href="/stock/#/{{biggest[2].exchange}}/{{biggest[2].ticker}}/">
                 <div class="singleBar">
                     <div class="bar" id="biggest2">
                         <div class="value blue">
                             <span>{{getBarHeight(biggest, 2, 'biggest2', true)}}</span>
                         </div>
                     </div>
-                   <div class="title"><a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/" class="label label-info">{{biggest[2].ticker}}</a></div>
+                   <div class="title">{{biggest[2].ticker}}</div>
                 </div>
+                </a>
             </div>
         </div>
     <br/> <br/>
