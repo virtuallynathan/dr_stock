@@ -2,7 +2,7 @@
 
 {% block pageheaders %}
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.min.js"></script>
-<script src="/static/js/StockController.js"></script>
+<script src="/static/js/IndexController.js"></script>
 
 {% endblock %}
 
@@ -15,8 +15,8 @@
 
 {% block content %}
 {% verbatim %}
-<div ng-app="StockApp">
-<div style="margin: auto; max-width: 1024px; height: 100%;" ng-controller="StockListCtrl" >
+<div ng-app="IndexApp">
+<div style="margin: auto; max-width: 1024px; height: 100%;" ng-controller="IndexListCtrl" >
 <script>var random = Math.floor((Math.random()*100)+1);</script>
 {{stocks[4].ticker}}
 </div>
