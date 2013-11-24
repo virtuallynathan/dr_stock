@@ -31,7 +31,7 @@ StockApp.controller('StockFavorite', function($scope) {
     $scope.value = "Favorite"
   }
 
-};
+});
 
 
 StockApp.controller('StockDataCtrl', function($scope, $http, $timeout) {
