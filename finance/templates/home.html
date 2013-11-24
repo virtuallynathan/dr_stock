@@ -175,8 +175,8 @@
                 </div>
             </div>
         </div>
-
-        <div id="comp-pane">
+    <br/> <br/>
+    <div id="comp-pane" ng-controller="favouriteCtrl">
   <div>
       <form role="form">
           <input type="text" class="form-control" placeholder="Search" ng-model="query">
@@ -187,17 +187,13 @@
       <tr>
         <th><a href="" ng-click="reverse = predicate == 'name' && !reverse; predicate = 'ticker'">Ticker</a></th>
         <th><a href="" ng-click="reverse = predicate == 'name' && !reverse; predicate = 'name'">Name</a></th>
-        <th><a href="" ng-click="reverse = predicate == 'price.price' && !reverse; predicate = 'price.price'">Price</a></th>
-        <th><a href="" ng-click="reverse = predicate == 'price.volume' && !reverse; predicate = 'price.volume'">Volume</a></th>
-        <th><a href="" ng-click="reverse = predicate == 'price.market_cap' && !reverse; predicate = 'price.market_cap'">Market Cap</a></th>
+         <th><a href="" ng-click="reverse = predicate == 'name' && !reverse; predicate = 'name'">Exchange</a></th>
       </tr>
     </thead>
-    <tr ng-repeat="stock in index.components | filter:query | orderBy:predicate:reverse" id="tbl-row-{{stock.ticker}}" onclick="toggleStockPage(this);" style="cursor: pointer;">
+    <tr ng-repeat="stock in favourites | filter:query | orderBy:predicate:reverse" id="tbl-row-{{stock.ticker}}" onclick="toggleStockPage(this);" style="cursor: pointer;">
       <td><a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/" class="label label-info">{{stock.ticker}}</a></td>
       <td>{{stock.name}}</td>
-      <td>{{stock.price.price.toFixed(2)}}</td>
-      <td>{{stock.price.volume.toFixed(2)}}</td>
-      <td>{{stock.price.market_cap.toFixed(2)}}</td>
+      <td>{{stock.exchange}}</td>
       <td><button type="button" class="btn btn-{{style}} btn-xs" ng-click="favorite()" ng-controller="StockFavorite">{{value}}</button></td>
       </a>
     </tr>
