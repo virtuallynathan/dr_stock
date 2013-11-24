@@ -26,7 +26,7 @@ StockApp.controller('StockParams', function($scope, $routeParams) {
 StockApp.controller('StockFavorite', function($scope, $http) {
   $scope.value = "Favorite";
   $scope.style = "primary";
-  var favoriteStock = function() {
+  var favouriteStock = function() {
     $http.get('/accounts/favourite/' + $scope.stock.exchange + '/' + $scope.stock.ticker + '/')
       .success(function(data) {
         $scope.value = "Favourited";
