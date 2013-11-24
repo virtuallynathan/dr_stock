@@ -175,40 +175,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
-            <div class="smallstat box" ng-repeat="stock in favourites">
-                <i class="fa fa-money blue"></i>
-                <span class="title">{{stock.name}}</span>
-                <span class="value">{{cropName(stock.name,28)}}</span>
-                <span class="notification blue">£{{stock.price.market_cap/1000000000}} bil</span>
-            </div>
-            <div class="verticalChart">
-                <div class="singleBar">
-                    <div class="bar" id="biggest0">
-                        <div class="value blue">
-                            <span>{{getBarHeight(biggest, 0, 'biggest0', true)}}</span>
-                        </div>
-                    </div>
-                    <div class="title">{{biggest[0].ticker}}</div>
-                </div>
-                <div class="singleBar">
-                    <div class="bar" id="biggest1">
-                        <div class="value blue">
-                            <span>{{getBarHeight(biggest, 1, 'biggest1', true)}}</span>
-                        </div>
-                    </div>
-                    <div class="title">{{biggest[1].ticker}}</div>
-                </div>
-                <div class="singleBar">
-                    <div class="bar" id="biggest2">
-                        <div class="value blue">
-                            <span>{{getBarHeight(biggest, 2, 'biggest2', true)}}</span>
-                        </div>
-                    </div>
-                    <div class="title">{{biggest[2].ticker}}</div>
-                </div>
-            </div>
-        </div>
+       
     </div>
     {% endverbatim %}
 </div>
