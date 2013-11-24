@@ -16,6 +16,24 @@ StockApp.config(function($routeProvider) {
     });
 });
 
+var getExchangeStyle = function(change) {
+  if (change > 0) {
+    return 'border-color: #bdea74';
+  } else if (change < 0) {
+    return 'border-color: #ff5454';
+  } else {
+    return 'border-color: #36a9e1';
+  }
+};
+
+var abbreviateNumber = function(n) {
+  with (Math) {
+    var base = floor(log(abs(n)) / 3);
+    var suffix = 'kmb'[base - 1];
+    return suffix ? String(n / pow(1000, base)).substring(0, 3) + suffix : '' + n;
+  }
+};
+
 
 StockApp.controller('StockParams', function($scope, $routeParams) {
   // Please someone teach how to use Angular properly
@@ -23,68 +41,39 @@ StockApp.controller('StockParams', function($scope, $routeParams) {
   $scope.ticker = $routeParams.ticker;
 });
 
-
 StockApp.controller('StockDataCtrl', function($scope, $http, $timeout) {
-
-  var abbreviateNumber = function(n) {
-    with (Math) {
-      var base = floor(log(abs(n)) / log(1000));
-      var suffix = 'kmb'[base - 1];
-      return suffix ? (n / pow(1000, base)).toPrecision(3) + suffix : '' + n;
-    }
-  };
-
   var fetchData = function() {
     $http.get('/data/stock/' + $scope.exchange + '/' + $scope.ticker + '/')
       .success(function(data) {
         $scope.stock = data;
-        $scope.volume = abbreviateNumber($scope.stock.price.volume);
         $timeout(fetchData, 1000 * 60 * 5);
       })
       .error(function(error) {
+        $scope.stock = ['everythings fucked'];
         $timeout(fetchData, 1000 * 60 * 5);
       });
-  };
+  }
   fetchData();
 });
-
 
 StockApp.controller('IndexParams', function($scope, $routeParams) {
   $scope.ticker = $routeParams.ticker;
 });
 
-
 StockApp.controller('IndexDataCtrl', function($scope, $http, $timeout) {
-  var indexChange = function(index) {
-    var ratio = index.price.price / index.price.last_close;
-    return ((ratio - 1) * 100).toFixed(3);;
-  };
-
-  var indexStyle = function(change) {
-    if (change > 0) {
-      return 'border-color: #bdea74';
-    } else if (change < 0) {
-      return 'border-color: #ff5454';
-    } else {
-      return 'border-color: #36a9e1';
-    }
-  };
-
   var fetchData = function() {
     $http.get('/data/index/' + $scope.ticker + '/')
       .success(function(data) {
         $scope.index = data;
-
-        var change = indexChange($scope.index);
-        $scope.index_change = change + "%";
-        $scope.index_change_colour = indexStyle(change);
+        $scope.index_change = ((index.price.price / index.price.last_close - 1) * 100).toFixed(3) + "%";
+        $scope.index_change_colour = getExchangeColour($scope.index_change)
         $timeout(fetchData, 1000 * 60 * 5);
       })
       .error(function(error) {
+        $scope.index = ['everythings fucked'];
         $timeout(fetchData, 1000 * 60 * 5);
       });
-  };
-
+  }
   fetchData();
 });
 
@@ -93,21 +82,14 @@ StockApp.directive('stockChart', function ($parse) {
     var directiveDefinitionObject = {
         restrict: 'E',
         replace: true,
-        scope: {exchange: '@exchange', ticker: '@ticker'},
+        scope: {exchange: '@exchange', ticker: '@ticker',
+                startDate: '@startDate', endDate: '@endDate'},
         template: '<div class="chart"></div>',
         controller: function ($scope, $http) {
           $scope.formatDate = d3.time.format("%Y-%m-%d");
           $scope.parseDate = $scope.formatDate.parse;
 
-          $scope.fixupDomain = function() {
-            var range = $scope.x.domain();
-            range[0] = Math.max(range[0], $scope.lowestDate);
-            range[1] = Math.min(range[1], $scope.highestDate);
-            $scope.x.domain(range);
-          }
-
           $scope.redraw = function() {
-            $scope.fixupDomain();
             $scope.newDataRange();
             $scope.svg.select(".x.axis").call($scope.xAxis.tickSize(6).tickFormat(null));
             $scope.svg.select(".y.axis").call($scope.yAxis.tickSize(6).tickFormat(null));
@@ -123,10 +105,6 @@ StockApp.directive('stockChart', function ($parse) {
               d2 = d2.date;
               return d1 < d2 ? -1 : (d1 > d2 ? 1 : 0);
             });
-
-            $scope.lowestDate = data[0].date;
-            $scope.highestDate = data[data.length - 1].date;
-
             $scope.y.domain(d3.extent(data, function(d) { return d.close; }));
             $scope.y.nice();
             $scope.svg.select("path.area").datum(data);
@@ -171,10 +149,8 @@ StockApp.directive('stockChart', function ($parse) {
           $scope.x = d3.time.scale().range([0, $scope.width]);
           $scope.y = d3.scale.linear().range([$scope.height, 0]);
 
-          var endDate = new Date();
-          var startDate = new Date();
-          startDate.setMonth(startDate.getMonth() - 9);
-
+          var startDate = $scope.parseDate($scope.startDate);
+          var endDate = $scope.parseDate($scope.endDate);
           $scope.currentMin = new Date(startDate.getTime() - 2 * (endDate.getTime() - startDate.getTime()))
           $scope.x.domain([startDate, endDate]);
           $scope.fetchData($scope.exchange, $scope.ticker, $scope.currentMin, endDate);
@@ -237,3 +213,4 @@ StockApp.directive('stockChart', function ($parse) {
     };
     return directiveDefinitionObject;
 });
+

@@ -30,7 +30,7 @@
   <div class="col-md-3 col-sm-4">
     <div class="tempStatBox">
       <div class="tempStat" style="border-color: rgb(103, 194, 239);">
-        {{abbreviateNumber(stock.price.volume)}}
+        {{volume}}
       </div>
       <span>Volume</span>
     </div>
@@ -50,7 +50,7 @@
 </div>
 
 <div style="background-color: #36A9E1; border-radius: 2px;">
-  <stock-chart exchange="{{ exchange }}" ticker="{{ ticker }}" start-date="2013-03-22" end-date="2013-11-22"/>
+  <stock-chart exchange="{{ exchange }}" ticker="{{ ticker }}"/>
 </div>
 
 </div>
