@@ -16,7 +16,7 @@ homeApp.controller('favouritesCtrl', function($scope, $http, $timeout) {
 
 
 
-  );
+ } );
 
 homeApp.controller('homeCtrl', function($scope, $http, $timeout) {
   $scope.getBarHeight = function(datas, index, id, capOrChange) {
