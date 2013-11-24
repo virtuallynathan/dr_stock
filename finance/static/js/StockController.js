@@ -23,14 +23,43 @@ StockApp.controller('StockParams', function($scope, $routeParams) {
   $scope.ticker = $routeParams.ticker;
 });
 
-StockApp.controller('StockFavorite', function($scope) {
+StockApp.controller('StockFavorite', function($scope, $http) {
   $scope.value = "Favorite";
-  $scope.style = "primary"
-  $scope.favorite = function() { 
-    $scope.value = $scope.value == "Favorite" ? "Favorited" : "Favorite";
-    $scope.style = $scope.style == "primary" ? "success" : "primary";
+  $scope.style = "primary";
+  var favoriteStock = function() {
+    $http.get('/accounts/favourite' + $scope.stock.exchange + '/' + $scope.stock.ticker + '/')
+      .success(function(data) {
+        $scope.value = $scope.value == "Favorite" ? "Favorited" : "Favorite";
+        $scope.style = $scope.style == "primary" ? "success" : "primary";
+      })
+      .error(function(error) {
+        console.log("ewps...")
+      });
+  };
+  var unfavoriteStock = function() {
+    $http.get('/accounts/unfavourite' + $scope.stock.exchange + '/' + $scope.stock.ticker + '/')
+      .success(function(data) {
+        $scope.value = $scope.value == "Favorite" ? "Favorited" : "Favorite";
+        $scope.style = $scope.style == "primary" ? "success" : "primary";
+      })
+      .error(function(error) {
+        console.log("ewps...")
+      });
+  };
+  $scope.favorite = function() {
+  if ($scope.value == "Favorite") {
+    favoriteStock();
   }
-  
+  if ($scope.value == "Favorited"){
+    unfavoriteStock();
+  } 
+
+  }
+
+
+// /accounts/favourite/<EXCHANGE>/<TICKER>
+// /acounts/favourite/<TICKER> (exchange)
+
 });
 
 
