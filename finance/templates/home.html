@@ -76,10 +76,13 @@
     <div class="row">
     {% verbatim %}
         <div class="col-lg-4">
+          <a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/">
+          <div>
             <div class="smallstat box" ng-repeat="stock in risers">
                 <i class="fa fa-arrow-up green" style="width: 112px;">&nbsp;{{shortenFloat(stock.price.change,2)}}%</i>
                 <span class="title">Biggest Riser</span>
-                <a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/" class="label label-info">{{cropName(stock.name,20)}}</a>
+                <span>{{cropName(stock.name,20)}}</span>
+            </div>
             </div>
             <div class="verticalChart">
                 <div class="singleBar">
@@ -109,10 +112,13 @@
             </div>
         </div>
         <div class="col-lg-4">
+         <a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/">
+                <div>
             <div class="smallstat box" ng-repeat="stock in fallers">
                 <i class="fa fa-arrow-down red" style="width: 112px;">&nbsp;{{shortenFloat(-stock.price.change,2)}}%</i>
                 <span class="title">Biggest Faller</span>
-                <a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/" class="label label-info">{{cropName(stock.name,20)}}</a>
+                <span>{{cropName(stock.name,20)}}</span>
+            </div>
             </div>
             <div class="verticalChart">
                 <div class="singleBar">
