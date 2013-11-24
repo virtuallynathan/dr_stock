@@ -29,8 +29,8 @@ StockApp.controller('StockFavorite', function($scope, $http) {
   var favoriteStock = function() {
     $http.get('/accounts/favourite/' + $scope.stock.exchange + '/' + $scope.stock.ticker + '/')
       .success(function(data) {
-        $scope.value = $scope.value == "Favorite" ? "Favorited" : "Favorite";
-        $scope.style = $scope.style == "primary" ? "success" : "primary";
+        $scope.value = "Favourited";
+        $scope.style = "success";
       })
       .error(function(error) {
         console.log("ewps...")
@@ -39,20 +39,22 @@ StockApp.controller('StockFavorite', function($scope, $http) {
   var unfavoriteStock = function() {
     $http.get('/accounts/unfavourite/' + $scope.stock.exchange + '/' + $scope.stock.ticker + '/')
       .success(function(data) {
-        $scope.value = $scope.value == "Favorite" ? "Favorited" : "Favorite";
-        $scope.style = $scope.style == "primary" ? "success" : "primary";
+        $scope.value = "Favourite";
+        $scope.style = "primary";
       })
       .error(function(error) {
         console.log("ewps...")
       });
   };
+
   $scope.favorite = function() {
-  if ($scope.value == "Favorite") {
-    favoriteStock();
-  }
-  if ($scope.value == "Favorited"){
-    unfavoriteStock();
-  } 
+    if ($scope.value == "Favorite") {
+      favoriteStock();
+    }
+
+    if ($scope.value == "Favorited"){
+      unfavoriteStock();
+    } 
 
   }
 
