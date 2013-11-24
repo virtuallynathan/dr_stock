@@ -111,7 +111,8 @@ def view_biggest(request, number):
     result = [serialize_symbol(p.symbol, p) for p in prices]
     return json_response(result)
 
-def return_recommendation(request, number):
-    get stocks
-    calc the diff between the last week max price and the 52 wk high (now - 1 wk to now - 53 wks), order by smallest difference. 
-    Return N stocks
+
+#def return_recommendation(request, number):
+#    get stocks
+#    calc the diff between the last week max price and the 52 wk high (now - 1 wk to now - 53 wks), order by smallest change.
+
