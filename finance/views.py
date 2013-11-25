@@ -41,11 +41,11 @@ WITH tc AS (SELECT symbol_id, Avg(close) FROM data_quote WHERE date >= '{0:%Y-%m
          INNER JOIN tb on ta.symbol_id = tb.symbol_id
            WHERE tc.avg > tb.avg AND tb.avg > ta.avg
 ) t INNER JOIN data_symbol ON id = symbol_id
-      ORDER BY (c^2 * b - b^2 * c + a * b^2 - a * c^2 + a^2 * c - a^2 * b);
+      ORDER BY ((c - a) * (b - a) * (c - b));
 '''.format(c_start, a_start, b_start, today)
 
     symbols = Symbol.objects.raw(statement)
-    
+
     result = []
     for symbol in symbols:
         price = get_price(symbol)
