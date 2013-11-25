@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from data.models import quotes
+from data.models import Quote
 
 def view_home(request):
     return render(request, 'home.html')
