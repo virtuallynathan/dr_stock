@@ -25,12 +25,12 @@ StockApp.controller('StockParams', function($scope, $routeParams) {
 
 StockApp.controller('StockFavourite', function($scope, $http) {
   $scope.value = "Favourite";
-  $scope.style = "primary";
+  $scope.style = "nt_fav";
   var favouriteStock = function() {
     $http.get('/accounts/favourite/' + $scope.stock.exchange + '/' + $scope.stock.ticker + '/')
       .success(function(data) {
         $scope.value = "Favourited";
-        $scope.style = "success";
+        $scope.style = "is_fav";
       })
       .error(function(error) {
         console.log("ewps...")
@@ -40,7 +40,7 @@ StockApp.controller('StockFavourite', function($scope, $http) {
     $http.get('/accounts/unfavourite/' + $scope.stock.exchange + '/' + $scope.stock.ticker + '/')
       .success(function(data) {
         $scope.value = "Favourite";
-        $scope.style = "primary";
+        $scope.style = "nt_fav";
       })
       .error(function(error) {
         console.log("ewps...")
