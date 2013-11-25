@@ -5,7 +5,10 @@
     <h1>{{stock.name}}</h1>
     <h2>{{stock.ticker}}</h2>
     <h3>{{stock.exchange}}</h3>
-    <button type="button" class="btn btn-{{style}} btn-xs" ng-click="favourite()" ng-controller="StockFavourite">{{value}}</button>
+    <a class="quick-button-small" ng-click="favourite()" ng-controller="StockFavourite"> 
+      <i class="fa fa-heart-o"></i>
+      <p>{{value}}</p>
+    </a>
   </div>
 </div>
 
