@@ -27,6 +27,33 @@ StockApp.controller('StockParams', function($scope, $routeParams) {
 });
 
 StockApp.controller('PortfolioCtrl', function($scope, $http) {
+
+  $scope.toggleStockPage = function toggleStockPage(sender) {
+
+    var parent_row = sender;
+
+    if (parent_row.className.match(/\bacc_open\b/)) {
+
+      parent_row.className = parent_row.className.replace('acc_open','');
+      $(parent_row.nextSibling).animate({height: '0px'}, {complete: function(){ parent_row.parentNode.removeChild(parent_row.nextSibling); }});
+
+    } else {
+      var new_row = document.createElement('tr');
+
+      var ticker = parent_row.firstElementChild.firstElementChild.innerHTML;
+      new_row.innerHTML = "<td style=\"background-color: #36a9e1; color: #FFFFFF; height: 0px;\" colspan=\"6\">" +
+      "<div>" +
+      "<stock-chart exchange=\""+$('#exc-name').html()+"\" ticker=\""+ticker+"\"/>"
+      "</div>" +
+      "</td>";
+
+      parent_row.parentNode.insertBefore(new_row, parent_row.nextSibling);
+      $(new_row).animate({height: '256px'});
+      parent_row.className += ' acc_open';
+    }
+
+  }
+
   var stockKey = function(stock) {
     return stock.exchange + stock.ticker;
   }
@@ -171,7 +198,6 @@ StockApp.controller('IndexDataCtrl', function($scope, $http, $timeout) {
 
   fetchData();
 });
-
 
 StockApp.directive('stockChart', function ($parse) {
     var directiveDefinitionObject = {
