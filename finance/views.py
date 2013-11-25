@@ -8,14 +8,18 @@ from django.shortcuts import render
 from datetime import datetime, timedelta
 from pytz import utc
 
-from data.models import Quote
+from data.cache import get_price
+from data.models import Quote, Symbol
 from data.views import serialize_symbol, json_response
+
 
 def view_home(request):
     return render(request, 'home.html')
 
+
 def view_stock(request):
     return render(request, 'stocks.html')
+
 
 def view_recommendations(request):
     c_date_size = 45
@@ -39,10 +43,15 @@ WITH tc AS (SELECT symbol_id, Avg(close) FROM data_quote WHERE date >= '{0:%Y-%m
 ) t INNER JOIN data_symbol ON id = symbol_id
       ORDER BY (c^2 * b - b^2 * c + a * b^2 - a * c^2 + a^2 * c - a^2 * b);
 '''.format(c_start, a_start, b_start, today)
-    print statement
-    quotes = list(Quote.objects.raw(statement))
-    print quotes
-    return json_response(quotes)
+
+    symbols = Symbol.objects.raw(statement)
+    
+    result = []
+    for symbol in symbols:
+        price = get_price(symbol)
+        result.append(serialize_symbol(symbol, price))
+
+    return json_response(result)
 
 
 def view_portfolio(request):
