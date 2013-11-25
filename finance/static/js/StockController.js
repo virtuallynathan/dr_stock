@@ -30,13 +30,9 @@ StockApp.controller('PortfolioCtrl', function($scope, $http) {
 
   $scope.toggleStockPage = function toggleStockPage(stock) {
 
-    var sender = $("#tbl-row-" + stock.ticker).get(0);
+    var parent_row = $("#tbl-row-" + stock.ticker).get(0);
     alert("#tbl-row-" + stock.ticker);
     alert(sender.innerHTML);
-
-    /*
-
-    var parent_row = sender;
 
     if (parent_row.className.match(/\bacc_open\b/)) {
 
@@ -57,8 +53,6 @@ StockApp.controller('PortfolioCtrl', function($scope, $http) {
       $(new_row).animate({height: '256px'});
       parent_row.className += ' acc_open';
     }
-    */
-
   };
 
   var stockKey = function(stock) {
