@@ -77,7 +77,7 @@
     {% verbatim %}
         <div class="col-lg-4">
 
-            <div class="smallstat box" ng-repeat="stock in risers" onclick="window.location = this.firstElementChild.href;" style="cursor: pointer;">
+            <div class="smallstat box" ng-repeat="stock in risers" onclick="window.location = this.firstElementChild.href;" style="cursor: pointer;" onmouseover="this.style.borderColor = '#36a9e1;';">
                 <a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/" style="display: none;">&nbsp;</a>
           <div>
                 <i class="fa fa-arrow-up green" style="width: 112px;">&nbsp;{{shortenFloat(stock.price.change,2)}}%</i>
