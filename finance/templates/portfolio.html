@@ -39,10 +39,10 @@
 }
 
 .percent .count, .percent .sep {
-  font-size: 24px;
+  font-size: 20px;
 }
 .percent .value {
-  font-size: 32px;
+  font-size: 28px;
 }
 </style>
 {% endblock %}
@@ -71,7 +71,7 @@
                 <span class="number">{{stock.ticker}}</span>
               </span>
             </span>
-          <div class="circleStat" style="margin-top: 16px;">
+          <div class="circleStat" style="margin-top: 12px;">
             <div class="ch_value">{{stock.price.change.toFixed(4) + '%'}}</div>
           </div>
           <div class="footer">
