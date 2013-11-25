@@ -29,6 +29,14 @@
   font-size: 48px;
   color: #FFFFFF;
 }
+
+.favlink:hover {
+  text-decoration: none;
+}
+
+.favlink:hover .circleStatsItemBox {
+  background-color: #F00;
+}
 </style>
 {% endblock %}
 
@@ -44,7 +52,7 @@
     {% if user.is_authenticated %}
     {% verbatim %}
     <div class="col-md-3" ng-repeat="stock in favourites | filter:query | orderBy:predicate:reverse"  style="text-align: center;">
-      <a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/">
+      <a class="favlink" href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/">
         <div class="circleStatsItemBox">
           <div class="header">PRICE HERE</div>
           <span class="percent">percent</span>
