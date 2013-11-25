@@ -16,15 +16,42 @@ StockApp.config(function($routeProvider) {
     });
 });
 
+
+StockApp.filter('priceChangeColour', function() {
+  return function(priceChange) {
+    if (priceChange > 0) {
+      return '#bdea74';
+    } else if (priceChange < 0) {
+      return '#ff5454';
+    } else {
+      return '#36a9e1';
+    }
+  };
+});
+
+
+StockApp.filter('abbreviateNumber', function() {
+  return function(n) {
+    with (Math) {
+      var base = floor(log(abs(n)) / log(1000));
+      var suffix = 'kmb'[base - 1];
+      return suffix ? (n / pow(1000, base)).toPrecision(3) + suffix : '' + n;
+    }
+  };
+});
+
+
 StockApp.controller('IndexParams', function($scope, $routeParams) {
   $scope.ticker = $routeParams.ticker;
 });
+
 
 StockApp.controller('StockParams', function($scope, $routeParams) {
   // Please someone teach how to use Angular properly
   $scope.exchange = $routeParams.exchange;
   $scope.ticker = $routeParams.ticker;
 });
+
 
 StockApp.directive('dynamic', function ($compile) {
   return {
@@ -38,6 +65,7 @@ StockApp.directive('dynamic', function ($compile) {
     }
   };
 });
+
 
 StockApp.controller('PortfolioCtrl', function($scope, $http) {
 
@@ -127,89 +155,38 @@ StockApp.controller('PortfolioStockCtrl', function($scope, $http) {
       addToPortfolio();
     }
   };
-
 });
 
 
 StockApp.controller('StockDataCtrl', function($scope, $http, $timeout) {
-
-  var abbreviateNumber = function(n) {
-    with (Math) {
-      var base = floor(log(abs(n)) / log(1000));
-      var suffix = 'kmb'[base - 1];
-      return suffix ? (n / pow(1000, base)).toPrecision(3) + suffix : '' + n;
-    }
-  };
-
-  var stockChange = function(stock) {
-    var ratio = stock.price.price / stock.price.last_close;
-    return ((ratio - 1) * 100).toFixed(3);;
-  };
-
-  var stockStyle = function(change) {
-    if (change > 0) {
-      return 'border-color: #bdea74';
-    } else if (change < 0) {
-      return 'border-color: #ff5454';
-    } else {
-      return 'border-color: #36a9e1';
-    }
-  };
-
   var fetchData = function() {
     $http.get('/data/stock/' + $scope.exchange + '/' + $scope.ticker + '/')
       .success(function(data) {
         $scope.stock = data;
-        $scope.volume = abbreviateNumber($scope.stock.price.volume);
-
-        var change = stockChange($scope.stock);
-        $scope.stock_change = change + "%";
-        $scope.stock_change_colour = stockStyle(change);
-
         $timeout(fetchData, 1000 * 60 * 5);
       })
       .error(function(error) {
         $timeout(fetchData, 1000 * 60 * 5);
       });
   };
-
   fetchData();
 });
 
 
 StockApp.controller('IndexDataCtrl', function($scope, $http, $timeout) {
-  var indexChange = function(index) {
-    var ratio = index.price.price / index.price.last_close;
-    return ((ratio - 1) * 100).toFixed(3);;
-  };
-
-  var indexStyle = function(change) {
-    if (change > 0) {
-      return 'border-color: #bdea74';
-    } else if (change < 0) {
-      return 'border-color: #ff5454';
-    } else {
-      return 'border-color: #36a9e1';
-    }
-  };
-
   var fetchData = function() {
     $http.get('/data/index/' + $scope.ticker + '/')
       .success(function(data) {
         $scope.index = data;
-
-        var change = indexChange($scope.index);
-        $scope.index_change = change + "%";
-        $scope.index_change_colour = indexStyle(change);
         $timeout(fetchData, 1000 * 60 * 5);
       })
       .error(function(error) {
         $timeout(fetchData, 1000 * 60 * 5);
       });
   };
-
   fetchData();
 });
+
 
 StockApp.directive('stockChart', function ($parse) {
     var directiveDefinitionObject = {

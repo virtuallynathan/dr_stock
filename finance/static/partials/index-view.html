@@ -32,7 +32,9 @@
 
   <div class="col-md-3 col-sm-4">
     <div class="tempStatBox">
-      <div class="tempStat" style="{{index_change_colour}}">{{index_change}}</div>
+      <div class="tempStat" style="border-color: {{index.price.change|priceChangeColour}}">
+        {{index.price.change.toFixed(3) + '%'}}
+      </div>
       <span>Change</span>
     </div>
   </div><!--/col-->
@@ -58,6 +60,7 @@
         <th><a href="" ng-click="reverse = predicate == 'name' && !reverse; predicate = 'ticker'">Ticker</a></th>
         <th><a href="" ng-click="reverse = predicate == 'name' && !reverse; predicate = 'name'">Name</a></th>
         <th><a href="" ng-click="reverse = predicate == 'price.price' && !reverse; predicate = 'price.price'">Price</a></th>
+        <th><a href="" ng-click="reverse = predicate == 'price.change' && !reverse; predicate = 'price.change'">Change</a></th>
         <th><a href="" ng-click="reverse = predicate == 'price.volume' && !reverse; predicate = 'price.volume'">Volume</a></th>
         <th><a href="" ng-click="reverse = predicate == 'price.market_cap' && !reverse; predicate = 'price.market_cap'">Market Cap</a></th>
       </tr>
@@ -66,8 +69,9 @@
       <td><a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/" class="label label-info">{{stock.ticker}}</a></td>
       <td>{{stock.name}}</td>
       <td>{{stock.price.price.toFixed(2)}}</td>
-      <td>{{stock.price.volume.toFixed(2)}}</td>
-      <td>{{stock.price.market_cap.toFixed(2)}}</td>
+      <td>{{stock.price.change.toFixed(3) + '%'}}</td>
+      <td>{{stock.price.volume|abbreviateNumber}}</td>
+      <td>{{stock.price.market_cap.toFixed(2)|abbreviateNumber}}</td>
       <td><button type="button" class="btn btn-{{style}} btn-xs" ng-click="portfolio()" ng-controller="PortfolioStockCtrl" style="background-color:{{inPortfolio() ? '#ff5454' : '#36a9e1'}}; color :#FFF;">{{inPortfolio() ? "In Portfolio" : "Add to Portfolio"}}</button></td>
       </a>
     </tr>

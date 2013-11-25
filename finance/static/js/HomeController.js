@@ -1,23 +1,6 @@
 var homeApp = angular.module('homeApp', []);
 
 
-homeApp.controller('favouritesCtrl', function($scope, $http, $timeout) {
-  var fetchData = function() {
-    $http.get('/accounts/favourites/')
-      .success(function(data) {
-        $scope.favourites = data;
-        $timeout(fetchData, 1000 * 60 * 5);
-      })
-      .error(function(error) {
-        $timeout(fetchData, 1000 * 60 * 5);
-      });
-  };
-  fetchData();
-
-
-
- } );
-
 homeApp.controller('homeCtrl', function($scope, $http, $timeout) {
   $scope.getBarHeight = function(datas, index, id, capOrChange) {
 
@@ -37,11 +20,11 @@ homeApp.controller('homeCtrl', function($scope, $http, $timeout) {
 
     //scale it arbitrarily to look better
     var percent = ((raw_percent*0.7) + 15) + "%";
-     
+
       $("#"+id).find('.value').animate({height:percent}, 2000, function() {
-          
+
         $(this).find('span').fadeIn();
-       
+
       });
 
     return percent;
