@@ -50,7 +50,7 @@ StockApp.controller('AddToPortfolioIndex', function($scope, $http) {
       });
   };
 
-  $scope.favourite = function() {
+  $scope.portfolio = function() {
     if ($scope.value == "Add to Portfolio") {
       addToPortfolio();
     }
