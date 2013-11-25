@@ -13,3 +13,6 @@ def view_stock(request):
 
 def view_recommendation(request):
     return render(request, 'recommendStock.html')
+
+def view_portfolio(request):
+    return render(request, 'portfolio.html')
