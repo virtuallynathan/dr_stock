@@ -43,7 +43,7 @@ StockApp.controller('PortfolioCtrl', function($scope, $http) {
       var ticker = parent_row.firstElementChild.firstElementChild.innerHTML;
       new_row.innerHTML = $compile("<td style=\"background-color: #36a9e1; color: #FFFFFF; height: 0px;\" colspan=\"6\">" +
       "<div>" +
-      "<stock-chart exchange=\""+$('#exc-name').html()+"\" ticker=\""+ticker+"\"/>"
+      "<stock-chart exchange=\""+$('#exc-name').html()+"\" ticker=\""+ticker+"\"/>" +
       "</div>" +
       "</td>")($scope);
 
