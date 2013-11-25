@@ -26,23 +26,23 @@ StockApp.controller('StockParams', function($scope, $routeParams) {
   $scope.ticker = $routeParams.ticker;
 });
 
-StockApp.controller('IndexFavourite', function($scope, $http) {
-  $scope.value = "Favourite";
+StockApp.controller('AddToPortfolioIndex', function($scope, $http) {
+  $scope.value = "Add to Portfolio";
   $scope.textcol = "#383e4b";
-  var favouriteStock = function() {
+  var addToPortfolio = function() {
     $http.get('/accounts/favourite/' + $scope.ticker + '/')
       .success(function(data) {
-        $scope.value = "Favourited";
+        $scope.value = "In Portfolio";
         $scope.textcol = "#36a9e1";
       })
       .error(function(error) {
         console.log("ewps...")
       });
   };
-  var unfavouriteStock = function() {
+  var removeFromPortfolio = function() {
     $http.get('/accounts/unfavourite/' + $scope.ticker + '/')
       .success(function(data) {
-        $scope.value = "Favourite";
+        $scope.value = "Add to Portfolio";
         $scope.textcol = "#383e4b";
       })
       .error(function(error) {
@@ -51,26 +51,26 @@ StockApp.controller('IndexFavourite', function($scope, $http) {
   };
 
   $scope.favourite = function() {
-    if ($scope.value == "Favourite") {
-      favouriteStock();
+    if ($scope.value == "Add to Portfolio") {
+      addToPortfolio();
     }
 
-    if ($scope.value == "Favourited"){
-      unfavouriteStock();
+    if ($scope.value == "In Portfolio"){
+      removeFromPortfolio();
     } 
   };
 
 });
 
 
-StockApp.controller('StockFavourite', function($scope, $http) {
-  $scope.value = "Favourite";
+StockApp.controller('addToPortfolio', function($scope, $http) {
+  $scope.value = "Add to Portfolio";
   $scope.textcol = "#383e4b";
   $scope.bgcol = "#36a9e1";
-  var favouriteStock = function() {
+  var addToPortfolio = function() {
     $http.get('/accounts/favourite/' + $scope.stock.exchange + '/' + $scope.stock.ticker + '/')
       .success(function(data) {
-        $scope.value = "Favourited";
+        $scope.value = "In Portfolio";
         $scope.textcol = "#36a9e1";
         $scope.bgcol = "#ff5454";
       })
@@ -78,10 +78,10 @@ StockApp.controller('StockFavourite', function($scope, $http) {
         console.log("ewps...")
       });
   };
-  var unfavouriteStock = function() {
+  var removeFromPortfolio = function() {
     $http.get('/accounts/unfavourite/' + $scope.stock.exchange + '/' + $scope.stock.ticker + '/')
       .success(function(data) {
-        $scope.value = "Favourite";
+        $scope.value = "Add to Portfolio";
         $scope.textcol = "#383e4b";
         $scope.bgcol = "#36a9e1";
       })
@@ -90,19 +90,15 @@ StockApp.controller('StockFavourite', function($scope, $http) {
       });
   };
 
-  $scope.favourite = function() {
-    if ($scope.value == "Favourite") {
-      favouriteStock();
+  $scope.portfolio = function() {
+    if ($scope.value == "Add to Portfolio") {
+      addToPortfolio();
     }
 
-    if ($scope.value == "Favourited"){
-      unfavouriteStock();
+    if ($scope.value == "In Portfolio"){
+      removeFromPortfolio();
     } 
   };
-
-
-// /accounts/favourite/<EXCHANGE>/<TICKER>
-// /acounts/favourite/<TICKER> (exchange)
 
 });
 
