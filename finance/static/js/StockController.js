@@ -117,7 +117,7 @@ StockApp.controller('StockDataCtrl', function($scope, $http, $timeout) {
     }
   };
 
-  var stockChange = function(index) {
+  var stockChange = function(stock) {
     var ratio = stock.price.price / stock.price.last_close;
     return ((ratio - 1) * 100).toFixed(3);;
   };
@@ -138,7 +138,7 @@ StockApp.controller('StockDataCtrl', function($scope, $http, $timeout) {
         $scope.stock = data;
         $scope.volume = abbreviateNumber($scope.stock.price.volume);
 
-        var change = stockChange($scope.index);
+        var change = stockChange($scope.stock);
         $scope.stock_change = change + "%";
         $scope.stock_change_colour = stockStyle(change);
 
