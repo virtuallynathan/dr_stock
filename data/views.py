@@ -5,7 +5,7 @@ import ujson
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from data.cache import get_price, get_components, get_quotes
+from data.cache import get_price, get_prices, get_components, get_quotes
 from data.cache import get_risers, get_fallers, get_biggest
 from data.models import Symbol, Exchange, get_exchange, get_symbol
 
@@ -58,12 +58,8 @@ def view_index(request, ticker):
     components = get_components(index)
 
     result = serialize_symbol(index, price)
-    result['components'] = []
-
-    for component in components:
-        price = get_price(component)
-        symbol = serialize_symbol(component, price)
-        result['components'].append(symbol)
+    prices = get_prices(components)
+    result['components'] = [serialize_symbol(p.symbol, p) for p in prices]
 
     return json_response(result)
 
