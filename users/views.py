@@ -1,15 +1,10 @@
 from django import forms
-from django.template import Context
-from django.forms import ModelForm, Textarea
-from django.db import models
-from django.conf import settings
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, resolve_url
-from django.core.mail import EmailMessage
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.utils.http import is_safe_url
@@ -44,19 +39,21 @@ def register(request, template_name='register.html'):
 
     return render(request, template_name, {'form': form, REDIRECT_FIELD_NAME: redirect_to})
 
+
 @csrf_protect
 @login_required
 def profile(request, nav="profile", template_name='profile.html'):
     context = {}
-    if request.method == 'POST': # If the form has been submitted...
-        form = UserEditForm(request.POST, instance=request.user) # A form bound to the POST data
-        if form.is_valid(): # All validation rules pass
+    if request.method == 'POST':
+        form = UserEditForm(request.POST, instance=request.user)
+        if form.is_valid():
             form.save()
-            context ['success'] = True
+            context['success'] = True
     else:
         form = UserEditForm(instance=request.user)
-    context ['form'] = form
-    return render(request, template_name,context)
+    context['form'] = form
+    return render(request, template_name, context)
+
 
 class UserEditForm(forms.ModelForm):
     email = forms.EmailField()
@@ -66,31 +63,6 @@ class UserEditForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('email', 'first_name', 'last_name')
-
-
-
-# Send an email from form
-def send_email(request):
-    errors = []
-    if request.method == 'POST':
-        if not request.POST.get('subject', ''):
-            errors.append('Enter a subject.')
-        if not request.POST.get('message', ''):
-            errors.append('Enter a message.')
-        if request.POST.get('email') and '@' not in request.POST['email']:
-            errors.append('Enter a valid e-mail address.')
-        if not errors:
-            send_mail(
-                request.POST['subject'],
-                request.POST['message'],
-                request.POST.get('email', 'jamesspyt@gmail.com'),
-                ['jamesspyt@gmail.com'],
-            )
-            return HttpResponseRedirect(request, '/accounts/sent')
-    return render(request, 'email.html', {'errors': errors})
-
-def sent(request, template_name='sent.html'):
-    return render(request, template_name)
 
 
 @csrf_protect

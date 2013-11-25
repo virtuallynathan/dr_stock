@@ -94,14 +94,3 @@ def get_biggest(number):
     '''
     prices = Price.objects.exclude(market_cap__isnull=True).order_by('-market_cap').all()[:number]
     return prices
-
-#def get_recommendation(number):
-#    '''
-#    Retrives the top 'number' stocks to recommend. Based on how close the current price is to the 52 week high
-#    '''
-#    queryset = Quotes.objects.all()
-#    Max(queryset.price)
-
-
-
-

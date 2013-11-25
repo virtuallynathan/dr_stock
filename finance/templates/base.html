@@ -15,7 +15,7 @@
     <link href="{% static "css/theme.css" %}" rel="stylesheet">
     <link href="{% static "css/retina.css" %}" rel="stylesheet">
 
-    <script src="{% static "js/jquery-2.0.3.min.js" %}"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -43,7 +43,7 @@
 
       .navbar .btn i {
         margin-top: 6px;
-        
+
       }
 
       .drop-login {
@@ -139,7 +139,7 @@
             <ul class="dropdown-menu login">
               <li class="dropdown-menu-title">
                 <span>Login</span>
-              </li> 
+              </li>
               <li style="width: 256px;">
                   <div style="width: 100%; padding: 8px;">
                     <form class="drop-login" method="post" action="{% url 'users.views.login' %}">
@@ -163,8 +163,8 @@
         </ul>
       </div>
       <!-- end: Header Menu -->
-      
-    </div>  
+
+    </div>
   </header>
   <!-- end: Header -->
 
@@ -184,7 +184,7 @@
   <script src="{% static "js/index.js" %}"></script>
   <script src="{% static "js/jquery-migrate-1.2.1.min.js" %}"></script>
   <script src="{% static "js/bootstrap.min.js" %}"></script>
-  
+
   <!-- page scripts -->
   <script src="{% static "js/jquery-ui-1.10.3.custom.min.js" %}"></script>
   <script src="{% static "js/jquery.ui.touch-punch.min.js" %}"></script>

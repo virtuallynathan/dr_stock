@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
 import data.urls
-from users.views import profile, register, send_email, sent, login, logout
+from users.views import profile, register, login, logout
 from finance.views import view_home, view_stock, view_recommendations, view_portfolio
 
 from users.views import favourite_stock, favourite_index, list_favourites
@@ -28,10 +28,6 @@ urlpatterns = patterns('',
     url(r'^accounts/profile/$', profile, {'template_name': 'profile.html'}),
     url(r'^accounts/register/$', register, {'template_name': 'register.html'}),
     url(r'^$', view_home),
-
-    # Messing around with sending email
-    url(r'^accounts/email/$',  send_email),
-    url(r'^accounts/sent/$',  sent, {'template_name': 'sent.html'}),
 
     # API for favouriting shit
     url(r'^accounts/favourite/(?P<exchange>[A-Z0-9]+)/(?P<ticker>[A-Z0-9]+)/$', favourite_stock),
