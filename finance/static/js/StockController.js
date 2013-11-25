@@ -28,7 +28,9 @@ StockApp.controller('StockParams', function($scope, $routeParams) {
 
 StockApp.controller('PortfolioCtrl', function($scope, $http) {
 
-  $scope.toggleStockPage = function toggleStockPage(sender) {
+  $scope.toggleStockPage = function toggleStockPage(stock) {
+
+    var sender = $("rw-" + stock.ticker).get(0);
     alert(sender.innerHTML);
 
     /*
