@@ -11,13 +11,13 @@
 {% block content %}
 
 {% if success == false %}
-	<p> Welcome to your profile page </p>
+	<h2> Welcome to your profile page </h2><br>
 {% else %}
-  <p> You have successfully updated your profile information </p>
+  <h2> You have successfully updated your profile details </h2><br>
 {% endif %}
 
 <div class="container" style="width: 40%;">
-<form role="form" action="{% url 'users.views.profile' %}" method="post">
+<form role="form" action="{% url 'users.views.profile' %}" method="post" style="width: 300px;">
  {% csrf_token %}
   <div class="form-group">
     <label for="inputEmail">Email address</label>
