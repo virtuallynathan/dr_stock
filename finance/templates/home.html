@@ -77,14 +77,13 @@
     {% verbatim %}
         <div class="col-lg-4">
 
-            <div class="smallstat box" ng-repeat="stock in risers">
-                      <a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/">
+            <div class="smallstat box" ng-repeat="stock in risers" onclick="window.location = this.firstElementChild.href;" style="cursor: pointer;">
+                      <a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/">&nbsp;</a>
           <div>
                 <i class="fa fa-arrow-up green" style="width: 112px;">&nbsp;{{shortenFloat(stock.price.change,2)}}%</i>
                 <span class="title">Biggest Riser</span>
                 <span>{{cropName(stock.name,20)}}</span>
             </div>
-            </a>
             </div>
             <div class="verticalChart">
             <a href="/stock/#/{{risers[0].exchange}}/{{risers[0].ticker}}/">
@@ -121,14 +120,13 @@
         </div>
         <div class="col-lg-4">
 
-            <div class="smallstat box" ng-repeat="stock in fallers">
-             <a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/">
+            <div class="smallstat box" ng-repeat="stock in fallers" onclick="window.location = this.firstElementChild.href;" style="cursor: pointer;">
+             <a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/" style="display: none;">&nbsp;</a>
              <div>
                 <i class="fa fa-arrow-down red" style="width: 112px;">&nbsp;{{shortenFloat(-stock.price.change,2)}}%</i>
                 <span class="title">Biggest Faller</span>
                 <span>{{cropName(stock.name,20)}}</span>
             </div>
-            </a>
             </div>
             <div class="verticalChart">
             <a href="/stock/#/{{fallers[0].exchange}}/{{fallers[0].ticker}}/">
@@ -164,8 +162,9 @@
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="smallstat box" ng-repeat="stock in biggest">
-                <div onclick="window.location = '/stock/#/{{stock.exchange}}/{{stock.ticker}}/';" style="cursor: pointer;">
+            <div class="smallstat box" onclick="window.location = this.firstElementChild.href;" style="cursor: pointer;" ng-repeat="stock in biggest">
+                <a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/" style="display: none;">&nbsp;</a>
+                <div>
                     <i class="fa fa-money blue"></i>
                     <span class="title">Biggest by Market Cap</span>
                     <span>{{cropName(stock.name,20)}}</span>
