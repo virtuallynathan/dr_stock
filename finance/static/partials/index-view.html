@@ -1,13 +1,13 @@
 <div class="container" ng-controller="IndexDataCtrl">
-  
+
 <div class="row" style="padding-left: 14px; padding-right: 14px">
-   <div class="col-md-1">
+   <div class="col-md-2">
     <a class="quick-button" ng-click="favourite()" ng-controller="StockFavourite" style="color: {{textcol}}; width: 100%;" > 
       <i class="fa fa-heart-o"></i>
       <p>{{value}}</p>
     </a>
   </div>
-  <div class="col-md-11">
+  <div class="col-md-10">
     <h1>{{index.name}}</h1>
     <h2>{{index.ticker}}</h2>
     <h3>{{index.exchange}}</h3>
