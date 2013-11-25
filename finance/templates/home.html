@@ -165,14 +165,12 @@
         </div>
         <div class="col-lg-4">
             <div class="smallstat box" ng-repeat="stock in biggest">
-                <a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/">
-                <div>
+                <div onclick="window.location = '/stock/#/{{stock.exchange}}/{{stock.ticker}}/';" style="cursor: pointer;">
                     <i class="fa fa-money blue"></i>
                     <span class="title">Biggest by Market Cap</span>
                     <span>{{cropName(stock.name,20)}}</span>
                     <span class="notification blue">£{{stock.price.market_cap/1000000000}} bil</span>
                 </div>
-                </a>
             </div>
             <div class="verticalChart">
                 <a href="/stock/#/{{biggest[0].exchange}}/{{biggest[0].ticker}}/">
