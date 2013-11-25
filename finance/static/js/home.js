@@ -9,7 +9,7 @@ homeApp.filter('cropName', function() {
 });
 
 
-homeApp.controller('homeCtrl', function($scope, $http, $timeout) {
+homeApp.controller('HomeCtrl', function($scope, $http, $timeout) {
   $scope.getBarHeight = function(datas, index, id, capOrChange) {
 
     var val = (capOrChange ? datas[index].price.market_cap : Math.abs(datas[index].price.change));

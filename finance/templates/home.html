@@ -3,7 +3,8 @@
 {% block pagename %}Welcome{% endblock %}
 {% block pageheaders %}
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.2/angular.min.js"></script>
-<script src="/static/js/HomeController.js"></script>
+<script src="/static/js/common.js"></script>
+<script src="/static/js/home.js"></script>
 <script type="text/javascript">
 </script>
 <style type="text/css">
@@ -37,8 +38,8 @@
 
 {% block content %}
 
-<div ng-app="homeApp">
-<div style="margin: auto; max-width: 1024px; height: 100%;" ng-controller="homeCtrl" >
+<div ng-app="HomeApp">
+<div style="margin: auto; max-width: 1024px; height: 100%;" ng-controller="HomeCtrl" >
     {% if user.is_authenticated %}
         <div class="row">
         <div class="col-lg-9" style="width: 100%">
@@ -87,9 +88,9 @@
             <div class="smallstat box" ng-repeat="stock in risers" onclick="window.location = this.firstElementChild.href;" style="cursor: pointer;">
                 <a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/" style="display: none;">&nbsp;</a>
           <div>
-                <i class="fa fa-arrow-up green" style="width: 112px;">&nbsp;{{shortenFloat(stock.price.change,2)}}%</i>
+                <i class="fa fa-arrow-up green" style="width: 112px;">&nbsp;{{stock.price.change.toFixed(2)}}%</i>
                 <span class="title">Biggest Riser</span>
-                <span>{{cropName(stock.name,20)}}</span>
+                <span>{{stock.name|cropName:20}}</span>
             </div>
             </div>
             <div class="verticalChart">
@@ -130,9 +131,9 @@
             <div class="smallstat box" ng-repeat="stock in fallers" onclick="window.location = this.firstElementChild.href;" style="cursor: pointer;">
              <a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/" style="display: none;">&nbsp;</a>
              <div>
-                <i class="fa fa-arrow-down red" style="width: 112px;">&nbsp;{{shortenFloat(-stock.price.change,2)}}%</i>
+                <i class="fa fa-arrow-down red" style="width: 112px;">&nbsp;{{(-stock.price.change).toFixed(2)}}%</i>
                 <span class="title">Biggest Faller</span>
-                <span>{{cropName(stock.name,20)}}</span>
+                <span>{{stock.name|cropName:20}}</span>
             </div>
             </div>
             <div class="verticalChart">
@@ -174,7 +175,7 @@
                 <div>
                     <i class="fa fa-money blue"></i>
                     <span class="title">Biggest by Market Cap</span>
-                    <span>{{cropName(stock.name,20)}}</span>
+                    <span>{{stock.name|cropName:20}}</span>
                     <span class="notification blue">£{{stock.price.market_cap/1000000000}} bil</span>
                 </div>
             </div>
