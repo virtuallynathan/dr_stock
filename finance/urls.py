@@ -30,9 +30,9 @@ urlpatterns = patterns('',
     url(r'^$', view_home),
 
     # API for favouriting shit
-    url(r'^accounts/favourite/(?P<exchange>[A-Z0-9]+)/(?P<ticker>[A-Z0-9]+)/$', favourite_stock),
+    url(r'^accounts/favourite/(?P<exchange>[A-Z0-9]+)/(?P<ticker>[-A-Z0-9]+)/$', favourite_stock),
     url(r'^accounts/favourite/(?P<ticker>[A-Z0-9]+)/$', favourite_index),
-    url(r'^accounts/unfavourite/(?P<exchange>[A-Z0-9]+)/(?P<ticker>[A-Z0-9]+)/$', unfavourite_stock),
+    url(r'^accounts/unfavourite/(?P<exchange>[A-Z0-9]+)/(?P<ticker>[-A-Z0-9]+)/$', unfavourite_stock),
     url(r'^accounts/unfavourite/(?P<ticker>[A-Z0-9]+)/$', unfavourite_index),
     url(r'^accounts/favourites/$', list_favourites),
 )

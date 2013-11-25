@@ -65,7 +65,7 @@ def get_prices(symbols):
             to_update.append(symbol)
         else:
             now = datetime.now(utc)
-            if total_seconds(now - price.updated) > 20:
+            if total_seconds(now - price.updated) > 60 * 15:
                 to_update.append(symbol)
             else:
                 prices.append(price)
