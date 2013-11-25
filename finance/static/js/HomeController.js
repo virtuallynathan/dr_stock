@@ -40,7 +40,6 @@ homeApp.controller('homeCtrl', function($scope, $http, $timeout) {
 
       $("#"+id).find('.value').animate({height:percent}, 2000, function() {
 
-        $(this).find('span').fadeIn();
 
       });
 
