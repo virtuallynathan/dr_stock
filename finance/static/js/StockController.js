@@ -117,17 +117,38 @@ StockApp.controller('StockDataCtrl', function($scope, $http, $timeout) {
     }
   };
 
+  var stockChange = function(index) {
+    var ratio = stock.price.price / stock.price.last_close;
+    return ((ratio - 1) * 100).toFixed(3);;
+  };
+
+  var stockStyle = function(change) {
+    if (change > 0) {
+      return 'border-color: #bdea74';
+    } else if (change < 0) {
+      return 'border-color: #ff5454';
+    } else {
+      return 'border-color: #36a9e1';
+    }
+  };
+
   var fetchData = function() {
     $http.get('/data/stock/' + $scope.exchange + '/' + $scope.ticker + '/')
       .success(function(data) {
         $scope.stock = data;
         $scope.volume = abbreviateNumber($scope.stock.price.volume);
+
+        var change = stockChange($scope.index);
+        $scope.stock_change = change + "%";
+        $scope.stock_change_colour = stockStyle(change);
+
         $timeout(fetchData, 1000 * 60 * 5);
       })
       .error(function(error) {
         $timeout(fetchData, 1000 * 60 * 5);
       });
   };
+
   fetchData();
 });
 
