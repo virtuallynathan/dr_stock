@@ -40,8 +40,10 @@ Common.controller('PortfolioCtrl', function($scope, $http) {
   };
 
   $scope.portfolio = null;
+  $scope.portfolioList = [];
   $http.get('/accounts/favourites/')
     .success(function(data) {
+      $scope.portfolioList = data;
       $scope.portfolio = {};
       for (var index in data) {
         var stock = data[index];
@@ -49,6 +51,7 @@ Common.controller('PortfolioCtrl', function($scope, $http) {
       }
     })
     .error(function(error) {
+      $scope.portfolioList = [];
       $scope.portfolio = null;
     });
 });

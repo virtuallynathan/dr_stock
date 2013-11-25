@@ -58,7 +58,7 @@
     </div>
     {% if user.is_authenticated %}
     {% verbatim %}
-    <div class="col-md-3" ng-repeat="portStock in portfolio | filter:query | orderBy:predicate:reverse" style="text-align: center;">
+    <div class="col-md-3" ng-repeat="portStock in portfolioList | filter:query | orderBy:predicate:reverse" style="text-align: center;">
       <a class="favlink" ng-init="exchange = portStock.exchange; ticker = portStock.ticker" href="/stock/#/{{portStock.exchange}}/{{portStock.ticker}}/">
         <div class="circleStatsItemBox" style="background-color: {{stock.price.change|priceChangeColour}}" ng-controller="StockDataCtrl">
           <div class="header">PRICE: {{stock.price.price}}</div>
