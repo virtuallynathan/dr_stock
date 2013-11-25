@@ -30,7 +30,7 @@ StockApp.controller('IndexFavourite', function($scope, $http) {
   $scope.value = "Favourite";
   $scope.textcol = "#383e4b";
   var favouriteStock = function() {
-    $http.get('/accounts/favourite/' + $routeParams.ticker + '/')
+    $http.get('/accounts/favourite/' + $scope.ticker + '/')
       .success(function(data) {
         $scope.value = "Favourited";
         $scope.textcol = "#36a9e1";
@@ -40,7 +40,7 @@ StockApp.controller('IndexFavourite', function($scope, $http) {
       });
   };
   var unfavouriteStock = function() {
-    $http.get('/accounts/unfavourite/' + $routeParams.ticker + '/')
+    $http.get('/accounts/unfavourite/' + $scope.ticker + '/')
       .success(function(data) {
         $scope.value = "Favourite";
         $scope.textcol = "#383e4b";
@@ -59,10 +59,6 @@ StockApp.controller('IndexFavourite', function($scope, $http) {
       unfavouriteStock();
     } 
   };
-
-
-
-
 
 });
 
