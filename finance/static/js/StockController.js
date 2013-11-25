@@ -26,6 +26,19 @@ StockApp.controller('StockParams', function($scope, $routeParams) {
   $scope.ticker = $routeParams.ticker;
 });
 
+StockApp.directive('dynamic', function ($compile) {
+  return {
+    restrict: 'A',
+    replace: true,
+    link: function (scope, ele, attrs) {
+      scope.$watch(attrs.dynamic, function(html) {
+        ele.html(html);
+        $compile(ele.contents())(scope);
+      });
+    }
+  };
+});
+
 StockApp.controller('PortfolioCtrl', function($scope, $http) {
 
   $scope.toggleStockPage = function toggleStockPage(stock) {
@@ -41,12 +54,11 @@ StockApp.controller('PortfolioCtrl', function($scope, $http) {
       var new_row = document.createElement('tr');
 
       var ticker = parent_row.firstElementChild.firstElementChild.innerHTML;
-      new_row.innerHTML = $compile("<td style=\"background-color: #36a9e1; color: #FFFFFF; height: 0px;\" colspan=\"6\">" +
+      new_row.innerHTML = "<td style=\"background-color: #36a9e1; color: #FFFFFF; height: 0px;\" colspan=\"6\">" +
       "<div>" +
       "<stock-chart exchange=\""+$('#exc-name').html()+"\" ticker=\""+ticker+"\"/>" +
       "</div>" +
-      "</td>")($scope);
-
+      "</td>";
 
       parent_row.parentNode.insertBefore(new_row, parent_row.nextSibling);
       $(new_row).animate({height: '256px'});
