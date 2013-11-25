@@ -16,12 +16,56 @@ StockApp.config(function($routeProvider) {
     });
 });
 
+StockApp.controller('IndexParams', function($scope, $routeParams) {
+  $scope.ticker = $routeParams.ticker;
+});
 
 StockApp.controller('StockParams', function($scope, $routeParams) {
   // Please someone teach how to use Angular properly
   $scope.exchange = $routeParams.exchange;
   $scope.ticker = $routeParams.ticker;
 });
+
+StockApp.controller('IndexFavourite', function($scope, $http) {
+  $scope.value = "Favourite";
+  $scope.textcol = "#383e4b";
+  var favouriteStock = function() {
+    $http.get('/accounts/favourite/' + $routeParams.ticker + '/')
+      .success(function(data) {
+        $scope.value = "Favourited";
+        $scope.textcol = "#36a9e1";
+      })
+      .error(function(error) {
+        console.log("ewps...")
+      });
+  };
+  var unfavouriteStock = function() {
+    $http.get('/accounts/unfavourite/' + $routeParams.ticker + '/')
+      .success(function(data) {
+        $scope.value = "Favourite";
+        $scope.textcol = "#383e4b";
+      })
+      .error(function(error) {
+        console.log("ewps...")
+      });
+  };
+
+  $scope.favourite = function() {
+    if ($scope.value == "Favourite") {
+      favouriteStock();
+    }
+
+    if ($scope.value == "Favourited"){
+      unfavouriteStock();
+    } 
+  };
+
+
+
+
+
+});
+
 
 StockApp.controller('StockFavourite', function($scope, $http) {
   $scope.value = "Favourite";
@@ -86,11 +130,6 @@ StockApp.controller('StockDataCtrl', function($scope, $http, $timeout) {
       });
   };
   fetchData();
-});
-
-
-StockApp.controller('IndexParams', function($scope, $routeParams) {
-  $scope.ticker = $routeParams.ticker;
 });
 
 
