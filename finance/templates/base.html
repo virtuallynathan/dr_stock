@@ -115,7 +115,7 @@
           <li>
             <a class="btn" href="{% url 'users.views.profile' %}">
               <i class="fa fa-user"></i>
-              <span>{{ if user.first_name }}{{ user.first_name }}{{ else }}{{ user.username }}{{ endif }}</span>
+              <span>{{ if user.full_name }}{{ user.full_name }}{{ else }}{{ user.username }}{{ endif }}</span>
             </a>
           </li>
           <li>
