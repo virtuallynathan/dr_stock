@@ -3,7 +3,7 @@ from django.contrib import admin
 
 import data.urls
 from users.views import profile, register, send_email, sent, login, logout
-from finance.views import view_home, view_stock, view_recommendation, view_portfolio
+from finance.views import view_home, view_stock, view_recommendations, view_portfolio
 
 from users.views import favourite_stock, favourite_index, list_favourites
 from users.views import unfavourite_stock, unfavourite_index
@@ -18,9 +18,9 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^data/', include(data.urls)),
-   
-    url(r'^view_portfolio/$', view_portfolio),
-    url(r'^view_recommendation/$', view_recommendation),
+
+    url(r'^portfolio/$', view_portfolio),
+    url(r'^recommendations/$', view_recommendations),
     url(r'^stock/$', view_stock),
 
     url(r'^accounts/login/$', login, {'template_name': 'login.html'}),
