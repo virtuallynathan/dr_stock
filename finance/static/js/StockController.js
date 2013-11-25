@@ -30,7 +30,6 @@ StockApp.controller('StockFavourite', function($scope, $http) {
     $http.get('/accounts/favourite/' + $scope.stock.exchange + '/' + $scope.stock.ticker + '/')
       .success(function(data) {
         $scope.value = "Favourited";
-        $scope.style = "is_fav";
         $scope.style = "{'color': '#36a9e1'}";
       })
       .error(function(error) {
