@@ -31,6 +31,7 @@ StockApp.controller('PortfolioCtrl', function($scope, $http) {
   $scope.toggleStockPage = function toggleStockPage(stock) {
 
     var sender = $("#rw-" + stock.ticker).get(0);
+    alert("#rw-" + stock.ticker);
     alert(sender.innerHTML);
 
     /*
