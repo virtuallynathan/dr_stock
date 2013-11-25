@@ -63,7 +63,7 @@ function toggleStockPage(sender) {
     var new_row = document.createElement('tr');
 
     var ticker = parent_row.firstElementChild.firstElementChild.innerHTML;
-    new_row.innerHTML = "<td style=\"background-color: #36a9e1; color: #FFFFFF; height: 0px;\" colspan=\"5\">" +
+    new_row.innerHTML = "<td style=\"background-color: #36a9e1; color: #FFFFFF; height: 0px;\" colspan=\"6\">" +
     "<div>" +
     "<stock-chart exchange=\""+$('#exc-name').html()+"\" ticker=\""+ticker+"\"/>"
     "</div>" +
