@@ -66,11 +66,13 @@ StockApp.controller('IndexFavourite', function($scope, $http) {
 StockApp.controller('StockFavourite', function($scope, $http) {
   $scope.value = "Favourite";
   $scope.textcol = "#383e4b";
+  $scope.bgcol = "#36a9e1";
   var favouriteStock = function() {
     $http.get('/accounts/favourite/' + $scope.stock.exchange + '/' + $scope.stock.ticker + '/')
       .success(function(data) {
         $scope.value = "Favourited";
         $scope.textcol = "#36a9e1";
+        $scope.bgcol = "##ff5454";
       })
       .error(function(error) {
         console.log("ewps...")
@@ -81,6 +83,7 @@ StockApp.controller('StockFavourite', function($scope, $http) {
       .success(function(data) {
         $scope.value = "Favourite";
         $scope.textcol = "#383e4b";
+        $scope.bgcol = "#36a9e1";
       })
       .error(function(error) {
         console.log("ewps...")
