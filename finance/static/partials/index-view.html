@@ -69,7 +69,7 @@
       <td><a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/" class="label label-info">{{stock.ticker}}</a></td>
       <td>{{stock.name}}</td>
       <td>{{stock.price.price.toFixed(2)}}</td>
-      <td>{{stock.price.change.toFixed(3) + '%'}}</td>
+     <!-- <td>{{stock.price.change.toFixed(3) + '%'}}</td> -->
       <td>{{stock.price.volume|abbreviateNumber}}</td>
       <td>{{stock.price.market_cap.toFixed(2)|abbreviateNumber}}</td>
       <td><button type="button" class="btn btn-{{style}} btn-xs" ng-click="portfolio()" ng-controller="PortfolioStockCtrl" style="background-color:{{inPortfolio() ? '#ff5454' : '#36a9e1'}}; color :#FFF;">{{inPortfolio() ? "In Portfolio" : "Add to Portfolio"}}</button></td>
