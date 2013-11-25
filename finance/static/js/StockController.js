@@ -72,7 +72,7 @@ StockApp.controller('StockFavourite', function($scope, $http) {
       .success(function(data) {
         $scope.value = "Favourited";
         $scope.textcol = "#36a9e1";
-        $scope.bgcol = "##ff5454";
+        $scope.bgcol = "#ff5454";
       })
       .error(function(error) {
         console.log("ewps...")
