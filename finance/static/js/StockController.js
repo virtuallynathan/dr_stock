@@ -26,78 +26,67 @@ StockApp.controller('StockParams', function($scope, $routeParams) {
   $scope.ticker = $routeParams.ticker;
 });
 
-StockApp.controller('AddToPortfolioIndex', function($scope, $http) {
-  $scope.value = "Add to Portfolio";
-  $scope.textcol = "#383e4b";
-  var addToPortfolio = function() {
-    $http.get('/accounts/favourite/' + $scope.ticker + '/')
-      .success(function(data) {
-        $scope.value = "In Portfolio";
-        $scope.textcol = "#36a9e1";
-      })
-      .error(function(error) {
-        console.log("ewps...")
-      });
-  };
-  var removeFromPortfolio = function() {
-    $http.get('/accounts/unfavourite/' + $scope.ticker + '/')
-      .success(function(data) {
-        $scope.value = "Add to Portfolio";
-        $scope.textcol = "#383e4b";
-      })
-      .error(function(error) {
-        console.log("ewps...")
-      });
-  };
+StockApp.controller('PortfolioCtrl', function($scope, $http) {
+  var stockKey = function(stock) {
+    return stock.exchange + stock.ticker;
+  }
 
-  $scope.portfolio = function() {
-    if ($scope.value == "Add to Portfolio") {
-      addToPortfolio();
-    }
+  $scope.inInitialPortfolio = function(stock) {
+    return $scope.portfolio && stockKey(stock) in $scope.portfolio;
+  }
 
-    if ($scope.value == "In Portfolio"){
-      removeFromPortfolio();
-    } 
-  };
-
+  $scope.portfolio = null;
+  $http.get('/accounts/favourites/')
+    .success(function(data) {
+      $scope.portfolio = {};
+      for (var index in data) {
+        var stock = data[index];
+        $scope.portfolio[stockKey(stock)] = stock;
+      }
+    })
+    .error(function(error) {
+      $scope.portfolio = null;
+    });
 });
 
 
-StockApp.controller('addToPortfolio', function($scope, $http) {
-  $scope.value = "Add to Portfolio";
-  $scope.textcol = "#383e4b";
-  $scope.bgcol = "#36a9e1";
+StockApp.controller('PortfolioStockCtrl', function($scope, $http) {
+  $scope.portfoliod = null;
+
+  $scope.inPortfolio = function() {
+    if ($scope.portfoliod === null) {
+      return $scope.inInitialPortfolio($scope.stock);
+    } else {
+      return $scope.portfoliod;
+    }
+  }
+
   var addToPortfolio = function() {
     $http.get('/accounts/favourite/' + $scope.stock.exchange + '/' + $scope.stock.ticker + '/')
       .success(function(data) {
-        $scope.value = "In Portfolio";
-        $scope.textcol = "#36a9e1";
-        $scope.bgcol = "#ff5454";
+        $scope.portfoliod = true;
       })
       .error(function(error) {
-        console.log("ewps...")
+        $scope.portfoliod = undefined;
       });
   };
+
   var removeFromPortfolio = function() {
     $http.get('/accounts/unfavourite/' + $scope.stock.exchange + '/' + $scope.stock.ticker + '/')
       .success(function(data) {
-        $scope.value = "Add to Portfolio";
-        $scope.textcol = "#383e4b";
-        $scope.bgcol = "#36a9e1";
+        $scope.portfoliod = false;
       })
       .error(function(error) {
-        console.log("ewps...")
+        $scope.portfoliod = undefined;
       });
   };
 
   $scope.portfolio = function() {
-    if ($scope.value == "Add to Portfolio") {
+    if ($scope.inPortfolio()) {
+      removeFromPortfolio();
+    } else {
       addToPortfolio();
     }
-
-    if ($scope.value == "In Portfolio"){
-      removeFromPortfolio();
-    } 
   };
 
 });
