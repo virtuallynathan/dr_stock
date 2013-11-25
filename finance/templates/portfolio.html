@@ -3,7 +3,7 @@
 {% block pagename %}Portfolio{% endblock %}
 {% block pageheaders %}
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.2/angular.min.js"></script>
-<script src="/static/js/HomeController.js"></script>
+<script src="/static/js/common.js"></script>
 <style type="text/css">
 
 .quick-button {
@@ -51,8 +51,8 @@
 
 {% block content %}
 
-<div ng-app="homeApp" ng-controller="favouritesCtrl">
-<div style="margin: auto; max-width: 1024px; height: 100%;" ng-controller="homeCtrl" >
+<div ng-app="Common" ng-controller="PortfolioCtrl">
+<div style="margin: auto; max-width: 1024px; height: 100%;">
     <div class="col-lg-12">
       <form role="form">
         <input type="text" class="form-control" placeholder="Search" ng-model="query">
@@ -60,14 +60,14 @@
     </div>
     {% if user.is_authenticated %}
     {% verbatim %}
-    <div class="col-md-3" ng-repeat="stock in favourites | filter:query | orderBy:predicate:reverse"  style="text-align: center;">
-      <a class="favlink" href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/">
-        <div class="circleStatsItemBox">
-          <div class="header">PRICE HERE</div>
+    <div class="col-md-3" ng-repeat="stock in portfolio | filter:query | orderBy:predicate:reverse" style="text-align: center;">
+      <a class="favlink" ng-init="exchange = stock.exchange; ticker = stock.ticker" href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/">
+        <div class="circleStatsItemBox" ng-controller="StockDataCtrl">
+          <div class="header">{{stock.price.price}}</div>
           <span class="percent">percent</span>
           <div class="circleStat" style="margin-top: 16px;">
-            <div class="ch_value">0.0032%</div>
-          </div>    
+            <div class="ch_value">{{stock.price.change.toFixed(4) + '%'}}</div>
+          </div>
           <div class="footer">
           <span class="count">
             <span class="number">{{stock.exchange}}</span>
@@ -75,7 +75,7 @@
           <span class="sep"> / </span>
             <span class="value">
               <span class="number">{{stock.ticker}}</span>
-            </span> 
+            </span>
           </div>
         </div>
       </a>
