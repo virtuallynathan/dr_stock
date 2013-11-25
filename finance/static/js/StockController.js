@@ -31,8 +31,6 @@ StockApp.controller('PortfolioCtrl', function($scope, $http) {
   $scope.toggleStockPage = function toggleStockPage(stock) {
 
     var parent_row = $("#tbl-row-" + stock.ticker).get(0);
-    alert("#tbl-row-" + stock.ticker);
-    alert(sender.innerHTML);
 
     if (parent_row.className.match(/\bacc_open\b/)) {
 
