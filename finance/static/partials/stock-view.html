@@ -1,16 +1,16 @@
 <div class="container" ng-controller="StockDataCtrl">
 
 <div class="row" style="padding-left: 14px; padding-right: 14px">
-  <div class="col-md-8" style="text-align: left;">
-    <h1>{{stock.name}}</h1>
-    <h2>{{stock.ticker}}</h2>
-    <h3>{{stock.exchange}}</h3>
-  </div>
-  <div class="col-md-4" style="text-align: right;">
-    <a class="quick-button" ng-click="favourite()" ng-controller="StockFavourite" style="color: {{textcol}}; width: 96px; float: right;" > 
+   <div class="col-md-4">
+    <a class="quick-button" ng-click="favourite()" ng-controller="StockFavourite" style="color: {{textcol}}; width: 96px;" > 
       <i class="fa fa-heart-o"></i>
       <p>{{value}}</p>
     </a>
+  </div>
+  <div class="col-md-8">
+    <h1>{{stock.name}}</h1>
+    <h2>{{stock.ticker}}</h2>
+    <h3>{{stock.exchange}}</h3>
   </div>
 </div>
 
