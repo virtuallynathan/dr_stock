@@ -37,15 +37,6 @@
 .favlink:hover div {
   background-color: #67c2ef;
 }
-
-.favlink div {
-  background-color: #bdea74;
-}
-
-.favlink .bad {
-  background-color: #ff5454;
-}
-
 </style>
 {% endblock %}
 
@@ -60,9 +51,9 @@
     </div>
     {% if user.is_authenticated %}
     {% verbatim %}
-    <div class="col-md-3" ng-repeat="stock in portfolio | filter:query | orderBy:predicate:reverse" style="text-align: center;">
-      <a class="favlink" ng-init="exchange = stock.exchange; ticker = stock.ticker" href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/">
-        <div class="circleStatsItemBox" ng-controller="StockDataCtrl">
+    <div class="col-md-3" ng-repeat="portStock in portfolio | filter:query | orderBy:predicate:reverse" style="text-align: center;">
+      <a class="favlink" ng-init="exchange = portStock.exchange; ticker = portStock.ticker" href="/stock/#/{{portStock.exchange}}/{{portStock.ticker}}/">
+        <div class="circleStatsItemBox" style="background-color: {{stock.price.change|priceChangeColour}}" ng-controller="StockDataCtrl">
           <div class="header">{{stock.price.price}}</div>
           <span class="percent">percent</span>
           <div class="circleStat" style="margin-top: 16px;">
