@@ -19,7 +19,7 @@ def view_recommendation(request):
 	middle_bit_size = 3
 	last_bit_size = 1
 
-    return json_response(Quote.objects.all()));
+    return json_response(Quote.objects.all());
 
 def view_portfolio(request):
     return render(request, 'portfolio.html')
