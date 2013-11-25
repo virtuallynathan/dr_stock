@@ -38,10 +38,7 @@ homeApp.controller('homeCtrl', function($scope, $http, $timeout) {
     //scale it arbitrarily to look better
     var percent = ((raw_percent*0.7) + 15) + "%";
 
-      $("#"+id).find('.value').animate({height:percent}, 2000, function() {
-
-
-      });
+      $("#"+id).find('.value').animate({height:percent}, 2000, function() {});
 
     return percent;
   };
