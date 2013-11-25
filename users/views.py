@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render, resolve_url
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
@@ -107,7 +107,7 @@ def logout(request, template_name='users/logout.html'):
 
 def _favourite_symbol(request, add, symbol):
     if not request.user.is_authenticated():
-        return json_response({'failure': 'naw'})
+        return HttpResponseForbidden()
 
     investor = request.user.investor
     if add:
@@ -140,7 +140,7 @@ def unfavourite_index(request, ticker):
 
 def list_favourites(request):
     if not request.user.is_authenticated():
-        return json_response({'failure': 'naw'})
+        return HttpResponseForbidden()
 
     symbols = request.user.investor.favourites.all()
     return json_response([{'name': s.name, 'ticker': s.ticker, 'exchange': s.exchange.abbreviation} for s in symbols])
