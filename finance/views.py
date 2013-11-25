@@ -15,9 +15,9 @@ def view_stock(request):
 
 def view_recommendation(request):
 
-	first_bit_size = 7
-	middle_bit_size = 3
-	last_bit_size = 1
+    first_bit_size = 7
+    middle_bit_size = 3
+    last_bit_size = 1
 
     return json_response(Quote.objects.all());
 
