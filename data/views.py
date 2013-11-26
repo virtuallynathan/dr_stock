@@ -3,11 +3,10 @@ from datetime import datetime
 import ujson
 
 from django.http import HttpResponse
-from django.shortcuts import render
 
 from data.cache import get_price, get_prices, get_components, get_quotes
 from data.cache import get_risers, get_fallers, get_biggest
-from data.models import Symbol, Exchange, get_exchange, get_symbol
+from data.models import Symbol
 
 
 def json_response(response):
@@ -29,6 +28,7 @@ def serialize_symbol(symbol, price):
             'name': symbol.name,
             'exchange': symbol.exchange.abbreviation,
             'price': serialize_price(price)}
+
 
 def serialize_quote(quote):
     return {'date': quote.date.strftime('%Y-%m-%d'),

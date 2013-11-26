@@ -1,5 +1,3 @@
-from django.db import connection
-
 from data.models import Exchange, Symbol
 from data.cache import get_components
 

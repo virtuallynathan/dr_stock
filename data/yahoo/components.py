@@ -4,7 +4,7 @@ Component scraper for Yahoo Finance
 from lxml import etree
 from requests import get
 
-from data.models import Exchange, Symbol, get_symbol
+from data.models import Symbol, get_symbol
 
 
 BASE_URL = 'http://finance.yahoo.com'
@@ -32,8 +32,6 @@ def _parse_components(index, html):
 
 def scrape_components(index):
     components = []
-
-    exchange = index.exchange
     symbol = '^' + index.ticker
 
     response = get(BASE_URL + '/q/cp', params={'s': symbol})

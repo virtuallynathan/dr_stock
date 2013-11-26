@@ -2,7 +2,6 @@
 Quote scraper for Yahoo Finance
 '''
 import datetime
-from lxml import etree
 from requests import get
 
 from data.models import Symbol, Quote

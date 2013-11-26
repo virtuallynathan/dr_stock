@@ -23,7 +23,7 @@ StockApp.controller('IndexParams', function($scope, $routeParams) {
 
 
 StockApp.controller('StockParams', function($scope, $routeParams) {
-  // Please someone teach how to use Angular properly
+  // Please someone teach me how to use Angular properly
   $scope.exchange = $routeParams.exchange;
   $scope.ticker = $routeParams.ticker;
 });

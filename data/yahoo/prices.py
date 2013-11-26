@@ -23,7 +23,7 @@ def _ticker(symbol):
 
 def _fetch_prices(symbols):
     tickers = ','.join(_ticker(s) for s in symbols)
-    response = get(BASE_URL, params={'s': tickers, 'f': 'sl1p0v0j1'})  # Or j3 for realtime market cap?
+    response = get(BASE_URL, params={'s': tickers, 'f': 'sl1p0v0j1'})
     response.raise_for_status()
     return response
 
@@ -49,7 +49,7 @@ def split_every(n, iterable):
 def scrape_prices(symbols):
     prices = []
 
-    for slice in split_every(SYMBOLS_AT_ONCE, symbols): #(symbols[n:n + SYMBOLS_AT_ONCE] for n in xrange(0, len(symbols) / SYMBOLS_AT_ONCE + 1), SYMBOLS_AT_ONCE):  # I miss Haskell
+    for slice in split_every(SYMBOLS_AT_ONCE, symbols):
         response = _fetch_prices(slice)
         lines = response.iter_lines()
         lines = list(lines)

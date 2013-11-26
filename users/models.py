@@ -10,12 +10,12 @@ class Investor(models.Model):
     favourites = models.ManyToManyField(Symbol)
 
     def __unicode__(self):
-          return "%s's investor profile" % self.user
+        return "%s's investor profile" % self.user
 
 
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-       profile, created = Investor.objects.get_or_create(user=instance)
+        profile, created = Investor.objects.get_or_create(user=instance)
 
 
 post_save.connect(create_user_profile, sender=User)

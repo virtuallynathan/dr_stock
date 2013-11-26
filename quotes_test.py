@@ -2,7 +2,7 @@ import datetime
 import sys
 
 from data.cache import get_price, get_quotes
-from data.models import Exchange, Symbol, get_symbol, get_exchange
+from data.models import get_symbol, get_exchange
 
 
 try:
@@ -23,6 +23,5 @@ for quote in quotes:
 
 
 for symbol in ftse.components.all():
-	price = get_price(symbol)
-	print price
-
+    price = get_price(symbol)
+    print price

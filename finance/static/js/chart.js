@@ -11,15 +11,7 @@ Chart.directive('stockChart', function ($parse) {
           $scope.formatDate = d3.time.format("%Y-%m-%d");
           $scope.parseDate = $scope.formatDate.parse;
 
-          $scope.fixupDomain = function() {
-            var range = $scope.x.domain();
-            range[0] = Math.max(range[0], $scope.lowestDate);
-            range[1] = Math.min(range[1], $scope.highestDate);
-            $scope.x.domain(range);
-          }
-
           $scope.redraw = function() {
-            $scope.fixupDomain();
             $scope.newDataRange();
             $scope.svg.select(".x.axis").call($scope.xAxis.tickSize(6).tickFormat(null));
             $scope.svg.select(".y.axis").call($scope.yAxis.tickSize(6).tickFormat(null));
@@ -71,7 +63,7 @@ Chart.directive('stockChart', function ($parse) {
                 }
                 $scope.updateChart($scope.historical.values());
               }).error(function(error) {
-                console.log('you gone and fucked up again aintcha');
+                console.log('ERROR!');
               });
           }
 

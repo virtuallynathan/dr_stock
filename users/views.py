@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.utils.http import is_safe_url
 
 from data.models import Symbol
-from data.views import serialize_symbol, json_response
+from data.views import json_response
 
 
 REDIRECT_FIELD_NAME = 'next'
@@ -21,7 +21,7 @@ DEFAULT_REDIRECT = '/'
 @never_cache
 def register(request, template_name='register.html'):
     redirect_to = request.POST.get(REDIRECT_FIELD_NAME,
-                                   request.GET.get(REDIRECT_FIELD_NAME, ''));
+                                   request.GET.get(REDIRECT_FIELD_NAME, ''))
 
     if not is_safe_url(url=redirect_to, host=request.get_host()):
         redirect_to = resolve_url(DEFAULT_REDIRECT)

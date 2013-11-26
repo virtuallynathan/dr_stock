@@ -1,15 +1,10 @@
-from django import forms
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
-from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 from datetime import datetime, timedelta
 from pytz import utc
 
 from data.cache import get_price
-from data.models import Quote, Symbol
+from data.models import Symbol
 from data.views import serialize_symbol, json_response
 
 
