@@ -24,9 +24,9 @@ def view_stock(request):
 def view_recommendations(request, number):
     number = int(number)
 
-    c_date_size = 120
-    b_date_size = 60
-    a_date_size = 30
+    c_date_size = 12
+    b_date_size = 6
+    a_date_size = 3
 
     today = datetime.now(utc)
     b_start = today - timedelta(b_date_size)
@@ -43,7 +43,7 @@ WITH tc AS (SELECT symbol_id, Avg(close) FROM data_quote WHERE date >= '{0:%Y-%m
          INNER JOIN tb on ta.symbol_id = tb.symbol_id
            WHERE tc.avg > tb.avg AND tb.avg > ta.avg
 ) t INNER JOIN data_symbol ON id = symbol_id
-      ORDER BY ((c - a) * (b - a) * (c - b)) LIMIT {4};
+      ORDER BY ((c - a) * (b - a) * (c - b)) DESC LIMIT {4};
 '''.format(c_start, a_start, b_start, today, number)
 
     symbols = Symbol.objects.raw(statement)
