@@ -44,9 +44,6 @@
 .percent .value {
   font-size: 28px;
 }
-.percent {
-  font-size: 17px;
-}
 </style>
 {% endblock %}
 
@@ -81,7 +78,7 @@
       <a class="favlink" ng-init="exchange = portStock.exchange; ticker = portStock.ticker" href="/stock/#/{{portStock.exchange}}/{{portStock.ticker}}/">
         <div class="circleStatsItemBox" style="background-color: {{stock.price.change|priceChangeColour}}" ng-controller="StockDataCtrl">
           <div class="header">PRICE: <strong>{{stock.price.price.toFixed(2)}}</strong></div>
-          <span class="percent" style="margin-top: -72px;">
+          <span class="percent" style="margin-top: -72px;font-size: 14px;">
             {{stock.name}}
           </span>
           <span class="percent">
