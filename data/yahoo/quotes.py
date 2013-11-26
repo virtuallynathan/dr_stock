@@ -17,7 +17,7 @@ def _fetch_quotes(symbol, start_date, end_date):
     else:
         ticker = symbol.ticker
         if symbol.exchange.ticker:
-            ticker += '.' . symbol.exchange.ticker
+            ticker += '.' + symbol.exchange.ticker
 
     response = get(BASE_URL, params={'s': ticker,
                                      'a': start_date.month - 1,
