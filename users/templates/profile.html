@@ -23,6 +23,7 @@
             </div>
             <div class="box-content">
               <form class="form-horizontal" role="form" action="{% url 'users.views.profile' %}" method="post">
+                {% csrf_token %}
                 <fieldset class="col-sm-12">  
                 <div class="form-group">
                   <label for="inputEmail">Email address</label>
