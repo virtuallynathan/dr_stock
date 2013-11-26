@@ -52,7 +52,7 @@ def scrape_prices(symbols):
     for slice in split_every(SYMBOLS_AT_ONCE, symbols):
         response = _fetch_prices(slice)
         lines = response.iter_lines()
-        lines = list(lines)
+        lines = [l for l in list(lines) if l.strip()]
         assert len(lines) == len(slice)
 
         for symbol, line in zip(slice, lines):
