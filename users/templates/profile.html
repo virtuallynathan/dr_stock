@@ -10,13 +10,16 @@
 
 {% block content %}
 
+<div style="margin: auto; max-width: 1024px; height: 100%;" ng-controller="HomeCtrl" >
+
 {% if success == false %}
-	<h2> Welcome to your profile page </h2><br>
+	<h2> Update your profile details </h2>
 {% else %}
-  <h2> You have successfully updated your profile details </h2><br>
+  <div class="alert alert-success">You have successfully updated your profile details.</div>
 {% endif %}
 
-<div class="container" style="width: 40%;">
+
+
 <form role="form" action="{% url 'users.views.profile' %}" method="post" style="width: 300px;">
  {% csrf_token %}
   <div class="form-group">
