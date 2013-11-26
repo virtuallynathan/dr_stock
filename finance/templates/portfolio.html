@@ -63,7 +63,7 @@
         <div class="circleStatsItemBox" style="background-color: {{stock.price.change|priceChangeColour}}" ng-controller="StockDataCtrl">
           <div class="header">PRICE: <strong>{{stock.price.price.toFixed(2)}}</strong></div>
           <span class="percent" style="margin-top: -72px;font-size: 17px;">
-            {{stock.name}}
+            {{stock.name|cropName:20}}
           </span>
           <span class="percent">
             <span class="count">

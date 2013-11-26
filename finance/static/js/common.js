@@ -1,6 +1,14 @@
 var Common = angular.module('Common', []);
 
 
+Common.filter('cropName', function() {
+  return function(name, length) {
+    if (name.length <= length) return name;
+    return name.substring(0,length - 3) + "...";
+  }
+});
+
+
 Common.filter('priceChangeColour', function() {
   return function(priceChange) {
     if (priceChange > 0) {

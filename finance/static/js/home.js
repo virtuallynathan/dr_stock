@@ -1,15 +1,7 @@
-var homeApp = angular.module('HomeApp', ['Common']);
+var HomeApp = angular.module('HomeApp', ['Common']);
 
 
-homeApp.filter('cropName', function() {
-  return function(name, length) {
-    if (name.length <= length) return name;
-    return name.substring(0,length - 3) + "...";
-  }
-});
-
-
-homeApp.controller('HomeCtrl', function($scope, $http, $timeout) {
+HomeApp.controller('HomeCtrl', function($scope, $http, $timeout) {
   $scope.getBarHeight = function(datas, index, id, capOrChange) {
 
     var val = (capOrChange ? datas[index].price.market_cap : Math.abs(datas[index].price.change));
