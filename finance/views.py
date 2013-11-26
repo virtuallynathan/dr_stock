@@ -56,3 +56,6 @@ WITH tc AS (SELECT symbol_id, Avg(close) FROM data_quote WHERE date >= '{0:%Y-%m
 
 def view_portfolio(request):
     return render(request, 'portfolio.html')
+
+def view_recommend(request):
+    return render(request, 'recommend.html')
