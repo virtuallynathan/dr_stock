@@ -14,6 +14,7 @@
   <table class="table table-striped table-hover" ng-controller="PortfolioCtrl">
     <thead>
       <tr>
+        <th><a href="" ng-click="reverse = predicate == 'rank' && !reverse; predicate = 'rank'">Rank</a></th>
         <th><a href="" ng-click="reverse = predicate == 'ticker' && !reverse; predicate = 'ticker'">Ticker</a></th>
         <th><a href="" ng-click="reverse = predicate == 'name' && !reverse; predicate = 'name'">Name</a></th>
         <th><a href="" ng-click="reverse = predicate == 'price.price' && !reverse; predicate = 'price.price'">Price</a></th>
@@ -23,6 +24,7 @@
       </tr>
     </thead>
     <tr ng-repeat="stock in recommended | filter:query | orderBy:predicate:reverse" id="tbl-row-{{stock.ticker}}">
+      <td>#{{stock.rank}}</td>
       <td><a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/" class="label label-info">{{stock.ticker}}</a></td>
       <td>{{stock.name}}</td>
       <td>{{stock.price.price.toFixed(2)}}</td>
