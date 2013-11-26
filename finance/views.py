@@ -24,9 +24,9 @@ def view_stock(request):
 def view_recommendations(request, number):
     number = int(number)
 
-    c_date_size = 12
+    c_date_size = 48
     b_date_size = 6
-    a_date_size = 3
+    a_date_size = 18
 
     today = datetime.now(utc)
     b_start = today - timedelta(b_date_size)
