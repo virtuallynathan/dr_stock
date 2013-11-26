@@ -54,27 +54,11 @@
     <div class="col-lg-12">
       <form role="form">
         <input type="text" class="form-control" placeholder="Search" ng-model="query">
-
-        <!-- FIX ME PLEASE ROB -->
-        <div class="btn-group">
-                <button class="btn btn-large btn-primary">Large Dropdown</button>
-                <button class="btn btn-large dropdown-toggle btn-primary" data-toggle="dropdown"><span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                  <li><a href="ui-elements.html#"><i class="fa fa-star"></i> Action</a></li>
-                  <li><a href="ui-elements.html#"><i class="fa fa-tag"></i> Another action</a></li>
-                  <li><a href="ui-elements.html#"><i class="fa fa-download"></i> Something else here</a></li>
-                  <li class="divider"></li>
-                  <li><a href="ui-elements.html#"><i class="fa fa-tint"></i> Separated link</a></li>
-                </ul>
-              </div>
-
-
-
       </form>
     </div>
     {% if user.is_authenticated %}
     {% verbatim %}
-    <div class="col-md-3" ng-repeat="portStock in portfolioList | filter:query | orderBy:predicate:reverse" style="text-align: center;">
+    <div class="col-md-3" ng-repeat="portStock in portfolioList | filter:query" style="text-align: center;">
       <a class="favlink" ng-init="exchange = portStock.exchange; ticker = portStock.ticker" href="/stock/#/{{portStock.exchange}}/{{portStock.ticker}}/">
         <div class="circleStatsItemBox" style="background-color: {{stock.price.change|priceChangeColour}}" ng-controller="StockDataCtrl">
           <div class="header">PRICE: <strong>{{stock.price.price.toFixed(2)}}</strong></div>
