@@ -72,7 +72,7 @@
       <td>{{stock.price.change.toFixed(3) + '%'}}</td>
       <td>{{stock.price.volume|abbreviateNumber}}</td>
       <td>{{stock.price.market_cap.toFixed(2)|abbreviateNumber}}</td>
-      <td><button ng-if="logged_in" type="button" class="btn btn-{{style}} btn-xs" ng-click="portfolio()" ng-controller="PortfolioStockCtrl" style="background-color:{{inPortfolio() ? '#ff5454' : '#36a9e1'}}; color :#FFF;">{{$window.logged_in}}{{inPortfolio() ? "In Portfolio" : "Add to Portfolio"}}</button></td>
+      <td><button ng-if="logged_in" type="button" class="btn btn-{{style}} btn-xs" ng-click="portfolio()" ng-controller="PortfolioStockCtrl" style="background-color:{{inPortfolio() ? '#ff5454' : '#36a9e1'}}; color :#FFF;"onclick="event.stopPropagation();">{{$window.logged_in}}{{inPortfolio() ? "In Portfolio" : "Add to Portfolio"}}</button></td>
       </a>
     </tr>
   </table>
