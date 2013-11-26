@@ -27,7 +27,7 @@ Common.filter('abbreviateNumber', function() {
     if (n === undefined || n === null) { return 'None'; }
     with (Math) {
       var base = floor(log(abs(n)) / log(1000));
-      var suffix = 'kmb'[base - 1];
+      var suffix = 'kMB'[base - 1];
       return suffix ? (n / pow(1000, base)).toPrecision(3) + suffix : '' + n;
     }
   };
