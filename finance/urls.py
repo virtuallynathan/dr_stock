@@ -21,7 +21,7 @@ urlpatterns = patterns('',
 
     url(r'^portfolio/$', view_portfolio),
     url(r'^recommend/$', view_recommend),
-    url(r'^recommendations/$', view_recommendations),
+    url(r'^recommendations/(?P<number>\d+)/$', view_recommendations),
     url(r'^stock/$', view_stock),
 
     url(r'^accounts/login/$', login, {'template_name': 'login.html'}),

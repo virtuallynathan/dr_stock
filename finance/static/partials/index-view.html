@@ -54,7 +54,7 @@
           <input type="text" class="form-control" placeholder="Search" ng-model="query">
       </form>
   </div>
-  <table class="table table-striped table-hover" ng-controller="PortfolioCtrl" dynamic="html" >
+  <table class="table table-striped table-hover" ng-controller="PortfolioCtrl">
     <thead>
       <tr>
         <th><a href="" ng-click="reverse = predicate == 'ticker' && !reverse; predicate = 'ticker'">Ticker</a></th>
@@ -65,7 +65,7 @@
         <th><a href="" ng-click="reverse = predicate == 'price.market_cap' && !reverse; predicate = 'price.market_cap'">Market Cap</a></th>
       </tr>
     </thead>
-    <tr ng-repeat="stock in recommended | filter:query | orderBy:predicate:reverse" id="tbl-row-{{stock.ticker}}">
+    <tr ng-repeat="stock in index.components | filter:query | orderBy:predicate:reverse" id="tbl-row-{{stock.ticker}}">
       <td><a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/" class="label label-info">{{stock.ticker}}</a></td>
       <td>{{stock.name}}</td>
       <td>{{stock.price.price.toFixed(2)}}</td>
