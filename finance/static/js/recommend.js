@@ -6,7 +6,7 @@ RecommendApp.controller('RecommendCtrl', function($scope, $http, $timeout) {
     $http.get('/recommendations/10/')
       .success(function(data) {
         for (var i = 0; i < data.length; i++) {
-          data.rank = i;
+          data[i].rank = i;
         }
         $scope.recommended = data;
         $timeout(getData, 1000 * 60 * 60);
