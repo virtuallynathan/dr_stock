@@ -3,7 +3,7 @@ from django.contrib import admin
 
 import data.urls
 from users.views import profile, register, login, logout
-from finance.views import view_home, view_stock, view_recommendations, view_portfolio
+from finance.views import view_home, view_stock, view_recommendations, view_recommend, view_portfolio
 
 from users.views import favourite_stock, favourite_index, list_favourites
 from users.views import unfavourite_stock, unfavourite_index
