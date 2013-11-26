@@ -15,7 +15,8 @@ def _parse_components(index, html):
 
     for row in html.xpath('//table[@class="yfnc_tableout1"]//tr[./td/@class="yfnc_tabledata1"]'):
         ticker = row[0][0][0].text  # <td><b><a>Symbol</td></b></a>
-        ticker = ticker[:ticker.rfind('.')]
+        dotpos = ticker.rfind('.')
+        ticker = ticker[:dotpos] if dotpos > 0 else ticker
 
         try:
             symbol = get_symbol(exchange, ticker)
