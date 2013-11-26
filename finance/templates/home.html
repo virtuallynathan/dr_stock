@@ -40,23 +40,9 @@
 
 <div ng-app="HomeApp">
 <div style="margin: auto; max-width: 1024px; height: 100%;" ng-controller="HomeCtrl" >
-    {% if user.is_authenticated %}
-        <div class="row">
-        <div class="col-lg-9" style="width: 100%">
-            <div class="box blue">
-                <div class="box-header">
-                    <h2><i class="fa fa-question"></i>What is Dr Stock?</h2>
-                </div>
-                <div class="box-content" style="min-height: 152px;">
-                    <img style="max-height: 128px; position: relative; float: right; padding: 8px;" src="/static/images/logo.png" id="logo" />
-                    <p> Bacon ipsum dolor sit amet spare ribs bresaola drumstick jerky pastrami pork loin. Fatback ground round capicola pork belly meatball tri-tip kevin cow, pancetta biltong pork loin bacon doner. Prosciutto short loin tri-tip flank tenderloin shoulder kevin sausage pastrami. Drumstick pancetta turducken cow pork, ribeye leberkas jowl.</p>
-                </div>
-            </div>
-        </div>
 
-       {% else %}
     <div class="row">
-        <div class="col-lg-9">
+        <div {% if user.is_authenticated %} class="col-lg-12" {% else %} class="col-lg-9" {% endif %}>
             <div class="box blue">
                 <div class="box-header">
                     <h2><i class="fa fa-question"></i>What is Stock Advisor?</h2>
@@ -67,7 +53,7 @@
                 </div>
             </div>
         </div>
-
+    {% if not user.is_authenticated %}
         <div class="col-lg-3">
             <a class="quick-button" href="/accounts/register/" style="vertical-align:middle;">
                 <i class="fa fa-book" style="vertical-align:middle;margin-bottom: 18px;"></i>
@@ -78,20 +64,21 @@
                 <span style="font-size: 24px;position: relative; top: -4px;">&nbsp;Login</span>
             </a>
         </div>
-        {% endif %}
+    {% endif %}
     </div>
     <div style="clear:both;"></div>
     <div class="row">
-        <!-- Hamish, Angularise this! -->
-        <a href="/stock/#/FTSE/">
+        {% verbatim %}
+        <a ng-repeat="index in indexes" href="/stock/#/{{index.ticker}}/">
             <div class="col-lg-6">
                 <div class="smallstat box">
-                    <i class="fa fa-list-alt yellow" style="width: 112px;">&nbsp;0.04%</i>
-                    <span class="title">£MONEYS</span>
-                    <span class="value">NAME</span>
+                    <i class="fa fa-list-alt yellow" style="width: 112px;">&nbsp;{{index.price.change.toFixed(2)}}%</i>
+                    <span class="title">{{index.price.price.toFixed(2)}}</span>
+                    <span class="value">{{index.name}}</span>
                 </div>
             </div>
         </a>
+        {% endverbatim %}
 
     </div>
     <div style="clear:both;"></div>

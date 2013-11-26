@@ -26,6 +26,16 @@ HomeApp.controller('HomeCtrl', function($scope, $http, $timeout) {
   };
 
   (function refresh() {
+    $http.get('/data/indexes/10/').success(
+      function(data) {
+        $scope.indexes = data;
+        $timeout(refresh, 1000 * 60 * 5);
+      }).error(
+        function(error) {
+          $timeout(refresh, 1000 * 60 * 5);
+        }
+    );})();
+  (function refresh() {
     $http.get('/data/risers/3/').success(
       function(data) {
         $scope.risers = data;

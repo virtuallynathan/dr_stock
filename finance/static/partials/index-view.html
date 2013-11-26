@@ -79,7 +79,7 @@
 </div>
 <div id="hist-pane" style="display:none;">
   <div style="background-color: #36A9E1; border-radius: 2px;">
-    <stock-chart exchange="LSE" ticker="{{ticker}}"/>
+    <stock-chart exchange="{{ticker == 'NDX' ? 'NASDAQ' : 'LSE'}}" ticker="{{ticker}}"/>
   </div>
 </div>
 </div>
