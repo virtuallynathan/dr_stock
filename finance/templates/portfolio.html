@@ -78,7 +78,7 @@
       <a class="favlink" ng-init="exchange = portStock.exchange; ticker = portStock.ticker" href="/stock/#/{{portStock.exchange}}/{{portStock.ticker}}/">
         <div class="circleStatsItemBox" style="background-color: {{stock.price.change|priceChangeColour}}" ng-controller="StockDataCtrl">
           <div class="header">PRICE: <strong>{{stock.price.price.toFixed(2)}}</strong></div>
-          <span class="percent">
+          <span class="percent" style="margin-top: -48px;">
             {{stock.name}}
           </span>
           <span class="percent">
