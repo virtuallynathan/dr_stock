@@ -33,6 +33,7 @@
                 <th><a href="" ng-click="reverse = predicate == 'price.change' && !reverse; predicate = 'price.change'">Change</a></th>
                 <th><a href="" ng-click="reverse = predicate == 'price.volume' && !reverse; predicate = 'price.volume'">Volume</a></th>
                 <th><a href="" ng-click="reverse = predicate == 'price.market_cap' && !reverse; predicate = 'price.market_cap'">Market Cap</a></th>
+                <th></th>
               </tr>
             </thead>
             <tr ng-repeat="stock in recommended | filter:query | orderBy:predicate:reverse" id="tbl-row-{{stock.ticker}}">
