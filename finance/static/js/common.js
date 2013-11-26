@@ -16,6 +16,7 @@ Common.filter('priceChangeColour', function() {
 
 Common.filter('abbreviateNumber', function() {
   return function(n) {
+    if (n === undefined || n === null) { return 'None'; }
     with (Math) {
       var base = floor(log(abs(n)) / log(1000));
       var suffix = 'kmb'[base - 1];

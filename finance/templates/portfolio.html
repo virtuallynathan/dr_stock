@@ -77,21 +77,22 @@
     <div class="col-md-3" ng-repeat="portStock in portfolioList | filter:query | orderBy:predicate:reverse" style="text-align: center;">
       <a class="favlink" ng-init="exchange = portStock.exchange; ticker = portStock.ticker" href="/stock/#/{{portStock.exchange}}/{{portStock.ticker}}/">
         <div class="circleStatsItemBox" style="background-color: {{stock.price.change|priceChangeColour}}" ng-controller="StockDataCtrl">
-          <div class="header"><strong>PRICE:</strong> {{stock.price.price.toFixed(2)}}</div>
+          <div class="header">PRICE: <strong>{{stock.price.price.toFixed(2)}}</strong></div>
           <span class="percent">
             <span class="count">
               <span class="number">{{stock.exchange}}</span>
             </span>
             <span class="sep"> / </span>
-              <span class="value">
-                <span class="number">{{stock.ticker}}</span>
-              </span>
+            <span class="value">
+              <span class="number">{{stock.ticker}}</span>
             </span>
+          </span>
           <div class="circleStat" style="margin-top: 12px;">
             <div class="ch_value">{{stock.price.change.toFixed(3) + '%'}}</div>
           </div>
           <div class="footer">
-            <strong>MARKET CAP:</strong> {{stock.price.market_cap|abbreviateNumber}}
+            MARKET CAP: <strong>{{stock.price.market_cap|abbreviateNumber}}</strong>
+          </div>
         </div>
       </a>
     </div>
