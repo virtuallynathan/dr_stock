@@ -15,7 +15,9 @@ def _fetch_quotes(symbol, start_date, end_date):
     if symbol.type == Symbol.INDEX:
         ticker = '^' + symbol.ticker
     else:
-        ticker = symbol.ticker + '.' + symbol.exchange.ticker
+        ticker = symbol.ticker
+        if symbol.exchange.ticker:
+            ticker += '.' . symbol.exchange.ticker
 
     response = get(BASE_URL, params={'s': ticker,
                                      'a': start_date.month - 1,
@@ -26,6 +28,7 @@ def _fetch_quotes(symbol, start_date, end_date):
                                      'f': end_date.year,
                                      'g': 'd'},
                    stream=True)
+    print response.url
     response.raise_for_status()
     return response
 

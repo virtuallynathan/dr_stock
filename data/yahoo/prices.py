@@ -15,7 +15,10 @@ def _ticker(symbol):
     if symbol.type == Symbol.INDEX:
         return '^' + symbol.ticker
     else:
-        return symbol.ticker + '.' + symbol.exchange.ticker
+        if symbol.exchange.ticker:
+            return symbol.ticker + symbol.exchange.ticker
+        else:
+            return symbol.ticker
 
 
 def _fetch_prices(symbols):

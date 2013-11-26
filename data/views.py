@@ -48,6 +48,12 @@ def serialize_historical(symbol, quotes):
             'historical': quote_list}
 
 
+def view_indexes(request, number):
+    indexes = Symbol.objects.filter(type=Symbol.INDEX)
+    prices = [get_price(s) for s in indexes]
+    return json_response([serialize_symbol(p.symbol, p) for p in prices])
+
+
 def view_index(request, ticker):
     try:
         index = Symbol.objects.get(ticker=ticker)
@@ -89,6 +95,7 @@ def view_historical(request, exchange, ticker, start_date, end_date):
 
     result = serialize_historical(symbol, quotes)
     return json_response(result)
+
 
 def view_risers(request, number):
     prices = get_risers(number)

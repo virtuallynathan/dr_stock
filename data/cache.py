@@ -26,6 +26,7 @@ def get_quotes(symbol, start_date, end_date):
 
     return quotes
 
+
 def get_components(index):
     '''
     Retrieves the components of an index. If the components in the database
