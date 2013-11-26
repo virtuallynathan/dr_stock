@@ -31,7 +31,7 @@
                 <th></th>
               </tr>
             </thead>
-            <tr ng-repeat="stock in recommended | filter:query | orderBy:predicate:reverse" id="tbl-row-{{stock.ticker}}" onclick="alert(this.firstElementChild.innerHTML);window.location= this.firstElementChild.nextSibling.firstElementChild.href;" style="cursor: pointer;">
+            <tr ng-repeat="stock in recommended | filter:query | orderBy:predicate:reverse" id="tbl-row-{{stock.ticker}}" onclick="alert(this.firstElementChild.nextSibling.innerHTML);window.location= this.firstElementChild.nextSibling.firstElementChild.href;" style="cursor: pointer;">
               <td>#{{stock.rank}}</td>
               <td><a href="/stock/#/{{stock.exchange}}/{{stock.ticker}}/" class="label label-info">{{stock.ticker}}</a></td>
               <td>{{stock.name}}</td>
