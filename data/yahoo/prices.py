@@ -16,7 +16,7 @@ def _ticker(symbol):
         return '^' + symbol.ticker
     else:
         if symbol.exchange.ticker:
-            return symbol.ticker + symbol.exchange.ticker
+            return symbol.ticker + '.' + symbol.exchange.ticker
         else:
             return symbol.ticker
 
